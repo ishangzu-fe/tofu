@@ -1,0 +1,143 @@
+@import "../utils/vue-popup/popup.css";
+
+.el-message-box{
+  position: fixed;
+  top:50%;
+  left:50%;
+  transform: translate3d(-50%,-50%,0);
+  background-color: $color-white;
+  width: 420px;
+  border-radius: 3px;
+  font-size: 16px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  overflow: hidden;
+  backface-visibility: hidden;
+}
+
+.el-message-box-header{
+  padding: 20px 20px 0;
+}
+
+.el-message-box-content{
+  padding: 30px 20px;
+  color: #475669;
+  font-size: 14px;
+  position: relative;
+}
+
+.el-message-box-close{
+  display: inline-block;
+  position: absolute;
+  top:19px;
+  right:20px;
+  color: #999;
+  cursor: pointer;
+  line-height: 20px;
+  text-align: center;
+
+  &:hover{
+    color: $color-primary;
+  }
+}
+
+.el-message-box-input{
+  padding-top: 15px;
+
+  & input.invalid{
+    border-color: $color-danger;
+    &:focus{
+      border-color: $color-danger;
+    }
+  }
+}
+
+.el-message-box-errormsg{
+  color: red;
+  font-size: 12px;
+  min-height: 18px;
+  margin-top:2px;
+}
+
+.el-message-box-title{
+  padding-left: 0;
+  margin-bottom: 0;
+  font-size: 16px;
+  font-weight: bold;
+  height: 18px;
+  color: #333;
+}
+
+.el-message-box-message{
+  margin: 0;
+
+  & p{
+    margin: 0;
+    line-height: 1.4;
+  }
+
+}
+
+.el-message-box-btns{
+  padding: 10px 20px 15px;
+  text-align: right;
+
+  & button:nth-child(2){
+    margin-left: 10px;
+  }
+}
+
+.el-message-box-btns-reverse{
+  flex-direction: row-reverse;
+}
+
+.el-message-box-status{
+  position: absolute;
+  top:50%;
+  transform: translateY(-50%);
+  font-size: 36px !important;
+
+  &.el-icon-circle-check{
+    color: $color-success;
+  }
+
+  &.el-icon-information{
+    color: $color-info;
+  }
+
+  &.el-icon-warning{
+    color: $color-warning;
+  }
+
+  &.el-icon-circle-cross{
+    color: $color-danger;
+  }
+}
+
+.msgbox-fade-enter-active{
+  animation: msgbox-fade-in .3s
+}
+
+.msgbox-fade-leave-active{
+  animation: msgbox-fade-out .3s;
+}
+
+@keyframes msgbox-fade-in {
+  0% {
+    transform: translate3d(-50%,calc(-50% - 20px),0);
+  }
+  100% {
+    transform: translate3d(-50%,-50%,0);
+  }
+}
+
+@keyframes msgbox-fade-out {
+  0% {
+    transform: translate3d(-50%,-50%,0);
+  }
+  100% {
+    transform: translate3d(-50%,calc(-50% - 20px),0);
+  }
+}

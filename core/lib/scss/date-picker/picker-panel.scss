@@ -1,0 +1,111 @@
+.el-picker-panel{
+  color: $datepicker-color;
+  border:1px solid $datepicker-border-color;
+  box-shadow:0 2px 6px #ccc;
+  background: $color-white;
+  border-radius: 2px;
+  line-height: 20px;
+  margin: 5px 0;
+}
+
+.el-picker-panel-body,
+.el-picker-panel-body-wrapper{
+  &::after{
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+.el-picker-panel-content{
+  position: relative;
+  margin: 15px;
+}
+
+.el-picker-panel-footer{
+  border-top:1px solid $datepicker-inner-border-color;
+  padding:4px;
+  text-align: right;
+  background-color: $color-white;
+  position: relative;
+}
+
+.el-picker-panel-shortcut{
+  display: block;
+  width: 100%;
+  border:0;
+  background-color: transparent;
+  line-height: 28px;
+  font-size: $font-size-base;
+  color: $datepicker-color;
+  padding-left: 12px;
+  text-align: left;
+  outline: none;
+  cursor: pointer;
+
+  &:hover{
+    background-color: #e5e9f2;
+  }
+
+  &.active{
+    background-color: #e6f1fe;
+    color: $datepicker-active-color;
+  }
+}
+
+.el-picker-panel-btn{
+  border:1px solid #dcdcdc;
+  color:#333;
+  line-height: 24px;
+  border-radius: 2px;
+  padding: 0 20px;
+  cursor: pointer;
+  background-color: transparent;
+  outline: none;
+  font-size: 12px;
+
+  &[disabled]{
+    color: #ccc;
+    cursor: not-allowed;
+  }
+}
+
+.el-picker-panel-icon-btn{
+  font-size: 12px;
+  color: $datepicker-icon-color;
+  border:0;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+  margin-top: 3px;
+
+  &:hover{
+    color:$datepicker-text-hover-color
+  }
+}
+
+.el-picker-panel-link-btn{
+  cursor: pointer;
+  color: #55a4ff;
+  text-decoration: none;
+  padding: 15px;
+  font-size: 12px;
+}
+
+.el-picker-panel *[slot=sidebar],
+.el-picker-panel-sidebar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 110px;
+  border-right: 1px solid $datepicker-inner-border-color;
+  box-sizing: border-box;
+  padding-top: 6px;
+  background-color: #f9fafc;
+}
+
+.el-picker-panel *[slot=sidebar] + .el-picker-panel-body,
+.el-picker-panel-sidebar + .el-picker-panel-body {
+  margin-left: 110px;
+}
+

@@ -1,0 +1,142 @@
+@import "select-dropdown";
+@import "./input";
+@import "tag";
+@import "./option";
+@import "./option-group";
+
+.el-select{
+  display: block;
+  position: relative;
+
+  &.is-small{
+    & input{
+      border-radius: 2px;
+      height: 28px;
+    }
+  }
+
+  &:hover{
+    .el-select-inner{
+      border-color: #8492A6;
+    }
+  }
+
+  & .el-input{
+    & .el-input-icon{
+      color:#c0ccda;
+      font-size: 12px;
+      transition: transform .3s;
+      transform:translateY(-50%) rotateZ(180deg);
+      line-height: 16px;
+      top:50%;
+      cursor: pointer;
+
+      &.is-reverse{
+        transform:translateY(-50%);
+      }
+
+      &.is-show-close{
+        transition: 0s;
+        size: 16px;
+        font-size: 14px;
+        right:8px;
+        text-align: center;
+        transform: translateY(-50%) rotateZ(180deg);
+        border-radius: 50%;
+        color:#c0ccda;
+
+        &:hover{
+          color:#99a9bf;
+        }
+
+      }
+    }
+
+    & .el-input-inner{
+      cursor: pointer;
+
+      &:focus{
+        border-color:#2ea0ff;
+      }
+    }
+
+    &.is-disabled{
+      & .el-input-inner{
+        cursor: not-allowed;
+
+        :hover{
+          border-color: #d3dce6;
+        }
+      }
+    }
+  }
+
+
+  & .el-tag-close{
+    margin-top: -2px;
+  }
+
+  & .el-tag{
+    height: 24px;
+    line-height: 24px;
+    box-sizing: border-box;
+    margin: 6px 0 0 6px;
+  }
+
+  &.is-small{
+    .el-tag{
+      height: 20px;
+      line-height: 20px;
+      margin: 4px 0 0 4px;
+    }
+  }
+}
+
+.el-select-input{
+  border:none;
+  outline: none;
+  padding: 0;
+  margin: 4px 0 -3px 10px;
+  color: #666;
+  font-size: 14px;
+  vertical-align: baseline;
+  appearance:none;
+  height: 28px;
+  background-color: transparent;
+}
+
+.el-select-close{
+  cursor: pointer;
+  position: absolute;
+  top:8px;
+  z-index: $index-top;
+  right: 25px;
+  color:#c0ccda;
+  line-height: 18px;
+  font-size: 12px;
+
+  &:hover{
+    color: #99a9bf;
+  }
+}
+
+.el-select-tags{
+  position: absolute;
+  line-height: normal;
+  white-space: normal;
+  z-index:$index-top;
+}
+
+.el-select-tag{
+  display: inline-block;
+  height: 24px;
+  line-height: 24px;
+  font-size: 24px;
+  border-radius: $border-radius-base;
+  color: $color-white;
+  background-color: $color-primary;
+
+  & .el-icon-close{
+    font-size: 12px;
+  }
+}

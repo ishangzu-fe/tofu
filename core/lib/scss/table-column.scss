@@ -1,0 +1,82 @@
+.el-table-filter{
+  border:1px solid #d3dce6;
+  border-radius: 2px;
+  background-color: $color-white;
+  box-shadow: $dropdown-menu-box-shadow;
+  box-sizing: border-box;
+  margin: 2px 0;
+
+  .el-input-inner,
+  .el-date-editor-editor{
+    border:none;
+  }
+}
+
+.el-table-filter-list{
+  padding: 5px 0;
+  margin: 0;
+  list-style: none;
+  min-width: 100px;
+}
+
+.el-table-filter-list-item{
+  line-height: 36px;
+  padding: 0 10px;
+  cursor: pointer;
+  font-size: $font-size-base;
+
+  :hover{
+    background-color: $dropdown-menuItem-hover-fill;
+    color: $dropdown-menuItem-hover-color;
+  }
+
+  &.is-active{
+    background-color: $color-primary;
+    color: $color-white;
+  }
+}
+
+.el-table-filter-content{
+  min-width: 100px;
+}
+
+.el-table-filter-bottom{
+  border-top:1px solid #d3dce6;
+  padding: 8px;
+
+  button{
+    background: transparent;
+    border:none;
+    color: #8492A6;
+    cursor: pointer;
+    font-size: $font-size-base;
+    padding: 0 3px;
+
+    &:hover{
+      color: $color-primary;
+    }
+
+    &:focus{
+      outline: none;
+    }
+
+    &.is-disabled{
+      color: #c0ccda;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.el-table-filter-checkbox-group{
+  padding: 10px;
+
+  .el-checkbox{
+    display: block;
+    margin-bottom: 8px;
+    margin-left: 5px;
+  }
+
+  .el-checkbox:last-child{
+    margin-bottom: 0;
+  }
+}

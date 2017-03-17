@@ -1,0 +1,46 @@
+.el-loading-bar{
+  transition: all .3s ease;
+  -webkit-transition: all .3s ease;
+  position: fixed;
+  top:0;
+  background: $color-success;
+  height: 3px;
+  opacity: 1;
+}
+
+.el-loading-bar-glow{
+  top:0;
+  position: absolute;
+  width: 100px;
+  height: 100%;
+  box-shadow: -3px 0 15px 1px rgba(0,241,132,.4);
+}
+
+.el-loading-bar-to-right{
+  left:0;
+}
+
+.el-loading-bar-to-left,
+.el-loading-bar-to-right .el-loading-bar-glow{
+  right: 0;
+}
+
+.el-loading-bar-to-left .el-loading-bar-glow{
+  left: 0;
+}
+
+.el-loading-bar-full{
+  transition: all .1s ease;
+  -webkit-transition: all .1s ease;
+  height: 0;
+  opacity: 0;
+}
+
+.el-loading-bar-error{
+  background: $color-danger;
+
+  & .el-loading-bar-glow{
+    box-shadow: -3px 0 15px 1px rgba(244,67,54,.4);
+  }
+}
+

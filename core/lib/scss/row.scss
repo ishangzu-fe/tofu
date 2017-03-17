@@ -1,0 +1,42 @@
+@import "./mixins/_commons";
+
+.el-row{
+  position: relative;
+  box-sizing: border-box;
+
+  @include clearfix
+}
+
+.el-row-flex{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+
+  &:before,
+  &:after{
+    display: none;
+  }
+
+  &.is-justify-space-around{
+    -ms-flex-pack:distribute;
+    justify-content: space-around;
+  }
+
+  &.is-justify-space-between{
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+  }
+
+  &.is-justify-end{
+    -webkit-box-pack: justify;
+    -ms-flex-pack:justify;
+    justify-content: flex-end;
+  }
+
+  &.is-justify-center{
+    -webkit-box-pack: center;
+    -ms-flex-pack:center ;
+    justify-content: center;
+  }
+}

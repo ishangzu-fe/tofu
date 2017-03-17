@@ -1,0 +1,88 @@
+.el-tree{
+  cursor: default;
+  background-color: $color-white;
+  border:1px solid #d3dce6;
+}
+
+.el-tree-node{
+  white-space: nowrap;
+
+  & > .el-tree-node-children{
+    overflow: hidden;
+    background-color: transparent;
+    display: none;
+  }
+
+  &.expanded > .el-tree-node-children{
+    display: block;
+  }
+}
+
+.el-tree-node-content{
+  line-height: 36px;
+  height: 36px;
+  cursor: pointer;
+
+  & > .el-checkbox,
+  & > .el-tree-node-expand-icon{
+    margin-right: 8px;
+  }
+
+  & > .el-checkbox{
+    vertical-align: middle;
+  }
+
+  &:hover{
+    background-color: #e5e9f2;
+  }
+}
+
+.el-tree-node-expand-icon{
+  display: inline-block;
+  cursor: pointer;
+  width: 0;
+  height: 0;
+  vertical-align: middle;
+  margin-left: 10px;
+  border:6px solid transparent;
+  border-right-width: 0;
+  border-left-color:#99a9bf;
+  border-left-width: 7px;
+
+  transform: rotate(0deg);
+  transition: transform 0.3s ease-in-out;
+
+  &:hover{
+    border-left-color:#999;
+  }
+
+  &.expanded{
+    transform: rotate(90deg);
+  }
+
+  &.is-leaf{
+    border-color: transparent;
+    cursor: default;
+  }
+}
+
+.el-tree-node-label{
+  font-size: $font-size-base;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.el-tree-node-icon{
+  display: inline-block;
+  vertical-align: middle;
+  font-size: $font-size-base;
+  color: #99a9bf;
+}
+
+.el-tree-highlight-current .el-tree-node.is-current > .el-tree-node-content {
+  background-color: #eff7ff;
+}
+.collapse-transition {
+  -webkit-transition: height .3s ease-in-out,padding-top .3s ease-in-out,padding-bottom .3s ease-in-out;
+  transition: height .3s ease-in-out,padding-top .3s ease-in-out,padding-bottom .3s ease-in-out;
+}

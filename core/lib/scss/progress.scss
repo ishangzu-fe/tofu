@@ -1,0 +1,130 @@
+.el-progress {
+  position: relative;
+  line-height: 1;
+
+  &.is-success{
+    .el-progress-bar-inner{
+      background-color: $color-success;
+    }
+
+    .el-progress-text{
+      color: $color-success;
+    }
+  }
+
+  &.is-exception{
+    .el-progress-bar-inner{
+      background-color: $color-danger;
+    }
+
+    .el-progress-text{
+      color: $color-danger;
+    }
+  }
+}
+
+.el-progress-text{
+  font-size: $font-size-base;
+  color: #475669;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 10px;
+  line-height: 1;
+
+  & i{
+    vertical-align: middle;
+    display: block;
+  }
+}
+
+.el-progress-circle{
+  display: inline-block;
+
+  .el-progress-text{
+    position: absolute;
+    top:50%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    transform: translate(0,-50%);
+
+    & i{
+      vertical-align: middle;
+      display: inline-block;
+    }
+  }
+}
+
+.el-progress-without-text{
+  .el-progress-text{
+    display: none;
+  }
+
+  .el-progress-bar{
+    padding-right: 0;
+    margin-right: 0;
+    display: block;
+  }
+}
+
+.el-progress-text-inside{
+  .el-progress-bar{
+    margin-right: 0;
+    padding-right: 0;
+  }
+}
+
+.el-progress-bar{
+  padding-right: 50px;
+  display: inline-block;
+  vertical-align: middle;
+  width: 100%;
+  margin-right: -55px;
+  box-sizing: border-box;
+}
+
+.el-progress-bar-outer{
+  height: 6px;
+  border-radius: 100px;
+  background-color: #e5e9f2;
+  overflow: hidden;
+  position: relative;
+  vertical-align: middle;
+}
+
+.el-progress-bar-inner{
+  position: absolute;
+  left:0;
+  top:0;
+  height: 100%;
+  border-radius: 2px 0 0 2px;
+  background-color: $color-primary;
+  text-align: right;
+  border-radius: 100px;
+  line-height: 1;
+
+  &:after{
+    display: inline-block;
+    content: "";
+    height: 100%;
+    vertical-align: middle;
+  }
+}
+
+.el-progress-bar-innerText{
+  display: inline-block;
+  vertical-align: middle;
+  color: $color-white;
+  font-size: 12px;
+  margin: 0 5px;
+}
+
+@keyframes progress {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 32px 0;
+  }
+}

@@ -1,0 +1,91 @@
+@import "./mixins/_commons";
+
+.el-form{
+  @include clearfix();
+}
+
+.el-form-label-left{
+  & .el-form-item-label{
+    text-align: left;
+  }
+}
+
+.el-form-label-top{
+  & .el-form-item-label{
+    float: none;
+    display: inline-block;
+    padding: 0 0 10px 0;
+  }
+}
+
+.el-form-inline{
+  & .el-form-item{
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: top;
+  }
+}
+
+.el-form-item{
+  margin-bottom: 22px;
+  @include clearfix();
+
+  & .el-form-item{
+    margin-bottom: 0;
+
+    & .el-form-item-content{
+      margin-left: 0 !important;
+    }
+  }
+
+  & .el-button + .el-button,
+  & .el-checkbox + .el-checkbox,
+  & .el-radio + .el-radio{
+    margin-left: 10px;
+  }
+
+  &.is-required{
+    .el-form-item-label:before{
+      content:'*';
+      color: $color-danger;
+      margin-right: 4px;
+    }
+  }
+
+  &.is-error{
+    & .el-input-inner,
+    & .el-textarea-inner,
+    & .el-date-editor-editor{
+      border-color: $color-danger;
+    }
+  }
+}
+
+.el-form-item-label{
+  text-align: right;
+  vertical-align: middle;
+  float: left;
+  font-size: $font-size-base;
+  color:#5e6d82;
+  line-height: 1;
+  padding: 11px 12px 11px 0;
+  box-sizing: border-box;
+}
+
+.el-form-item-content{
+  line-height: 36px;
+  position: relative;
+  font-size: $font-size-base;
+
+  @include clearfix();
+}
+
+.el-form-item-error{
+  color: #ff4949;
+  font-size: 12px;
+  line-height: 1;
+  padding-top:4px;
+  position: absolute;
+  top:100%;
+  left: 0;
+}

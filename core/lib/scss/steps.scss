@@ -1,0 +1,213 @@
+.el-steps{
+  font-size: 0;
+
+  > :last-child .el-step-line{
+    display: none;
+  }
+
+  &.is-horizontal{
+    white-space: nowrap;
+  }
+}
+
+.el-step{
+  position: relative;
+  vertical-align: top;
+
+  &.is-horizontal{
+    display: inline-block;
+  }
+
+  &.is-vertical{
+    & .el-step-head,
+    & .el-step-main{
+      display: inline-block;
+    }
+
+    & .el-step-main{
+      padding-left: 10px;
+    }
+  }
+}
+
+.el-step-line{
+  display: inline-block;
+  position: absolute;
+  border-color: inherit;
+  background-color: #c0ccda;
+
+  &.is-icon{
+    &.is-horizontal{
+      right: 4px;
+    }
+  }
+
+  &.is-horizontal{
+    top:15px;
+    height:2px;
+    left:30px;
+    right: 0;
+  }
+
+  &.is-vertical{
+    width: 2px;
+    box-sizing: border-box;
+    top:30px;
+    bottom: 0;
+  }
+}
+
+.el-step-line-inner{
+  display: inherit;
+  border: 1px solid;
+  border-color: inherit;
+  transition: all 150ms;
+  width: 0;
+  height: 0;
+}
+
+.el-step-icon{
+  display: block;
+  line-height: 28px;
+
+  > *{
+    line-height: inherit;
+    vertical-align: middle;
+  }
+}
+
+.el-step-head{
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: transparent;
+  text-align: center;
+  line-height: 28px;
+  font-size: 28px;
+  vertical-align: top;
+  transition: all 150ms;
+
+  &.is-process{
+    color: #c0ccda;
+    border-color: #c0ccda;
+  }
+
+  &.is-wait{
+    color: #c0ccda;
+    border-color: #c0ccda;
+  }
+
+  &.is-success{
+    color: $color-success;
+    border-color: $color-success;
+  }
+
+  &.is-error{
+    color: $color-danger;
+    border-color: $color-danger;
+  }
+
+  &.is-finish{
+    color: $color-primary;
+    border-color: $color-primary;
+  }
+
+  &.is-text{
+    font-size: 14px;
+    border-width: 2px;
+    border-style: solid;
+
+    &.is-process{
+      color: #fff;
+      background-color: #c0ccda;
+      border-color:#c0ccda;
+    }
+
+    &.is-wait{
+      color: #c0ccda;
+      background-color: #fff;
+      border-color: #c0ccda;
+    }
+
+    &.is-success{
+      color: #fff;
+      background-color: $color-success;
+      border-color: $color-success;
+    }
+
+    &.is-error{
+      color: #fff;
+      background-color: $color-danger;
+      border-color: $color-danger;
+    }
+
+    &.is-finish{
+      color: #fff;
+      background-color: $color-primary;
+      border-color: $color-primary;
+    }
+  }
+}
+
+.el-step-main{
+  white-space: normal;
+  padding-right: 10px;
+  text-align: left;
+}
+
+.el-step-title{
+  font-size: 14px;
+  line-height: 32px;
+  display: inline-block;
+
+  &.is-process{
+    font-weight: 700;
+    color: #475669;
+  }
+
+  &.is-wait{
+    font-weight: normal;
+    color: #99a9bf;
+  }
+
+  &.is-success{
+    font-weight: 700;
+    color: $color-success;
+  }
+
+  &.is-error{
+    font-weight: 700;
+    color: $color-danger;
+  }
+
+  &.is-finish{
+    font-weight: 700;
+    color: $color-primary;
+  }
+}
+
+.el-step-description{
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14px;
+
+  &.is-process{
+    color: #8492A6;
+  }
+
+  &.is-wait{
+    color: #c0ccda;
+  }
+
+  &.is-success{
+    color: $color-success;
+  }
+
+  &.is-error{
+    color: $color-danger;
+  }
+
+  &.is-finish{
+    color: $color-primary;
+  }
+}

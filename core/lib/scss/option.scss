@@ -1,0 +1,39 @@
+.el-select-dropdown-item{
+  font-size: 12px;
+  padding: 8px 10px;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #475669;
+  height: 36px;
+  line-height: 1.5;
+  box-sizing: border-box;
+  cursor: pointer;
+
+  &.hover{
+    background-color: #e5e9f2;
+  }
+
+  &.selected{
+    color: $color-white;
+    background-color: $color-primary;
+
+    &.hover{
+      background-color: #1d8ce0;
+    }
+  }
+
+  & span{
+    line-height: 1.5 !important;
+  }
+
+  &.is-disabled{
+    color: $color-grey;
+    cursor: not-allowed;
+
+    &:hover{
+      background-color: $color-white;
+    }
+  }
+}

@@ -1,0 +1,27 @@
+.el-month-table{
+  font-size: 12px;
+  margin: -1px;
+
+  td{
+    text-align: center;
+    padding: 20px 3px;
+    cursor: pointer;
+
+    .cell{
+      width: 48px;
+      height: 32px;
+      display: block;
+      line-height: 32px;
+      color: $datepicker-color;
+
+      &:hover{
+        background-color: $datepicker-cell-hover-color;
+      }
+    }
+
+    &.current .cell{
+      background-color: $datepicker-active-color !important;
+      color: $color-white;
+    }
+  }
+}

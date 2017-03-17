@@ -1,0 +1,226 @@
+@import "./mixins/_commons";
+
+.el-input{
+  position: relative;
+  font-size: $font-size-base;
+
+  &.is-active{
+    .el-input-inner{
+      outline: none;
+      border-color:$input-focus-border;
+    }
+  }
+
+  &.is-disabled{
+    .el-input-inner{
+      background-color: $disabled-fill-base;
+      border-color:$disabled-border-base;
+      color:$disabled-color-base;
+      cursor: not-allowed;
+
+      @include placeholder($input-disabled-placeholder-color);
+
+    }
+  }
+
+  & .el-icon-loading{
+    animation: validating-rotating 1s linear infinite;
+  }
+}
+
+.el-input-inner{
+  display: block;
+  padding:3px 10px;
+  box-sizing: border-box;
+  width: 100%;
+  height: $input-height;
+  color:$input-color;
+  background-color: $color-white;
+  background-image: none;
+  border:$input-border;
+  border-radius: $border-radius-base;
+  transition:$border-transition-base;
+  outline: none;
+  font-size: inherit;
+
+  @include placeholder($input-placeholder-color);
+
+  &:hover{
+    border-color:$input-hover-border;
+  }
+
+  &:focus{
+    outline: none;
+    border-color:$input-focus-border;
+  }
+}
+
+.el-input-icon{
+  position: absolute;
+  width: 35px;
+  height: 100%;
+  right: 0px;
+  top:0;
+  text-align: center;
+  color:$input-icon-color;
+
+  &:after{
+    content: '';
+    height:100%;
+    width:0;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  & + .el-input-inner{
+    padding-right: 35px;
+  }
+}
+
+.el-input-large{
+  font-size: $input-large-font-size;
+
+  & .el-input-inner{
+   height: $input-large-height;
+  }
+}
+
+.el-input-small{
+  font-size:$input-small-font-size;
+
+  & .el-input-inner{
+    height:$input-small-height;
+  }
+}
+
+.el-input-mini{
+  font-size: $input-mini-font-size;
+
+  & .el-input-inner{
+    height: $input-mini-height;
+  }
+}
+
+.el-input-group{
+  display: table;
+  border-collapse: separate;
+
+  & > .el-input-inner{
+    vertical-align: middle;
+    display: table-cell;
+  }
+
+  & .el-input-inner:first-child{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  & .el-input-inner:last-child{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  & .el-input-inner:not(:first-child):not(:last-child){
+    border-radius: 0;
+  }
+}
+
+.el-input-group-append,
+.el-input-group-prepend{
+  background-color: #f9fafc;
+  color:#99a9bf;
+  vertical-align: middle;
+  display: table-cell;
+  position: relative;
+  border:$border-base;
+  border-radius: $border-radius-base;
+  padding:0 10px;
+  width: 1%;
+  white-space: nowrap;
+
+  & .el-select,
+  & .el-button{
+    display: block;
+    margin: -10px;
+  }
+
+  & .el-button,
+  & .el-select .el-input-inner,
+  & .el-select:hover .el-input-inner{
+    border-color: transparent;
+    background-color: transparent;
+    color:inherit;
+    border-top:0;
+    border-bottom:0
+  }
+
+  & .el-button,
+  & .el-input{
+    font-size: inherit;
+  }
+}
+
+.el-input-group-prepend{
+  border-right: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.el-input-group-append{
+  border-left:0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.el-textarea{
+  .el-textarea-inner{
+    display: block;
+    resize: vertical;
+    padding:8px 5px;
+    line-height: normal;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 88px;
+    font-size: $font-size-base;
+    color:$input-color;
+    background-color: $color-white;
+    background-image: none;
+    border:$input-border;
+    border-radius: $border-radius-base;
+    transition: $border-transition-base;
+
+    @include placeholder($input-placeholder-color);
+
+    &:hover{
+      border-color:$input-hover-border;
+    }
+
+    &:focus{
+      outline: none;
+      border-color:$input-focus-border
+    }
+
+  }
+  &.is-disabled{
+    & .el-textarea-inner{
+      background-color: $disabled-fill-base;
+      border-color:$disabled-border-base;
+      color:$disabled-border-base;
+      cursor: not-allowed;
+
+      @include placeholder($input-disabled-placeholder-color);
+
+    }
+  }
+
+}
+
+
+@keyframes validating-rotating {
+  0% {
+    transform: translate(0,-50%) rotateZ(0deg);
+  }
+  100% {
+    transform: translate(0,-50%) rotateZ(360deg);
+  }
+}

@@ -1,0 +1,45 @@
+<div class="portal">
+    <div class="side-bar">
+        <div class="logo">
+            <img src="../../assets/logo.png" alt="">
+            <span>{{title}}</span>
+            <span class="btn-menu"></span>
+        </div>
+        <div class="menu-bar">
+            <sys-menu :config="menuConfig" @activate="openTab"></sys-menu>
+        </div>
+    </div>
+    <div class="view-right">
+        <div class="header">
+            <sys-tab-menu :config="tabConfig"> </sys-tab-menu>
+            <div class="tool-bar">
+                <div class="tool-bar-item">
+                    <i-dropdown @command="changeCity" class="tool-bar-item">
+                        <span class="el-dropdown-link">
+                          {{currentCity}}<i class="el-icon-triangle-down" ></i>
+                        </span>
+                        <i-dropdown-menu slot="dropdown">
+                            <i-dropdown-item v-for="item in cityData" :command="item.name">{{item.name}}</i-dropdown-item>
+                        </i-dropdown-menu>
+                    </i-dropdown>
+                </div>
+                <div class="tool-bar-item set">
+                    <a class="el-icon-set"></a>
+                </div>
+                <div class="tool-bar-item notice">
+                    <a class="el-icon-notice"></a>
+                </div>
+                <div class="tool-bar-item user-info"
+                     @mouseenter="switchUserDropdown('open')"
+                     @mouseleave="switchUserDropdown('close')">
+                    <img src="../../assets/avatar.png" alt="">
+                    <i class="el-icon-triangle-down" ></i>
+                    <sys-dropdown-user :config="userDropdownConfig"/>
+                </div>
+            </div>
+        </div>
+        <keep-alive>
+            <router-view class="view-main"></router-view>
+        </keep-alive>
+    </div>
+</div>

@@ -1,0 +1,130 @@
+.el-date-range-picker{
+  min-width: 520px;
+
+  &.has-sidebar.has-time{
+    min-width: 766px;
+  }
+
+  &.has-sidebar{
+    min-width: 620px;
+  }
+
+  &.has-time{
+    min-width: 660px;
+  }
+
+  table{
+    text-layout:fixed;
+    width: 100%;
+  }
+
+  .el-picker-panel-body{
+    min-width: 513px;
+  }
+
+  .el-picker-panel-content{
+    margin: 0;
+  }
+
+}
+
+.el-date-range-picker-editor{
+  position: relative;
+  border: 1px solid #c0ccda;
+  border-radius: 4px;
+  padding: 5px 10px;
+  box-sizing: border-box;
+  height: 28px;
+  outline: none;
+  width: 100%;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-transition: border 0.3s;
+  transition: border 0.3s;
+
+  :hover{
+    border-color: #20a0ff;
+  }
+}
+
+.el-date-range-picker-header{
+  position: relative;
+  text-align: center;
+  height: 28px;
+
+  button {
+    float: left;
+  }
+
+  div {
+    font-size: 14px;
+    margin-right: 50px;
+  }
+}
+
+.el-date-range-picker-content{
+  float: left;
+  width: 50%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 16px;
+
+  &.is-left{
+    border-right: 1px solid $datepicker-inner-border-color;
+  }
+
+  &.is-right{
+    .el-date-range-picker-header{
+      button{
+        float: right;
+      }
+
+      div{
+        margin-left: 50px;
+        margin-right: 50px;
+      }
+    }
+  }
+}
+
+.el-date-range-picker-editors-wrap{
+  box-sizing: border-box;
+  display: table-cell;
+
+  &.is-right{
+    text-align: right;
+  }
+}
+
+.el-date-range-picker-time-header{
+  position: relative;
+  border-bottom: 1px solid $datepicker-inner-border-color;
+  font-size: 12px;
+  padding: 8px 5px 5px 5px;
+  display: table;
+  width: 100%;
+  box-sizing: border-box;
+
+  > .el-icon-arrow-right{
+    font-size: 20px;
+    vertical-align: middle;
+    display: table-cell;
+    color: $datepicker-icon-color;
+  }
+}
+
+.el-date-range-picker-time-picker-wrap{
+  position: relative;
+  display: table-cell;
+  padding: 0 5px;
+
+
+  .el-picker-panel{
+    position: absolute;
+    top:13px;
+    right: 0;
+    z-index:1;
+    background: #fff;
+  }
+}

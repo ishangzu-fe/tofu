@@ -1,0 +1,281 @@
+@import "./progress";
+
+.el-upload{
+  width: 100%;
+}
+
+.el-upload-input{
+  display: none;
+}
+
+.el-upload-inner{
+  display: inline-block;
+  position: relative;
+
+  & iframe{
+    position: absolute;
+    z-index: -1;
+    top:0;
+    left: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+  }
+}
+
+.el-upload-files{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  margin-bottom: 10px;
+}
+
+.el-upload-file{
+  transition:all .5s cubic-bezier(.55,0,.1,1);
+  font-size: $font-size-base;
+  color: #475669;
+  line-height: 32px;
+  position: relative;
+  box-sizing: border-box;
+  border-radius: $border-radius-base;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  position: relative;
+
+  a{
+    color: #475669;
+    transition:color .3s;
+    padding-left: 4px;
+
+    [class^="el-icon"] {
+      color: #99a9bf;
+      margin-right: 7px;
+      height: 100%;
+      line-height: inherit;
+    }
+  }
+
+  & .el-progress{
+    position: absolute;
+    bottom:-3px;
+    width: 100%;
+  }
+
+  & .el-progress-text{
+    position: absolute;
+    right:0;
+    top:-10px;
+  }
+
+  .el-progress-bar{
+    margin-right: 0;
+    padding-right: 0;
+  }
+
+  &:hover{
+    background-color: #eff2f7;
+  }
+
+  &.is-finished{
+    & a:hover{
+      color: $link-hover-color;
+      cursor: pointer;
+    }
+
+    &:hover{
+      .el-upload-btn-delete{
+        display: block;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.el-upload-tip{
+  font-size: 12px;
+  color: #8492A6;
+  margin-top: 7px;
+}
+
+.el-upload-btn-delete{
+  position: absolute;
+  right: 15px;
+  top:0;
+  font-size: 12px;
+  color: $color-primary;
+  display: none;
+}
+
+.el-dragger{
+  background-color: #f9fafc;
+  border:1px solid #c0ccda;
+  box-sizing: border-box;
+  width: 100%;
+  height: 180px;
+  border-radius: $border-radius-base;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+
+  & .el-upload-inner{
+    display: block;
+    height: 100%;
+  }
+
+  & .el-icon-upload{
+    font-size: 67px;
+    color: #99a9bf;
+    margin: 40px 0 16px;
+    line-height: 50px;
+  }
+
+  & + .el-upload-tip{
+    text-align: center;
+  }
+
+  & ~ .el-upload-files{
+    margin-top: 7px;
+    padding-top: 5px;
+    border-top:1px solid rgba(#c0ccda,.2);
+  }
+
+  &:not(.is-showCover):hover{
+    border-color: $color-primary;
+  }
+
+  &.is-dragOver{
+    background-color: rgba(32,159,255,.06);
+    border:2px dashed $color-primary;
+  }
+}
+
+.el-dragger-cover{
+  position: absolute;
+  left: 0;
+  top:0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index:10;
+  cursor: default;
+
+  &:after{
+    display: inline-block;
+    content: "";
+    height: 100%;
+    vertical-align: middle;
+  }
+
+  & img{
+    display: block;
+    height: auto;
+    margin: 0 auto;
+  }
+}
+
+.el-dragger-cover-progress{
+  display: inline-block;
+  vertical-align: middle;
+  position: static;
+  width: 243px;
+
+  & + .el-upload-inner{
+    opacity: 0;
+  }
+}
+
+.el-dragger-cover-content{
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.el-dragger-cover-interact{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(#000,.72);
+  text-align: center;
+
+  & .btn{
+    display: inline-block;
+    color: $color-white;
+    font-size: $font-size-base;
+    cursor: pointer;
+    vertical-align: middle;
+    transition: $md-fade-transition;
+    margin-top: 60px;
+
+    & i{
+      margin-top: 0;
+    }
+
+    & span{
+      opacity: 0;
+      transition: opacity .15s linear;
+    }
+
+    &:not(:first-child){
+      margin-left: 35px;
+    }
+
+    &:hover{
+      transform: translateY(-13px);
+
+      & span{
+        opacity: 1;
+      }
+    }
+
+    & i{
+      color: $color-white;
+      display: block;
+      font-size: 25px;
+      line-height: inherit;
+      margin: 0 auto 5px;
+    }
+  }
+}
+
+.el-dragger-cover-title{
+  position: absolute;
+  bottom: 0;
+  left:0;
+  background-color: $color-white;
+  height: 36px;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: normal;
+  text-align: left;
+  padding: 0 10px;
+  margin: 0;
+  line-height: 36px;
+  font-size: $font-size-base;
+  color: #475669;
+
+  & + .el-upload-inner{
+    opacity: 0;
+    position: relative;
+    z-index:1;
+  }
+}
+
+.el-dragger-text{
+  color: #99a9bf;
+  font-size: 14px;
+  text-align: center;
+
+  & em{
+    color: $color-primary;
+    font-style: normal;
+  }
+}
+

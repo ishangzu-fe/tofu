@@ -1,0 +1,73 @@
+@import "./input";
+
+.el-input-number{
+  display: block;
+  overflow: hidden;
+
+  & .el-input-inner{
+    appearance:none;
+  }
+
+  & .el-input{
+    float: left;
+    margin-right: -($input-height + 1px) *2;
+  }
+
+  &.is-disabled{
+    & .el-input-number-increase,
+    .el-input-number-decrease{
+      border-color:$disabled-border-base;
+      color:$disabled-border-base;
+
+      &:hover{
+        color: $disabled-border-base;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  &.is-large{
+    & .el-input{
+      margin-right: -($input-large-height + 1px) * 2;
+    }
+
+    & .el-input-number-increase,
+      .el-input-number-decrease{
+      line-height: $input-large-height;
+      width: $input-large-height;
+      font-size: $input-large-font-size;
+    }
+  }
+
+  &.is-small{
+    & .el-input{
+      margin-right: -($input-small-height + 1px) * 2;
+    }
+
+    & .el-input-number-increase,
+      .el-input-number-decrease{
+      line-height: $input-small-height;
+      width: $input-small-height;
+      font-size: $input-small-font-size;
+    }
+  }
+}
+
+.el-input-number-increase,
+.el-input-number-decrease{
+  height: 100%;
+  border-left: $border-base;
+  width: $input-height;
+  line-height: $input-height;
+  top:0;
+  text-align: center;
+  color:#99a9bf;
+  cursor: pointer;
+  float: left;
+  position: relative;
+
+  &:hover{
+    color:$color-primary;
+  }
+
+}

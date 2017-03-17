@@ -1,0 +1,103 @@
+@import "picker-panel";
+
+.el-date-picker{
+  min-width: 254px;
+  max-width: 254px;
+
+  &.has-sidebar.has-time{
+    min-width: 434px;
+  }
+
+  &.has-sidebar {
+    min-width: 370px;
+  }
+
+  &.has-time{
+    min-width: 324px;
+  }
+
+  .el-picker-panel-content{
+    min-width: 224px;
+  }
+
+  table{
+    table-layout: fixed;
+    width: 100%;
+  }
+}
+
+.el-date-picker-editor{
+
+  position: relative;
+  border:1px solid #c0ccda;
+  border-radius: $border-radius-base;
+  padding: 5px 10px;
+  box-sizing:border-box;
+  height: 28px;
+  outline: none;
+  appearance:none;
+  transition:border 0.3s;
+  width: 100%;
+
+  &:hover{
+    border-color: $datepicker-text-hover-color;
+  }
+}
+
+.el-date-picker-editor-wrap{
+  position: relative;
+  display: table-cell;
+  padding: 0 5px;
+}
+
+.el-date-picker-time-header{
+  position: relative;
+  border-bottom: 1px solid $datepicker-inner-border-color;
+  font-size: 12px;
+  padding: 8px 5px 5px 5px;
+  display: table;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.el-date-picker-header{
+  margin: 12px;
+  text-align: center;
+}
+
+.el-date-picker-header-label{
+  font-size: $font-size-base;
+  padding: 0 5px;
+  line-height: 22px;
+  text-align: center;
+  cursor: pointer;
+
+  &:hover{
+    color:$datepicker-text-hover-color;
+  }
+
+  &.active{
+    color:$datepicker-active-color;
+  }
+}
+
+.el-date-picker-prev-btn{
+  float: left;
+}
+
+.el-date-picker-next-btn{
+  float: right;
+}
+
+.el-date-picker-time-wrap{
+  padding: 10px;
+  text-align: center;
+}
+
+.el-date-picker-time-label{
+  float: left;
+  cursor: pointer;
+  line-height: 30px;
+  margin-left: 10px;
+}
+

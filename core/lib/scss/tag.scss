@@ -1,0 +1,54 @@
+@mixin tag-type($type,$background-color,$border-color,$color){
+  .el-tag-#{$type}{
+    background-color: $background-color;
+    border-color: $border-color;
+    color:$color;
+
+    & .el-tag-close:hover{
+      background-color: $color;
+      color: $color-white;
+    }
+  }
+}
+
+.el-tag{
+  background-color: $tag-fill;
+  display: inline-block;
+  padding: $tag-padding;
+  height: 22px;
+  line-height: 22px;
+  font-size: $tag-font-size;
+  color:$tag-color;
+  border-radius: $tag-border-radius;
+  border:1px solid $tag-border;
+
+  & .el-icon-close{
+    border-radius: 50%;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    font-size: 12px;
+    transform: scale(.75,.75);
+    height: 18px;
+    width: 18px;
+    line-height: 18px;
+    vertical-align: middle;
+    top:-1px;
+    right: -2px;
+
+    &:hover{
+      background-color: $color-white;
+      color:$tag-fill;
+    }
+  }
+}
+
+@include tag-type('gray',$tag-gray-fill,$tag-gray-border,$tag-gray-color);
+
+@include tag-type('primary',$tag-primary-fill,$tag-primary-border,$tag-primary-color);
+
+@include tag-type('success',$tag-success-fill,$tag-success-border,$tag-success-color);
+
+@include tag-type('warning',$tag-warning-fill,$tag-warning-border,$tag-warning-color);
+
+@include tag-type('danger',$tag-danger-fill,$tag-danger-border,$tag-danger-color);
