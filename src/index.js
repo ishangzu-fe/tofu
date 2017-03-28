@@ -35,11 +35,9 @@ import Popover from './components/popover';
 import Tabbar from './components/tabbar';
 import IMenu from './components/menubar';
 
-// import { Http, DateFormatter } from 'tofu-lib';
-
 import './scss/index.scss';
 
-export default function install (Vue) {
+module.exports = function (Vue) {
     Vue.component('i-alert', Alert);
     Vue.component('i-autocomplete', Autocomplete);
     Vue.component('i-button', Button);
@@ -98,13 +96,4 @@ export default function install (Vue) {
 
     Loading.install(Vue);
     Editor.install(Vue);
-
-    // 注册工具库
-    // Vue.prototype.$http = new Http();
-    // DateFormatter();
-}
-
-export {
-    Tabbar
-    // Http
 };

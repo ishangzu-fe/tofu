@@ -1,5 +1,4 @@
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 function resolve(dir) {
     return path.posix.join(__dirname, '..', dir)
@@ -41,13 +40,6 @@ module.exports = function (config) {
                         }
                     }
                 },
-                // {
-                //   test: /\.(css|scss)$/,
-                //   use: ExtractTextPlugin.extract({
-                //       fallback: 'style-loader',
-                //       use: ['css-loader', 'sass-loader'] 
-                //   })
-                // },
                 {
                     test: /\.(css|scss)$/,
                     use: ['style-loader', 'css-loader', 'sass-loader']
@@ -55,7 +47,7 @@ module.exports = function (config) {
                 {
                     test: /\.js(x)*$/,
                     loader: 'babel-loader',
-                    include: [resolve('node_modules/i-tofu'), resolve('src')]
+                    exclude: /node_modules/
                 },
                 {
                     test: /\.html$/,

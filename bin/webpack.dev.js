@@ -7,7 +7,7 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 
 // 添加热重载
 Object.keys(baseWebpackConfig.entry).forEach((name) => {
-    baseWebpackConfig.entry[name] = ['webpack-hot-middleware/client'].concat(baseWebpackConfig.entry[name])
+    baseWebpackConfig.entry[name] = ['./bin/hot-reload'].concat(baseWebpackConfig.entry[name])
 })
 
 module.exports = merge(baseWebpackConfig, {
