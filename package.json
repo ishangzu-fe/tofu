@@ -1,13 +1,13 @@
 {
   "name": "i-tofu",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "UI Library.",
   "author": "vincent",
   "main": "dist/app.js",
   "bugs": {
     "url": "https://github.com/ishangzu-fe/issues",
     "email": "frontend@ishangzu.com"
-  },
+  }, 
   "scripts": {
     "dev": "node bin/server.js",
     "build": "node bin/build.js"

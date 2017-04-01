@@ -37,7 +37,7 @@ import IMenu from './components/menubar';
 
 import './scss/index.scss';
 
-module.exports = function (Vue) {
+const install = (Vue) => {
     Vue.component('i-alert', Alert);
     Vue.component('i-autocomplete', Autocomplete);
     Vue.component('i-button', Button);
@@ -97,3 +97,8 @@ module.exports = function (Vue) {
     Loading.install(Vue);
     Editor.install(Vue);
 };
+
+module.exports = {
+    install,
+    TabManager: Tabbar.manager
+}

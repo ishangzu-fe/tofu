@@ -54,20 +54,12 @@ module.exports = function (config) {
                     loader: 'vue-html-loader'
                 },
                 {
-                    test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+                    test: /\.(png|jpe?g|gif|svg|woff2?|eot|ttf|otf)(\?.*)?$/,
                     loader: 'url-loader',
-                    query: {
-                        limit: 10000,
-                        name: getAssetsPath('img/[name].[hash:7].[ext]', config)
-                    }
-                },
-                {
-                    test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-                    loader: 'url-loader',
-                    query: {
-                        limit: 10000,
-                        name: getAssetsPath('fonts/[name].[hash:7].[ext]', config)
-                    }
+                    // query: {
+                    //     limit: 10000,
+                    //     name: getAssetsPath('img/[name].[hash:7].[ext]', config)
+                    // }
                 }
             ]
         }

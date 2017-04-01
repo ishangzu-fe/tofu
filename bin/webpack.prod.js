@@ -23,11 +23,11 @@ const webpackConfig = merge(baseWebpackConfig, {
             'process.env': env
         }),
         new webpack.optimize.OccurrenceOrderPlugin(true),
-        new CopyWebpackPlugin([{
-            from: path.resolve(process.cwd(), 'static'),
-            to: config.assetsSubDirectory,
-            ignore: ['.*']
-        }])
+        // new CopyWebpackPlugin([{
+        //     from: path.resolve(process.cwd(), 'static'),
+        //     to: config.assetsSubDirectory,
+        //     ignore: ['.*']
+        // }])
     ]
 })
 
