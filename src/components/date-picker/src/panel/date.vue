@@ -1,61 +1,77 @@
 <template>
-    <transition name="md-fade-bottom" @after-leave="$emit('dodestroy')">
-        <div v-show="visible"
-             :style="{ width: width + 'px'}"
-             class="el-picker-panel el-date-picker"
-             :class="{'has-sidebar': $slots.sidebar || shortcuts,'has-time': showTime}">
+    <transition name="el-zoom-in-top" @after-leave="$emit('dodestroy')">
+        <div
+                v-show="visible"
+                :style="{
+        width: width + 'px'
+      }"
+                class="el-picker-panel el-date-picker"
+                :class="[{
+        'has-sidebar': $slots.sidebar || shortcuts,
+        'has-time': showTime
+      }, popperClass]">
             <div class="el-picker-panel-body-wrapper">
                 <slot name="sidebar" class="el-picker-panel-sidebar"></slot>
                 <div class="el-picker-panel-sidebar" v-if="shortcuts">
-                    <button type="button"
+                    <button
+                            type="button"
                             class="el-picker-panel-shortcut"
                             v-for="shortcut in shortcuts"
                             @click="handleShortcutClick(shortcut)">{{ shortcut.text }}</button>
                 </div>
                 <div class="el-picker-panel-body">
                     <div class="el-date-picker-time-header" v-if="showTime">
+            <span class="el-date-picker-editor-wrap">
+              <el-input
+                      :placeholder="t('el.datepicker.selectDate')"
+                      :value="visibleDate"
+                      size="small"
+                      @change.native="visibleDate = $event.target.value" />
+            </span>
                         <span class="el-date-picker-editor-wrap">
-                            <input :placehoder="$t('el.datepicker.selectDate')"
-                                    type="text"
-                                    v-model.lazy="visibleDate"
-                                    class="el-date-picker-editor">
-                        </span>
-                        <span class="el-date-picker-editor-wrap">
-                            <input ref="input"
-                                   @focus="timePickerVisible = !timePickerVisible"
-                                   v-model.lazy="visibleTime"
-                                   :placehoder="$t('el.datepicker.selectTime')"
-                                   type="text"
-                                   class="el-date-picker-editor">
-                            <time-picker ref="timepicker"
-                                         :date="date"
-                                         :picker-width="pickerWidth"
-                                         @pick="handleTimePick"
-                                         :visible="timePickerVisible">
-                            </time-picker>
-                        </span>
+              <el-input
+                      ref="input"
+                      @focus="timePickerVisible = !timePickerVisible"
+                      :placeholder="t('el.datepicker.selectTime')"
+                      :value="visibleTime"
+                      size="small"
+                      @change.native="visibleTime = $event.target.value" />
+              <time-picker
+                      ref="timepicker"
+                      :date="date"
+                      :picker-width="pickerWidth"
+                      @pick="handleTimePick"
+                      :visible="timePickerVisible">
+              </time-picker>
+            </span>
                     </div>
                     <div class="el-date-picker-header" v-show="currentView !== 'time'">
-                        <button type="button"
+                        <button
+                                type="button"
                                 @click="prevYear"
-                                class="el-picker-panel-icon-btn el-date-picker-prev-btn el-icon-d-arrow-left">
+                                class="el-picker-panel-icon-btn el-date-picker__prev-btn el-icon-d-arrow-left">
                         </button>
-                        <button type="button"
+                        <button
+                                type="button"
                                 @click="prevMonth"
                                 v-show="currentView === 'date'"
-                                class="el-picker-panel-icon-btn el-date-picker-prev-btn el-icon-arrow-left">
+                                class="el-picker-panel-icon-btn el-date-picker__prev-btn el-icon-arrow-left">
                         </button>
-                        <span @click="showYearPicker" class="el-date-picker-header-label">{{ yearLabel }}</span>
-                        <span @click="showMonthPicker"
-                              v-show="currentView === 'date'"
-                              class="el-date-picker-header-label"
-                              :class="{ active: currentView === 'month' }">{{$t(`el.datepicker.month${ month + 1 }`)}}
-                        </span>
-                        <button type="button"
+                        <span
+                                @click="showYearPicker"
+                                class="el-date-picker-header-label">{{ yearLabel }}</span>
+                        <span
+                                @click="showMonthPicker"
+                                v-show="currentView === 'date'"
+                                class="el-date-picker-header-label"
+                                :class="{ active: currentView === 'month' }">{{$t(`el.datepicker.month${ month + 1 }`)}}</span>
+                        <button
+                                type="button"
                                 @click="nextYear"
                                 class="el-picker-panel-icon-btn el-date-picker-next-btn el-icon-d-arrow-right">
                         </button>
-                        <button type="button"
+                        <button
+                                type="button"
                                 @click="nextMonth"
                                 v-show="currentView === 'date'"
                                 class="el-picker-panel-icon-btn el-date-picker-next-btn el-icon-arrow-right">
@@ -63,34 +79,45 @@
                     </div>
 
                     <div class="el-picker-panel-content">
-                        <date-table v-show="currentView === 'date'"
-                                    @pick="handleDatePick"
-                                    :year="year"
-                                    :month="month"
-                                    :date="date"
-                                    :value="value"
-                                    :week="week"
-                                    :selection-mode="selectionMode"
-                                    :disabled-date="disabledDate">
+                        <date-table
+                                v-show="currentView === 'date'"
+                                @pick="handleDatePick"
+                                :year="year"
+                                :month="month"
+                                :date="date"
+                                :week="week"
+                                :selection-mode="selectionMode"
+                                :first-day-of-week="firstDayOfWeek"
+                                :disabled-date="disabledDate">
                         </date-table>
-                        <year-table ref="yearTable"
-                                    :year="year"
-                                    v-show="currentView === 'year'"
-                                    @pick="handleYearPick">
+                        <year-table
+                                ref="yearTable"
+                                :year="year"
+                                :date="date"
+                                v-show="currentView === 'year'"
+                                @pick="handleYearPick"
+                                :disabled-date="disabledDate">
                         </year-table>
-                        <month-table :month="month"
-                                     v-show="currentView === 'month'"
-                                     @pick="handleMonthPick">
+                        <month-table
+                                :month="month"
+                                :date="date"
+                                v-show="currentView === 'month'"
+                                @pick="handleMonthPick"
+                                :disabled-date="disabledDate">
                         </month-table>
                     </div>
                 </div>
             </div>
 
-            <div class="el-picker-panel-footer" v-show="footerVisible && currentView === 'date'">
-                <a href="JavaScript:"
-                   class="el-picker-panel-link-btn"
-                   @click="changeToNow">{{ $t('el.datepicker.now') }}</a>
-                <button type="button"
+            <div
+                    class="el-picker-panel-footer"
+                    v-show="footerVisible && currentView === 'date'">
+                <a
+                        href="JavaScript:"
+                        class="el-picker-panel-link-btn"
+                        @click="changeToNow">{{ $t('el.datepicker.now') }}</a>
+                <button
+                        type="button"
                         class="el-picker-panel-btn"
                         @click="confirm">{{ $t('el.datepicker.confirm') }}</button>
             </div>
@@ -99,8 +126,13 @@
 </template>
 
 <script type="text/babel">
-    import { formatDate, parseDate } from '../util';
+    import { formatDate, parseDate, getWeekNumber } from '../util';
     import Locale from '../../../../mixins/locale';
+    import TimePicker from './time';
+    import YearTable from '../basic/year-table';
+    import MonthTable from '../basic/month-table';
+    import DateTable from '../basic/date-table';
+    import ElInput from '../../../input';
 
     export default {
         mixins: [Locale],
@@ -110,7 +142,7 @@
                 /* istanbul ignore if */
                 if (!val) return;
                 this.$nextTick(_ => {
-                    const inputElm = this.$refs.input;
+                    const inputElm = this.$refs.input.$el;
                     if (inputElm) {
                         this.pickerWidth = inputElm.getBoundingClientRect().width + 10;
                     }
@@ -118,8 +150,9 @@
             },
 
             value(newVal) {
-                if (newVal instanceof Date) {
-
+                if (!newVal) return;
+                newVal = new Date(newVal);
+                if (!isNaN(newVal)) {
                     if (typeof this.disabledDate === 'function' &&
                             this.disabledDate(new Date(newVal))) {
                         return;
@@ -141,23 +174,23 @@
                     if (this.currentView !== 'year' || this.currentView !== 'month') {
                         this.currentView = 'month';
                     }
+                } else if (newVal === 'week') {
+                    this.week = getWeekNumber(this.date);
                 }
             },
 
             date(newVal) {
-                /* istanbul ignore next */
-                if (!this.year) {
-                    this.year = newVal.getFullYear();
-                    this.month = newVal.getMonth();
-                }
+                this.year = newVal.getFullYear();
+                this.month = newVal.getMonth();
             }
         },
 
         methods: {
-            handleClear(){
+            handleClear() {
                 this.date = new Date();
-                this.$emit('pick','')
+                this.$emit('pick');
             },
+
             resetDate() {
                 this.date = new Date(this.date);
             },
@@ -263,14 +296,8 @@
                     this.date.setMonth(value.getMonth());
                     this.date.setDate(value.getDate());
                 } else if (this.selectionMode === 'week') {
-                    let date = formatDate(value.date, this.format || 'yyyywWW');
-                    const week = this.week = value.week;
-
-                    date = /WW/.test(date)
-                            ? date.replace(/WW/, week < 10 ? '0' + week : week)
-                            : date.replace(/W/, week);
-
-                    this.$emit('pick', date);
+                    this.week = value.week;
+                    this.$emit('pick', value.date);
                 }
 
                 this.resetDate();
@@ -317,17 +344,10 @@
         },
 
         components: {
-            TimePicker: require('./time'),
-            YearTable: require('../basic/year-table'),
-            MonthTable: require('../basic/month-table'),
-            DateTable: require('../basic/date-table')
+            TimePicker, YearTable, MonthTable, DateTable, ElInput
         },
 
         mounted() {
-            if (this.selectionMode === 'month') {
-                this.currentView = 'month';
-            }
-
             if (this.date && !this.year) {
                 this.year = this.date.getFullYear();
                 this.month = this.date.getMonth();
@@ -336,6 +356,7 @@
 
         data() {
             return {
+                popperClass: '',
                 pickerWidth: 0,
                 date: new Date(),
                 value: '',
@@ -345,6 +366,7 @@
                 visible: false,
                 currentView: 'date',
                 disabledDate: '',
+                firstDayOfWeek: 7,
                 year: null,
                 month: null,
                 week: null,
@@ -402,7 +424,10 @@
                 const yearTranslation = this.$t('el.datepicker.year');
                 if (this.currentView === 'year') {
                     const startYear = Math.floor(year / 10) * 10;
-                    return startYear + ' ' + yearTranslation + '-' + (startYear + 9) + ' ' + yearTranslation;
+                    if (yearTranslation) {
+                        return startYear + ' ' + yearTranslation + ' - ' + (startYear + 9) + ' ' + yearTranslation;
+                    }
+                    return startYear + ' - ' + (startYear + 9);
                 }
                 return this.year + ' ' + yearTranslation;
             }

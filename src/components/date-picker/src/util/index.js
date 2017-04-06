@@ -8,10 +8,18 @@ const newArray = function(start, end) {
     return result;
 };
 
+export const equalDate = function(dateA, dateB) {
+    return dateA === dateB || new Date(dateA).getTime() === new Date(dateB).getTime();
+};
+
 export const toDate = function(date) {
-    date = new Date(date);
-    if (isNaN(date.getTime())) return null;
-    return date;
+    return isDate(date) ? new Date(date) : null;
+};
+
+export const isDate = function(date) {
+    if (date === null || date === undefined) return false;
+    if (isNaN(new Date(date).getTime())) return false;
+    return true;
 };
 
 export const formatDate = function(date, format) {
@@ -133,11 +141,10 @@ export const getRangeHours = function(ranges) {
     return hours;
 };
 
-export const limitRange = function(date, ranges) {
+export const limitRange = function(date, ranges, format = 'yyyy-MM-dd HH:mm:ss') {
     if (!ranges || !ranges.length) return date;
 
     const len = ranges.length;
-    const format = 'HH:mm:ss';
 
     date = dateUtil.parse(dateUtil.format(date, format), format);
     for (let i = 0; i < len; i++) {
