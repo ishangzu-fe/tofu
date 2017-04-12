@@ -26,7 +26,8 @@ module.exports = function (config) {
             extensions: ['.js', '.vue', '.json'],
             alias: {
                 'vue$': 'vue/dist/vue.common.js',
-                '@': resolve('src')
+                '@': resolve('src'),
+                'dist': resolve('dist')
             }
         },
         module: {

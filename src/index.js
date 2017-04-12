@@ -34,6 +34,9 @@ import Popover from './components/popover';
 
 import Tabbar from './components/tabbar';
 import IMenu from './components/menubar';
+import NewTabbar from './components/new-tabbar';
+
+import Draggable from './directives/drag/';
 
 import './scss/index.scss';
 
@@ -94,11 +97,13 @@ const install = (Vue) => {
     Vue.prototype.$prompt = MessageBox.prompt;
     Vue.prototype.$loading = LoadingService;
 
+    Draggable(Vue); // 注册 drag 指令
     Loading.install(Vue);
     Editor.install(Vue);
 };
 
 module.exports = {
     install,
-    TabManager: Tabbar.manager
+    TabManager: Tabbar.manager,
+    Tabbar: NewTabbar
 }

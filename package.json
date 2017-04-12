@@ -7,7 +7,7 @@
   "bugs": {
     "url": "https://github.com/ishangzu-fe/issues",
     "email": "frontend@ishangzu.com"
-  }, 
+  },
   "scripts": {
     "dev": "node bin/server.js",
     "build": "node bin/build.js"
