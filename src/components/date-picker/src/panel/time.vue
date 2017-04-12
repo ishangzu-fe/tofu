@@ -1,23 +1,28 @@
 <template>
-    <transition name="md-fade-bottom" @after-leave="$emit('dodestroy')">
-        <div v-show="currentVisible"
-             :style="{width: width + 'px'}"
-             class="el-time-panel">
-            <div class="el-time-panel-content">
-                <time-spinner ref="spinner"
-                              @change="handleChange"
-                              :show-seconds="showSeconds"
-                              @select-range="setSelectionRange"
-                              :hours="hours"
-                              :minutes="minutes"
-                              :seconds="seconds">
+    <transition name="el-zoom-in-top" @after-leave="$emit('dodestroy')">
+        <div
+                v-show="currentVisible"
+                :style="{width: width + 'px'}"
+                class="el-time-panel"
+                :class="popperClass">
+            <div class="el-time-panel-content" :class="{ 'has-seconds': showSeconds }">
+                <time-spinner
+                        ref="spinner"
+                        @change="handleChange"
+                        :show-seconds="showSeconds"
+                        @select-range="setSelectionRange"
+                        :hours="hours"
+                        :minutes="minutes"
+                        :seconds="seconds">
                 </time-spinner>
             </div>
             <div class="el-time-panel-footer">
-                <button type="button"
+                <button
+                        type="button"
                         class="el-time-panel-btn cancel"
                         @click="handleCancel">{{ $t('el.datepicker.cancel') }}</button>
-                <button type="button"
+                <button
+                        type="button"
                         class="el-time-panel-btn confirm"
                         @click="handleConfirm()">{{ $t('el.datepicker.confirm') }}</button>
             </div>
@@ -68,6 +73,7 @@
                     minutes: date.getMinutes(),
                     seconds: date.getSeconds()
                 });
+                this.$nextTick(_ => this.ajustScrollTop());
             },
 
             selectableRange(val) {
@@ -77,6 +83,7 @@
 
         data() {
             return {
+                popperClass: '',
                 format: 'HH:mm:ss',
                 value: '',
                 hours: 0,
@@ -96,9 +103,10 @@
         },
 
         methods: {
-            handleClear(){
-                this.$emit('pick','')
+            handleClear() {
+                this.$emit('pick');
             },
+
             handleCancel() {
                 this.$emit('pick');
             },
@@ -126,7 +134,7 @@
 
             handleConfirm(visible = false, first) {
                 if (first) return;
-                const date = new Date(limitRange(this.currentDate, this.selectableRange));
+                const date = new Date(limitRange(this.currentDate, this.selectableRange, 'HH:mm:ss'));
                 this.$emit('pick', date, visible, first);
             },
 

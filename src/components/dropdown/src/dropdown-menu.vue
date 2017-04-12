@@ -29,7 +29,7 @@
             '$parent.menuAlign':{
                 immediate:true,
                 handler(val){
-                    this.currentPlacement = `bottom=${val}`;
+                    this.currentPlacement = `bottom-${val}`;
                 }
             }
         }
