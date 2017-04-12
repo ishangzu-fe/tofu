@@ -18,6 +18,7 @@ class TabManager {
     constructor () {
         this.eventBus = new Vue()
         this._options = {}
+        this.cache = '' // 缓存的实例字符串
 
         this.eventBus.$on('tabbar-init', this.init.bind(this))
     }
@@ -34,10 +35,22 @@ class TabManager {
      * 通过 Vue 的 $on 方法来进行通讯
      * @param {Object} eventHandlerObject 
      */
-    on (eventHandlerObject) {
-        for (let eventName of Object.keys(eventHandlerObject)) {
-            this.eventBus.$on(eventName, eventHandlerObject[eventName])
+    on () {
+        let argLength = arguments.length
+        if (argLength) {
+            if (typeof arguments[0] === 'object') {
+                for (let eventName of Object.keys(arguments[0])) {
+                    this.eventBus.$on(eventName, arguments[0][eventName])
+                }
+            } else if (typeof arguments[0] === 'string') {
+                this.eventBus.$on(arguments[0], arguments[1])
+            } else {
+                return false
+            }
+        } else {
+            return false
         }
+
     }
 
     /**

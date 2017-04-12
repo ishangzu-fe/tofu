@@ -60,7 +60,7 @@
                 computedId: 0, // 用于计算 tab 的 id
                 tabs: [],
                 tabMap: null, // tab 与 id 的映射
-                pageMap: null, // 页面实例的映射
+                pageCache: [], // 需要缓存的名字的数组，会被暴露出去
                 activeId: null,
                 tabAmount: null, // 计算出的能生成的 tab 的数量
                 tabWidth: null, // 计算出的 tab 的宽度
@@ -104,27 +104,6 @@
             // 检测路由的改变
             // tabbar 中会造成路由改变的情况： 1.生成tab 2.激活tab
             '$route' (newRoute, oldRoute) {
-                // 判断是否需要销毁页面实例
-                const matchedRoutes = oldRoute.matched
-                const matchedRoute = matchedRoutes[matchedRoutes.length - 1]
-                const pageName =  matchedRoute.components.default.name
-                if (this.destroyRoute) {
-                    const pageInstance = matchedRoute.instances.default
-                    if (pageInstance && !pageInstance.$data._notBindTab) {
-                        pageInstance.$destroy()
-                        if (this.pageMap.hasOwnProperty(pageName)) {
-                            delete this.pageMap[pageName]
-                        }
-                    }
-                    this.destroyRoute = null
-                } else {
-                    // 路由发生变化时且不是由于关闭 Tab 所致
-                    // 则查看 map 中是否存在页面实例，没有则记录
-                    if (!this.pageMap.hasOwnProperty(pageName)) {
-                        this.pageMap[pageName] = matchedRoute.instances.default
-                    }
-                }
-
                 const path = newRoute.path
                 const activeTab = this.tabMap.get(this.activeId)
                 // 排除重复激活的情况
@@ -146,7 +125,6 @@
 
                 // 初始化
                 this.tabMap = new Map()
-                this.pageMap = {}
                 this.computeDemension()
 
                 if (options.mode) this.mode = options.mode
@@ -209,8 +187,17 @@
                     // 将 tab 与页面实例绑定
                     const matchedRoutes = this.$router.currentRoute.matched
                     const matchedRoute = matchedRoutes[matchedRoutes.length - 1]
-                    const pageName = matchedRoute.components.default.name
+                    const matchedComponent = matchedRoute.components.default
+                    const pageName = matchedComponent.name
+                    const pageData = matchedComponent.data && matchedComponent.data()
+                    if (pageData) {
+                        tab.notBindTab = pageData._notBindTab
+                    }
                     tab.pageName = pageName
+                    if (this.pageCache.indexOf(pageName) === -1) {
+                        this.pageCache.push(pageName)
+                    }
+                    TabManager['cache'] = this.pageCache.join(',')
                 }
 
                 // 生成 id
@@ -302,18 +289,12 @@
                 let destroyedTab = this.tabs.splice(tabIdx, 1)[0] // 移除指定 tab
                 this.reorderTabs()
 
-                // 如果使用 vue-router，判断是否需要在此销毁实例
+                // 处理缓存
                 if (this.useRouter) {
-                    // 如果关闭当前激活的 tab，则 route 的 watcher 可以检测到变化，就交给它执行
-                    if (tabId === this.activeId) {
-                        this.destroyRoute = destroyedTab.path
-                    } else {
-                        let pageInstance = this.pageMap[destroyedTab.pageName]
-                        if (pageInstance && !pageInstance.$data._notBindTab) {
-                            pageInstance.$destroy()
-                            delete this.pageMap[destroyedTab.pageName]
-                        }
-                    } 
+                    if (!destroyedTab.notBindTab) {
+                        this.pageCache.splice(this.pageCache.indexOf(destroyedTab.pageName), 1)
+                        TabManager['cache'] = this.pageCache.join(',')
+                    }
                 }
 
                 if (tabId === this.activeId) {
@@ -413,6 +394,7 @@
              */
             syncToStorage () {
                 sessionStorage.setItem('tabData', JSON.stringify({
+                    pageCache: this.pageCache, // 缓存的页面数组
                     computedId: this.computedId, // 用于生成 id，保证恢复后生成的 id 保持唯一性
                     tabs: this.tabs,
                     activeId: this.activeId
@@ -429,16 +411,15 @@
                 data.tabs.forEach(tab => {
                     if (this.useRouter && this.$router) {
                         this.$router.push(tab.path)
-                        // 将 tab 与页面实例绑定
-                        const matchedRoutes = this.$router.currentRoute.matched
-                        const matchedRoute = matchedRoutes[matchedRoutes.length - 1]
-                        const pageName = matchedRoute.components.default.name
-                        tab.pageName = pageName
                     }
 
                     // 添加映射
                     this.tabMap.set(tab.id, tab)
                 })
+
+                // 恢复页面缓存
+                this.pageCache = data.pageCache ? data.pageCache : []
+                TabManager['cache'] = this.pageCache.join(',')
 
                 // 恢复激活状态
                 this.$nextTick(() => {
