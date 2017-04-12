@@ -66,6 +66,7 @@
                 tabWidth: null, // 计算出的 tab 的宽度
                 movingTabId: null, // 当前拖拽的目标 tab 的 id
                 hasTabMoving: false, // 控制 tab 是否设置过渡
+                destroyRoute: null, // 用于通知 route 的 watcher 销毁页面实例
 
                 showStore: false // 控制面板的展示
             }
@@ -103,6 +104,27 @@
             // 检测路由的改变
             // tabbar 中会造成路由改变的情况： 1.生成tab 2.激活tab
             '$route' (newRoute, oldRoute) {
+                // 判断是否需要销毁页面实例
+                const matchedRoutes = oldRoute.matched
+                const matchedRoute = matchedRoutes[matchedRoutes.length - 1]
+                const pageName =  matchedRoute.components.default.name
+                if (this.destroyRoute) {
+                    const pageInstance = matchedRoute.instances.default
+                    if (pageInstance && !pageInstance.$data._notBindTab) {
+                        pageInstance.$destroy()
+                        if (this.pageMap.hasOwnProperty(pageName)) {
+                            delete this.pageMap[pageName]
+                        }
+                    }
+                    this.destroyRoute = null
+                } else {
+                    // 路由发生变化时且不是由于关闭 Tab 所致
+                    // 则查看 map 中是否存在页面实例，没有则记录
+                    if (!this.pageMap.hasOwnProperty(pageName)) {
+                        this.pageMap[pageName] = matchedRoute.instances.default
+                    }
+                }
+
                 const path = newRoute.path
                 const activeTab = this.tabMap.get(this.activeId)
                 // 排除重复激活的情况
@@ -184,13 +206,10 @@
 
                     if (isExists) return // 如果已经存在 Tab，则仅仅激活路由，保证 tab 与路由的映射唯一性
 
-                    // 绑定 tab 与页面实例
+                    // 将 tab 与页面实例绑定
                     const matchedRoutes = this.$router.currentRoute.matched
                     const matchedRoute = matchedRoutes[matchedRoutes.length - 1]
                     const pageName = matchedRoute.components.default.name
-                    if (!this.pageMap.hasOwnProperty(pageName)) {
-                        this.pageMap[pageName] = matchedRoute.instances.default
-                    }
                     tab.pageName = pageName
                 }
 
@@ -283,22 +302,26 @@
                 let destroyedTab = this.tabs.splice(tabIdx, 1)[0] // 移除指定 tab
                 this.reorderTabs()
 
+                // 如果使用 vue-router，判断是否需要在此销毁实例
+                if (this.useRouter) {
+                    // 如果关闭当前激活的 tab，则 route 的 watcher 可以检测到变化，就交给它执行
+                    if (tabId === this.activeId) {
+                        this.destroyRoute = destroyedTab.path
+                    } else {
+                        let pageInstance = this.pageMap[destroyedTab.pageName]
+                        if (pageInstance && !pageInstance.$data._notBindTab) {
+                            pageInstance.$destroy()
+                            delete this.pageMap[destroyedTab.pageName]
+                        }
+                    } 
+                }
+
                 if (tabId === this.activeId) {
                     // 激活相邻 tab
                     if (tabIdx !== 0) {
-                        this.activeId = this.tabs[tabIdx - 1].id
+                        this.activateTab(this.tabs[tabIdx - 1].id)
                     } else if (this.tabs.length) { // 移除 tab 后还有其他 tab
-                        this.activeId = this.tabs[tabIdx].id
-                    }
-                }
-
-                // 如果使用 vue-router 则销毁对应页面的实例
-                if (this.useRouter) {
-                    let pageInstance = this.pageMap[destroyedTab.pageName]
-
-                    // 编写页面时，可以通过设置 _notBindTab 为 true 来阻止销毁实例的行为
-                    if (pageInstance && !pageInstance.$data._notBindTab) {
-                        pageInstance.$destroy()
+                        this.activateTab(this.tabs[tabIdx].id)
                     }
                 }
 
@@ -406,13 +429,10 @@
                 data.tabs.forEach(tab => {
                     if (this.useRouter && this.$router) {
                         this.$router.push(tab.path)
-                        // 绑定 tab 与页面实例
+                        // 将 tab 与页面实例绑定
                         const matchedRoutes = this.$router.currentRoute.matched
                         const matchedRoute = matchedRoutes[matchedRoutes.length - 1]
                         const pageName = matchedRoute.components.default.name
-                        if (!this.pageMap.hasOwnProperty(pageName)) {
-                            this.pageMap[pageName] = matchedRoute.instances.default
-                        }
                         tab.pageName = pageName
                     }
 
@@ -589,7 +609,7 @@
             width: $store-width;
 
             position: absolute;
-            right: $store-button-width / 2;
+            right: $store-button-width / 2 - $store-width;
             top: 75%;
             z-index: 2;
 

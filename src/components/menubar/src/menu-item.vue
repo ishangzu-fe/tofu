@@ -70,7 +70,7 @@
             width: 16px;
             height: 16px;
 
-            background: url('/static/triangle_down.svg') no-repeat;
+            background: url('../../../assets/triangle_down.svg') no-repeat;
             background-position: center;
             background-size: 8px 8px;
 

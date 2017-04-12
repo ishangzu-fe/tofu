@@ -18,7 +18,7 @@
                 :style="{transform: `translateX(${-labelTranslate}px)`}"
                 @mouseenter.stop="onLabelOver"
                 @mouseleave.stop="onLabelLeave">
-                {{tab.id}}
+                {{tab.label}}
             </span>
         </span>
         <span 
@@ -84,9 +84,7 @@
             * 如果使用了路由，则会激活路由
             */
             activate () {
-                if (this.activeId !== this.tab.id) {
-                    this.$emit('tab-activate', this.tab.id)
-                }
+                this.$emit('tab-activate', this.tab.id)
             },
 
             destroy () {

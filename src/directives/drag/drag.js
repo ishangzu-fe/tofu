@@ -135,7 +135,7 @@ function onMousedown (event, cb) {
 
             cb && cb(getEvent(event, this))
         }
-    }, 100)
+    }, 150)
 
 }
 
