@@ -6,12 +6,12 @@
             :style="{'padding-left': paddingLeft}"
             @click.stop="activate">
             <i class="menu-item-icon" v-if="menu.iconClass || menu.imgSrc">
-                <v-icon :iconClass="menu.iconClass" :imgSrc="menu.imgSrc" :size="14"/>
+                <v-icon :iconClass="menu.iconClass" :imgSrc="menu.imgSrc" :size="16"/>
             </i>
             <span class="menu-item-icon" v-else-if="menu._deep === 0"><slot></slot></span>
             <span class="menu-item-label">{{ menu.label }}</span>
-            <span class="menu-item-arrow" :class="{'menu-item-arrow-active': childrenVisibility}" v-if="menu.children"></span>
-            <span class="menu-item-sign" v-else></span>
+            <!--<span class="menu-item-arrow" :class="{'menu-item-arrow-active': childrenVisibility}" v-if="menu.children"></span>-->
+            <span class="menu-item-sign"></span>
         </div>
         <menu-item
             @menuItem_activate="emitSubActivate"
@@ -45,6 +45,7 @@
 
         color: #A3ACBA;
         font-size: 14px;
+        font-weight: bold;
 
         cursor: pointer;
 
@@ -55,12 +56,26 @@
         }
         &:hover {
             background: rgba(255, 255, 255, .1);
+
+            .menu-item-sign {
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+
+                width: 2px;
+                height: 36px;
+
+                opacity: 1;
+                background: #20A0FF;
+            }
         }
         &.menu-item-active .menu-item-icon {
             color: #1990EA;
         }
 
         .menu-item-label {
+            padding-left: 6px;
             vertical-align: top;
         }
 
@@ -76,32 +91,32 @@
             text-align: center;
         }
 
-        .menu-item-arrow {
-            position: absolute;
-            right: 16px;
-            top: 10px;
+        // .menu-item-arrow {
+        //     position: absolute;
+        //     right: 16px;
+        //     top: 10px;
 
-            width: 16px;
-            height: 16px;
+        //     width: 16px;
+        //     height: 16px;
 
-            background: url('/static/triangle_down.svg') no-repeat;
-            background-position: center;
-            background-size: 8px 8px;
+        //     background: url('/static/triangle_down.svg') no-repeat;
+        //     background-position: center;
+        //     background-size: 8px 8px;
 
-            transform: rotate(-90deg);
-            transition: transform .2s ease-in-out;
+        //     transform: rotate(-90deg);
+        //     transition: transform .2s ease-in-out;
 
-            &.menu-item-arrow-active {
-                transform: rotate(0deg)
-            }
-        }
+        //     &.menu-item-arrow-active {
+        //         transform: rotate(0deg)
+        //     }
+        // }
 
         .menu-item-sign {
             position: absolute;
             left: 0;
             top: 0;
 
-            width: 3px;
+            width: 2px;
             height: 0px;
 
             opacity: 0;
@@ -129,7 +144,7 @@
                 top: 50%;
                 transform: translateY(-50%);
 
-                width: 3px;
+                width: 2px;
                 height: 36px;
 
                 opacity: 1;
