@@ -6,11 +6,11 @@
             :style="{'padding-left': paddingLeft}"
             @click.stop="activate">
             <i class="menu-item-icon" v-if="menu.iconClass || menu.imgSrc">
-                <v-icon :iconClass="menu.iconClass" :imgSrc="menu.imgSrc" :size="14"/>
+                <v-icon :iconClass="menu.iconClass" :imgSrc="menu.imgSrc" :size="16"/>
             </i>
             <span class="menu-item-icon" v-else-if="menu._deep === 0"><slot></slot></span>
             <span class="menu-item-label">{{ menu.label }}</span>
-            <span class="menu-item-arrow" :class="{'menu-item-arrow-active': childrenVisibility}" v-if="menu.children"></span>
+            <!--<span class="menu-item-arrow" :class="{'menu-item-arrow-active': childrenVisibility}" v-if="menu.children"></span>-->
             <span class="menu-item-sign" v-else></span>
         </div>
         <menu-item
@@ -45,6 +45,7 @@
 
         color: #A3ACBA;
         font-size: 14px;
+        font-weight: bold;
 
         cursor: pointer;
 
@@ -61,6 +62,7 @@
         }
 
         .menu-item-label {
+            padding-left: 6px;
             vertical-align: top;
         }
 
@@ -76,25 +78,25 @@
             text-align: center;
         }
 
-        .menu-item-arrow {
-            position: absolute;
-            right: 16px;
-            top: 10px;
+        // .menu-item-arrow {
+        //     position: absolute;
+        //     right: 16px;
+        //     top: 10px;
 
-            width: 16px;
-            height: 16px;
+        //     width: 16px;
+        //     height: 16px;
 
-            background: url('/static/triangle_down.svg') no-repeat;
-            background-position: center;
-            background-size: 8px 8px;
+        //     background: url('/static/triangle_down.svg') no-repeat;
+        //     background-position: center;
+        //     background-size: 8px 8px;
 
-            transform: rotate(-90deg);
-            transition: transform .2s ease-in-out;
+        //     transform: rotate(-90deg);
+        //     transition: transform .2s ease-in-out;
 
-            &.menu-item-arrow-active {
-                transform: rotate(0deg)
-            }
-        }
+        //     &.menu-item-arrow-active {
+        //         transform: rotate(0deg)
+        //     }
+        // }
 
         .menu-item-sign {
             position: absolute;
