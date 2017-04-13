@@ -33,7 +33,11 @@ import TabMenu from './components/tab-menu';
 import Popover from './components/popover';
 
 import Tabbar from './components/tabbar';
-import IMenu from './components/menubar';
+import IMenu from './components/tofu-menu';
+import OIcon from './components/tofu-icon';
+import OButton from './components/tofu-button';
+import OPanel from './components/tofu-panel';
+import ODropdown from './components/tofu-dropdown';
 import NewTabbar from './components/new-tabbar';
 
 import Draggable from './directives/drag/';
@@ -89,6 +93,10 @@ const install = (Vue) => {
 
     Vue.component('i-tabbar', Tabbar.component);
     Vue.component('i-menubar', IMenu);
+    Vue.component('o-icon', OIcon);
+    Vue.component('o-button', OButton);
+    Vue.component('o-panel', OPanel);
+    Vue.component('o-dropdown', ODropdown);
 
     Vue.prototype.$message = Message;
     Vue.prototype.$msgbox = MessageBox;

@@ -518,13 +518,11 @@
 </script>
 
 <style lang="scss">
-    $tabbar-top-padding: 10px;
     $tabbar-left-padding: 20px;
-    $tabbar-height: 40px;
+    $tabbar-height: 30px;
 
     $store-button-color-inactive: #fff;
     $store-button-width: 30px;
-    $store-button-height: $tabbar-height - $tabbar-top-padding;
     $store-button-hover: rgba(255, 255, 255, .1);
     $store-button-active: #14161A;
     $store-width: 140px;
@@ -543,7 +541,7 @@
 
         .tabbar-tab-container {
             position: absolute;
-            top: $tabbar-top-padding;
+            top: 0;
             bottom: 0;
             left: $tabbar-left-padding;
             right: $store-button-width;
@@ -555,8 +553,8 @@
             display: inline-block;
             box-sizing: border-box;
             width: $store-button-width;
-            height: $store-button-height;
-            line-height: $store-button-height;
+            height: $tabbar-height;
+            line-height: $tabbar-height;
 
             position: absolute;
             right: 0;
