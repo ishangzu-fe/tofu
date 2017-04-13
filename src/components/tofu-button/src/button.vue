@@ -21,7 +21,10 @@
         name: 'tofu-button',
 
         props: {
-            state: Boolean, // 外部控制状态
+            state: {  // 外部控制状态
+                type: Boolean | Number,
+                default: 0
+            },
             label: String,
             width: String,
             height: String,
@@ -37,7 +40,7 @@
 
         computed: {
             isActive () {
-                if (this.state !== null && this.state !== undefined) {
+                if (this.state !== 0) {
                     return this.state
                 } else {
                     return this.active

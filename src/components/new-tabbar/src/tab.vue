@@ -12,7 +12,7 @@
         v-drag:start="onDragstart"
         v-drag:move="onDrag"
         v-drag:end="onDragend">
-        <span class="tab-label" :title="tab.id">
+        <span class="tab-label" :title="tab.label">
             <span 
                 class="tab-label-container"
                 :style="{transform: `translateX(${-labelTranslate}px)`}"
