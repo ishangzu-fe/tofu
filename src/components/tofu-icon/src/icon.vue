@@ -11,9 +11,9 @@
         </span>
         <img 
             class="icon-image" 
-            :style="`width: ${size}; 
-                    height: ${size}; 
-                    transform: scale(${scale})`"
+            :style="`width: ${size}px; 
+                    height: ${size}px; 
+                    transform: scale(${scale}) translate(-50%, -50%)`"
             :src="imgSrc" 
             v-else>
         </img>
@@ -61,9 +61,6 @@
         .icon-image {
             position: absolute;
             top: 50%;
-            left: 50%;
-
-            transform: translate(-50%, -50%);
         }
     }
 </style>

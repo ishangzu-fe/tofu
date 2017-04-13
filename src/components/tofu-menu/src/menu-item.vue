@@ -6,7 +6,7 @@
             :style="{'padding-left': paddingLeft}"
             @click.stop="activate">
             <i class="menu-item-icon" v-if="menu.iconClass || menu.imgSrc">
-                <v-icon :iconClass="menu.iconClass" :imgSrc="menu.iconClass" :size="14"/>
+                <v-icon :iconClass="menu.iconClass" :imgSrc="menu.imgSrc" :size="14"/>
             </i>
             <span class="menu-item-icon" v-else-if="menu._deep === 0"><slot></slot></span>
             <span class="menu-item-label">{{ menu.label }}</span>
@@ -84,7 +84,7 @@
             width: 16px;
             height: 16px;
 
-            background: url('../../../assets/triangle_down.svg') no-repeat;
+            background: url('/static/triangle_down.svg') no-repeat;
             background-position: center;
             background-size: 8px 8px;
 
