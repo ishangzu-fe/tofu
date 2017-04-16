@@ -22,8 +22,7 @@
             </span>
         </span>
         <span 
-            class="tab-close tofu-icon" 
-            :class="activeId === tab.id ? 'icon-close-circle' : 'icon-close'"
+            class="tab-close tofu-icon icon-close" 
             v-if="!tab.fixed" 
             @click.stop="destroy">
         </span>
@@ -152,8 +151,8 @@
     $tab-border-radius: 2px;
     $tab-margin-right: 6px;
     $tab-background-active: #fff;
-    $tab-background-inactive: rgba(255, 255, 255, .1);
-    $tab-background-hover: rgba(255, 255, 255, .7);
+    $tab-background-inactive: #313D4F;
+    $tab-background-hover: #C7CFDA;
     $tab-font-size: 12px;
     $tab-color-inactive: #A3ACBA;
     $tab-color-active: #1F2D3D;
@@ -205,10 +204,14 @@
 
            &:hover .tab-close {
                color: $tab-close-color-active-hover;
+
+               &.tofu-icon.icon-close:before {
+                   content: "\e6bf"; 
+               }
            }
 
            .tab-close {
-               color: $tab-close-color-active;
+               color: $tab-color-active;
                font-size: 14px;
 
                transform: none;

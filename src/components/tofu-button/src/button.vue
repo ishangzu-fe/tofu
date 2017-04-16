@@ -69,8 +69,8 @@
     $button-label-padding: 5px 0;
     $button-label-font-size: 12px;
 
-    $background-hover: rgba(255, 255, 255, .1);
-    $background-active: rgba(0, 0, 0, .1);
+    $background-hover: #313D4F;
+    $background-active: #14161A;
 
     .tofu-button-component {
         box-sizing: border-box;

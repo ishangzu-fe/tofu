@@ -55,7 +55,7 @@
             color: #fff;
         }
         &:hover {
-            background: rgba(255, 255, 255, .1);
+            background: #313D4F;
 
             .menu-item-sign {
                 position: absolute;
@@ -136,7 +136,7 @@
             color: #fff;
 
             background-origin: content-box;
-            background-color: rgba(255, 255, 255, .1);
+            background-color: #313D4F;
 
             .menu-item-sign {
                 position: absolute;

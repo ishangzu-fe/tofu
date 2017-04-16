@@ -523,7 +523,7 @@
 
     $store-button-color-inactive: #fff;
     $store-button-width: 30px;
-    $store-button-hover: rgba(255, 255, 255, .1);
+    $store-button-hover: #313D4F;
     $store-button-active: #14161A;
     $store-width: 140px;
 

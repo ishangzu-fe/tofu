@@ -118,7 +118,7 @@ function getEvent (event, el) {
 }
 
 function onMousedown (event, cb) {
-    if (this.dataset.canDrag !== 'true') {
+    if (this.dataset.canDrag !== 'true' || event.button !== 0) {
         return false
     }
 

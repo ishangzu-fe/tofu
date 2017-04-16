@@ -1,6 +1,6 @@
 {
   "name": "i-tofu",
-  "version": "0.2.3",
+  "version": "0.2.5",
   "description": "UI Library.",
   "author": "vincent",
   "main": "dist/app.js",
