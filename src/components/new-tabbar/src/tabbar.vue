@@ -110,7 +110,7 @@
                 if (activeTab.path !== path) {
                     this.tabs.forEach(tab => {
                         if (tab.path === path) {
-                            this.activeId = tab.id
+                            this.activateTab(tab.id)
                         }
                     })
                 }
@@ -409,16 +409,16 @@
                 this.computedId = data.computedId
                 this.tabs = data.tabs
                 data.tabs.forEach(tab => {
-                    if (this.useRouter && this.$router) {
-                        this.$router.push(tab.path)
-                    }
+                    // if (this.useRouter && this.$router) {
+                    //     this.$router.push(tab.path)
+                    // }
 
                     // 添加映射
                     this.tabMap.set(tab.id, tab)
                 })
 
                 // 恢复页面缓存
-                this.pageCache = data.pageCache ? data.pageCache : []
+                this.pageCache = data.pageCache || []
                 TabManager['cache'] = this.pageCache.join(',')
 
                 // 恢复激活状态
@@ -590,7 +590,7 @@
             position: absolute;
             right: $store-button-width / 2 - $store-width;
             top: 75%;
-            z-index: 2;
+            z-index: 3;
 
             box-shadow: 0 6px 15px 0 rgba(0, 0, 0,.3);
             border-radius: 2px;
