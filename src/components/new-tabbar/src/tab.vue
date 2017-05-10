@@ -16,6 +16,7 @@
             <span 
                 class="tab-label-container"
                 :style="{transform: `translateX(${-labelTranslate}px)`}"
+                @click.stop="activate"
                 @mouseenter.stop="onLabelOver"
                 @mouseleave.stop="onLabelLeave">
                 {{tab.label}}
