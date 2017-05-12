@@ -61,10 +61,6 @@ export default {
     .dropdown-tree {
         width: 200px;
 
-        position: absolute;
-        left: 400px;
-        top: 200px;
-
         cursor: pointer;
 
         input {
