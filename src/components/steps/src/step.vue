@@ -1,7 +1,8 @@
 <template>
     <div class="el-step"
          :style="style"
-         :class="['is-' + $parent.direction]">
+         :class="['is-' + $parent.direction]"
+         @click="handleClick">
         <div class="el-step-head"
              :class="['is-' + currentStatus, { 'is-text': !icon }]">
             <div class="el-step-line"
@@ -61,6 +62,9 @@
         },
 
         methods: {
+            handleClick(event){
+                this.$emit('click',event);
+            },
             updateStatus(val) {
                 const prevChild = this.$parent.$children[this.index - 1];
 
