@@ -32,6 +32,7 @@ import Editor from './components/editor';
 import TabMenu from './components/tab-menu';
 import Popover from './components/popover';
 
+import DropdownTree from './components/dropdown-tree';
 import Tabbar from './components/tabbar';
 import IMenu from './components/tofu-menu';
 import OIcon from './components/tofu-icon';
@@ -93,6 +94,7 @@ const install = (Vue) => {
 
     Vue.component('i-tabbar', Tabbar.component);
     Vue.component('i-menubar', IMenu);
+    Vue.component('i-dropdown-tree', DropdownTree);
     Vue.component('o-icon', OIcon);
     Vue.component('o-button', OButton);
     Vue.component('o-panel', OPanel);
