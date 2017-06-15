@@ -1,40 +1,60 @@
 <template>
-    <ul class="el-select-group-wrap">
-        <li class="el-select-group-title">{{ label }}</li>
-        <li>
-            <ul class="el-select-group">
-                <slot></slot>
-            </ul>
-        </li>
-    </ul>
+  <ul class="el-select-group-wrap">
+    <li class="el-select-group-title" v-show="visible">{{ label }}</li>
+    <li>
+      <ul class="el-select-group">
+        <slot></slot>
+      </ul>
+    </li>
+  </ul>
 </template>
 
 <script type="text/babel">
-    import Emitter from '../../../utils/emitter';
+  import Emitter from '@/mixins/emitter';
 
-    export default {
-        mixins: [Emitter],
+  export default {
+    mixins: [Emitter],
 
-        name: 'el-option-group',
+    name: 'ElOptionGroup',
 
-        props: {
-            label: String,
-            disabled: {
-                type: Boolean,
-                default: false
-            }
-        },
+    componentName: 'ElOptionGroup',
 
-        watch: {
-            disabled(val) {
-                this.broadcast('option', 'handleGroupDisabled', val);
-            }
-        },
+    props: {
+      label: String,
+      disabled: {
+        type: Boolean,
+        default: false
+      }
+    },
 
-        mounted() {
-            if (this.disabled) {
-                this.broadcast('option', 'handleGroupDisabled', this.disabled);
-            }
-        }
-    };
+    data() {
+      return {
+        visible: true
+      };
+    },
+
+    watch: {
+      disabled(val) {
+        this.broadcast('ElOption', 'handleGroupDisabled', val);
+      }
+    },
+
+    methods: {
+      queryChange() {
+        this.visible = this.$children &&
+          Array.isArray(this.$children) &&
+          this.$children.some(option => option.visible === true);
+      }
+    },
+
+    created() {
+      this.$on('queryChange', this.queryChange);
+    },
+
+    mounted() {
+      if (this.disabled) {
+        this.broadcast('ElOption', 'handleGroupDisabled', this.disabled);
+      }
+    }
+  };
 </script>
