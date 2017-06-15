@@ -1,7 +1,7 @@
 <template>
     <div class="tabbar">
         <div class="tabbar-tab-container">
-            <Tab 
+            <Tab
                 v-for="tab in tabsInStage"
                 :key="tab.id"
                 :tab="tab"
@@ -16,14 +16,14 @@
                 @tab-dragend="onTabDragend"
             />
         </div>
-        <span 
-            class="tabbar-store-button tofu-icon icon-more" 
-            :class="{'store-button-active': showStore}" 
+        <span
+            class="tabbar-store-button tofu-icon icon-more"
+            :class="{'store-button-active': showStore}"
             @click.stop="toggleStore"
             v-if="mode === 'right' ? true : (tabsInStore.length ? true : false)">
         </span>
         <div class="tab-store" v-show="showStore"  @click="toggleStore">
-            <TabStoreItem 
+            <TabStoreItem
                 v-for="tab in tabsInStore"
                 :key="tab.id"
                 :tab="tab"
@@ -188,7 +188,7 @@
                     const matchedRoutes = this.$router.currentRoute.matched
                     const matchedRoute = matchedRoutes[matchedRoutes.length - 1]
                     const matchedComponent = matchedRoute.components.default
-                    const pageName = matchedComponent.name
+                    const pageName = matchedComponent.name || matchedComponent._Ctor[0].options.name
                     const pageData = matchedComponent.data && matchedComponent.data()
                     if (pageData) {
                         tab.notBindTab = pageData._notBindTab
@@ -216,7 +216,7 @@
                         }
                     }
                     this.insertTab(tab, idx)
-                    this.reorderTabs()          
+                    this.reorderTabs()
                 } else if (this.tabAmount && this.tabs.length >= this.tabAmount) { // 如果当前 tabs 数量已经超过限制
                     this.pushAndShift(tab, this.tabAmount, true)
                     this.reorderTabs()
@@ -268,7 +268,7 @@
                         } else {
                             this.pushAndShift(curTab, this.tabAmount)
                             this.reorderTabs()
-                        } 
+                        }
                     }
                 }
 
@@ -358,7 +358,7 @@
 
                 const rightBoundary = this.tabs.length >= this.tabAmount ? this.tabAmount - 1 : this.tabs.length - 1
                 const leftBoundary = this.getFirstNotFixedTab().idx // 第一个不是固定的 tab 的索引
-                
+
                 // 需要排除边界条件
                 if ((offset > 0 && curIdx !== rightBoundary) || (offset < 0 && curIdx !== leftBoundary)) {
 
@@ -369,7 +369,7 @@
                     } else if (pos < leftBoundary) {
                         pos = leftBoundary
                     }
-                    
+
                     this.moveTab(this.tabs[curIdx], pos)
                 }
                 this.reorderTabs(true)
@@ -601,7 +601,7 @@
                 content: '';
                 width: 100%;
                 height: 100%;
-                
+
                 position: fixed;
                 left: 0;
                 top: 0;
