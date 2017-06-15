@@ -132,7 +132,7 @@ export default {
             <ElSelect
                 size="small"
                 value={ this.$parent.internalPageSize }
-                on-change={ this.handleChange }
+                on-input={ this.handleChange }
                 width={ 110 }>
               {
                   this.$parent.pageSizes.map(item =>

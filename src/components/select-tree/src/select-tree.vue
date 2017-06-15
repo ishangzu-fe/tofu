@@ -51,7 +51,7 @@
     import SelectTreeMenu from './select-tree-menu';
     import debounce from 'throttle-debounce/debounce';
     import { addClass,removeClass,hasClass } from 'wind-dom/src/class';
-    import { addResizeListener,removeResizeListener } from '../../../utils/resize.event';
+    import { addResizeListener,removeResizeListener } from '../../../utils/resize-event';
     import { $t } from '../../../utils/locale';
 
     export default{

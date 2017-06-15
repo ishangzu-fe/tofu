@@ -98,7 +98,7 @@
     import Migrating from '../../../mixins/migrating';
     import throttle from 'throttle-debounce/throttle';
     import debounce from 'throttle-debounce/debounce';
-    import { addResizeListener, removeResizeListener } from '../../../utils/resize.event';
+    import { addResizeListener, removeResizeListener } from '../../../utils/resize-event';
     import Locale from '../../../mixins/locale';
     import TableStore from './table-store';
     import TableLayout from './table-layout';
