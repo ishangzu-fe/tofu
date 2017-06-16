@@ -1,7 +1,8 @@
 <template>
   <div
     class="el-select"
-    v-clickoutside="handleClose">
+    v-clickoutside="handleClose"
+    :class="{'over-hidden': !multipleShowAll}">
     <div
       class="el-select-tags"
       v-if="multiple"
@@ -185,6 +186,10 @@
       multipleLimit: {
         type: Number,
         default: 0
+      },
+      multipleShowAll:{
+        type: Boolean,
+        default: true
       },
       placeholder: {
         type: String,

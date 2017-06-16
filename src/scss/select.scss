@@ -8,7 +8,28 @@
   display: block;
   position: relative;
 
+  &.over-hidden .el-select-tags{
+    overflow: hidden;
+    height: 36px;
+    white-space: nowrap;
+  }
+
+  &.over-hidden .el-input-inner{
+    height: 36px !important;
+  }
+
   &.is-small{
+
+    &.over-hidden input{
+      height: 28px !important;
+    }
+
+    &.over-hidden .el-select-tags{
+      height: 28px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
     & input{
       border-radius: 2px;
       height: 28px;
