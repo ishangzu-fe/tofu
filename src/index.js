@@ -32,6 +32,7 @@ import Editor from './components/editor';
 import TabMenu from './components/tab-menu';
 import Popover from './components/popover';
 
+import Cascader from './components/cascader';
 import DropdownTree from './components/dropdown-tree';
 import Tabbar from './components/tabbar';
 import IMenu from './components/tofu-menu';
@@ -40,6 +41,9 @@ import OButton from './components/tofu-button';
 import OPanel from './components/tofu-panel';
 import ODropdown from './components/tofu-dropdown';
 import NewTabbar from './components/new-tabbar';
+import FiledFilter from './components/field_filter';
+import Popup from './components/popup';
+import Uploader from './components/uploader';
 
 import Draggable from './directives/drag/';
 
@@ -92,6 +96,7 @@ const install = (Vue) => {
     Vue.component('i-menu', Menu);
     Vue.component('i-tab-menu', TabMenu);
 
+    Vue.component('i-cascader', Cascader);
     Vue.component('i-tabbar', Tabbar.component);
     Vue.component('i-menubar', IMenu);
     Vue.component('i-dropdown-tree', DropdownTree);
@@ -99,6 +104,9 @@ const install = (Vue) => {
     Vue.component('o-button', OButton);
     Vue.component('o-panel', OPanel);
     Vue.component('o-dropdown', ODropdown);
+    Vue.component('i-popup', Popup);
+    Vue.component('i-field-filter', FiledFilter);
+    Vue.component('i-uploader', Uploader);
 
     Vue.prototype.$message = Message;
     Vue.prototype.$msgbox = MessageBox;

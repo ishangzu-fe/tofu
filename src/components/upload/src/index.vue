@@ -8,7 +8,7 @@
     }
 
     export default {
-        name: 'el-upload',
+        name: 'i-upload',
 
         components: {
             'i-progress':Progress,
@@ -212,7 +212,7 @@
 
             if (this.type === 'select') {
                 return (
-                        <div class="el-upload">
+                        <div class="i-upload">
                             {uploadList}
                             {uploadComponent}
                             {this.$slots.tip}
@@ -222,7 +222,7 @@
 
             if (this.type === 'drag') {
                 return (
-                        <div class="el-upload">
+                        <div class="i-upload">
                             {uploadComponent}
                             {this.$slots.tip}
                             {uploadList}

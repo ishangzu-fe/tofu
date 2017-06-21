@@ -1,7 +1,7 @@
 <template>
-    <div class="el-upload-inner"
+    <div class="i-upload-inner"
          :class="{
-      'el-dragger': type === 'drag',
+      'i-dragger': type === 'drag',
       'is-dragOver': dragOver,
       'is-showCover': showCover
     }"
@@ -11,7 +11,7 @@
          @dragleave.prevent="dragOver = false">
         <slot v-if="!showCover"></slot>
         <cover :image="lastestFile" :on-preview="onPreview" :on-remove="onRemove" v-else></cover>
-        <input class="el-upload-input" type="file" ref="input" @change="handleChange" :multiple="multiple" :accept="accept">
+        <input class="i-upload-input" type="file" ref="input" @change="handleChange" :multiple="multiple" :accept="accept">
     </div>
 </template>
 

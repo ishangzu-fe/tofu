@@ -1,14 +1,14 @@
 @import "./progress";
 
-.el-upload{
+.i-upload{
   width: 100%;
 }
 
-.el-upload-input{
+.i-upload-input{
   display: none;
 }
 
-.el-upload-inner{
+.i-upload-inner{
   display: inline-block;
   position: relative;
 
@@ -22,14 +22,14 @@
   }
 }
 
-.el-upload-files{
+.i-upload-files{
   margin: 0;
   padding: 0;
   list-style: none;
   margin-bottom: 10px;
 }
 
-.el-upload-file{
+.i-upload-file{
   transition:all .5s cubic-bezier(.55,0,.1,1);
   font-size: $font-size-base;
   color: #475669;
@@ -48,7 +48,7 @@
     transition:color .3s;
     padding-left: 4px;
 
-    [class^="el-icon"] {
+    [class^="i-icon"] {
       color: #99a9bf;
       margin-right: 7px;
       height: 100%;
@@ -56,19 +56,19 @@
     }
   }
 
-  & .el-progress{
+  & .i-progress{
     position: absolute;
     bottom:-3px;
     width: 100%;
   }
 
-  & .el-progress-text{
+  & .i-progress-text{
     position: absolute;
     right:0;
     top:-10px;
   }
 
-  .el-progress-bar{
+  .i-progress-bar{
     margin-right: 0;
     padding-right: 0;
   }
@@ -84,7 +84,7 @@
     }
 
     &:hover{
-      .el-upload-btn-delete{
+      .i-upload-btn-delete{
         display: block;
         cursor: pointer;
       }
@@ -92,13 +92,13 @@
   }
 }
 
-.el-upload-tip{
+.i-upload-tip{
   font-size: 12px;
   color: #8492A6;
   margin-top: 7px;
 }
 
-.el-upload-btn-delete{
+.i-upload-btn-delete{
   position: absolute;
   right: 15px;
   top:0;
@@ -107,7 +107,7 @@
   display: none;
 }
 
-.el-dragger{
+.i-dragger{
   background-color: #f9fafc;
   border:1px solid #c0ccda;
   box-sizing: border-box;
@@ -119,23 +119,23 @@
   position: relative;
   overflow: hidden;
 
-  & .el-upload-inner{
+  & .i-upload-inner{
     display: block;
     height: 100%;
   }
 
-  & .el-icon-upload{
+  & .i-icon-upload{
     font-size: 67px;
     color: #99a9bf;
     margin: 40px 0 16px;
     line-height: 50px;
   }
 
-  & + .el-upload-tip{
+  & + .i-upload-tip{
     text-align: center;
   }
 
-  & ~ .el-upload-files{
+  & ~ .i-upload-files{
     margin-top: 7px;
     padding-top: 5px;
     border-top:1px solid rgba(#c0ccda,.2);
@@ -151,7 +151,7 @@
   }
 }
 
-.el-dragger-cover{
+.i-dragger-cover{
   position: absolute;
   left: 0;
   top:0;
@@ -175,18 +175,18 @@
   }
 }
 
-.el-dragger-cover-progress{
+.i-dragger-cover-progress{
   display: inline-block;
   vertical-align: middle;
   position: static;
   width: 243px;
 
-  & + .el-upload-inner{
+  & + .i-upload-inner{
     opacity: 0;
   }
 }
 
-.el-dragger-cover-content{
+.i-dragger-cover-content{
   position: absolute;
   top:0;
   left: 0;
@@ -194,7 +194,7 @@
   height: 100%;
 }
 
-.el-dragger-cover-interact{
+.i-dragger-cover-interact{
   position: absolute;
   bottom: 0;
   left: 0;
@@ -243,7 +243,7 @@
   }
 }
 
-.el-dragger-cover-title{
+.i-dragger-cover-title{
   position: absolute;
   bottom: 0;
   left:0;
@@ -261,14 +261,14 @@
   font-size: $font-size-base;
   color: #475669;
 
-  & + .el-upload-inner{
+  & + .i-upload-inner{
     opacity: 0;
     position: relative;
     z-index:1;
   }
 }
 
-.el-dragger-text{
+.i-dragger-text{
   color: #99a9bf;
   font-size: 14px;
   text-align: center;

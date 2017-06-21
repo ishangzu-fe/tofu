@@ -132,8 +132,8 @@
             var frameName = 'frame-' + Date.now();
             return (
                     <div class={{
-                                'el-upload-inner': true,
-                                'el-dragger': this.type === 'drag',
+                                'i-upload-inner': true,
+                                'i-dragger': this.type === 'drag',
                                 'is-dragOver': this.dragOver,
                                 'is-showCover': this.showCover
                             }}
@@ -148,7 +148,7 @@
                         >
                         </iframe>
                         <form ref="form" action={this.action} target={frameName} enctype="multipart/form-data" method="POST">
-                            <input class="el-upload__input"
+                            <input class="i-upload__input"
                                     type="file"
                                     ref="input"
                                     name="file"
