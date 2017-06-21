@@ -64,12 +64,15 @@
 
 <script>
     import CascaderMenu from './menu';
+    import Emitter from '@/mixins/emitter';
 
     export default {
         name: 'cascader',
         components: {
             'cascader-menu': CascaderMenu
         },
+        mixins: [Emitter],
+
         props: {
             options: {//菜单选项
                 type: Array,
@@ -141,9 +144,6 @@
             childrenKey () {
                 return this.props.children || 'children';
             },
-//            currentValue () {//子组件直接触发方法改变this.value报错，需要有一个中间值
-//                return this.value;
-//            },
             //根据值转换为相应的label
             currentLabel () {
                 if (!this.currentValue || this.currentValue.length <= 0) {
@@ -180,6 +180,11 @@
                      v.label = v.label.substring(0, v.label.length - 1);
                      return v;
                 });
+            }
+        },
+        watch: {
+            currentValue(value) {
+                this.dispatch('form-item', 'el.form.change', [value]);
             }
         },
         methods: {

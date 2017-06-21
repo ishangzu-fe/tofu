@@ -63,6 +63,9 @@
 
         methods: {
             handleClick(event){
+                if (this.currentStatus === 'wait') {
+                    return;
+                }
                 this.$emit('click',event);
             },
             updateStatus(val) {
