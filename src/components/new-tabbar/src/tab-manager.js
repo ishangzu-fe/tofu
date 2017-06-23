@@ -25,7 +25,7 @@ class TabManager {
 
     /**
      * 通过 Vue 的 $emit 方法来进行通讯
-     * @param {String} eventName 
+     * @param {String} eventName
      */
     emit (eventName, ...params) {
         this.eventBus.$emit(eventName, ...params)
@@ -33,7 +33,7 @@ class TabManager {
 
     /**
      * 通过 Vue 的 $on 方法来进行通讯
-     * @param {Object} eventHandlerObject 
+     * @param {Object} eventHandlerObject
      */
     on () {
         let argLength = arguments.length
@@ -54,7 +54,7 @@ class TabManager {
     }
 
     /**
-     * 
+     *
      * @param {Object} tab Tab数据对象
      */
     createTab (tab) {
@@ -63,6 +63,13 @@ class TabManager {
 
     init () {
         this.emit('tab-manager-init', this._options)
+    }
+
+    /**
+     * 销毁所有 Tab
+     */
+    destroyAllTabs () {
+        this.emit('tab-manager-destroyAll')
     }
 
     /**

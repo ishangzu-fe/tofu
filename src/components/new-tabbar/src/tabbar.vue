@@ -13,8 +13,8 @@
                 @tab-destroy="destroyTab"
                 @tab-dragstart="onTabDragstart"
                 @tab-drag="onTabDrag"
-                @tab-dragend="onTabDragend"
-            />
+                @tab-dragend="onTabDragend">
+            </Tab>
         </div>
         <span
             class="tabbar-store-button tofu-icon icon-more"
@@ -29,8 +29,8 @@
                 :tab="tab"
                 :activeId="activeId"
                 @store-activate="activateTab"
-                @store-destroy="destroyTab"
-            />
+                @store-destroy="destroyTab">
+            </TabStoreItem>
         </div>
     </div>
 </template>
@@ -311,6 +311,17 @@
             },
 
             /**
+             * 关闭所有 Tab
+             */
+            destroyAllTabs () {
+                this.tabs = [this.tabs[0]]
+                this.pageCache = [this.pageCache[0]]
+                TabManager['cache'] = this.pageCache.join(',')
+                this.activateTab(this.tabs[0].id)
+                this.syncToStorage()
+            },
+
+            /**
             * 交换 tab 位置
             */
             onTabDrag (offset, tabComponent) {
@@ -502,7 +513,8 @@
             // 与管理器的通讯
             TabManager.on({
                 'tab-manager-createTab': this.createTab.bind(this),
-                'tab-manager-init': this.init.bind(this)
+                'tab-manager-init': this.init.bind(this),
+                'tab-manager-destroyAll': this.destroyAllTabs.bind(this)
             })
             // 挂载完成后，获取初始化配置进行初始化
             TabManager.emit('tabbar-init')
