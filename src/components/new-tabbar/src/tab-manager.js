@@ -73,6 +73,13 @@ class TabManager {
     }
 
     /**
+     * 模拟刷新
+     */
+    flush () {
+        this.emit('tab-manager-flush')
+    }
+
+    /**
      * 在 Vue.use 时调用
      * 初始化配置
      */

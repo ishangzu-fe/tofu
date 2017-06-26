@@ -438,6 +438,22 @@
                 })
             },
 
+            /**
+             * 模拟刷新
+             */
+            flushTabs () {
+                let originData = {}
+                originData.tabs = this.tabs.slice(0)
+                originData.computedId = this.computedId
+                originData.pageCache = this.pageCache
+                originData.activeId = this.activeId
+
+                this.destroyAllTabs()
+                this.$nextTick(() => {
+                    this.recoverTabs(originData)
+                })
+            },
+
             /******************** tools *********************/
             getTabIdxById (tabId) {
                 return this.tabMap.get(tabId).idx
@@ -514,7 +530,8 @@
             TabManager.on({
                 'tab-manager-createTab': this.createTab.bind(this),
                 'tab-manager-init': this.init.bind(this),
-                'tab-manager-destroyAll': this.destroyAllTabs.bind(this)
+                'tab-manager-destroyAll': this.destroyAllTabs.bind(this),
+                'tab-manager-flush': this.flushTabs.bind(this)
             })
             // 挂载完成后，获取初始化配置进行初始化
             TabManager.emit('tabbar-init')
