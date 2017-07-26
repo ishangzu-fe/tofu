@@ -1,7 +1,7 @@
 <template>
     <div class="tabbar">
         <div class="tabbar-tab-container">
-            <Tab 
+            <Tab
                 v-for="tab in tabsInStage"
                 :key="tab.id"
                 :tab="tab"
@@ -13,24 +13,24 @@
                 @tab-destroy="destroyTab"
                 @tab-dragstart="onTabDragstart"
                 @tab-drag="onTabDrag"
-                @tab-dragend="onTabDragend"
-            />
+                @tab-dragend="onTabDragend">
+            </Tab>
         </div>
-        <span 
-            class="tabbar-store-button tofu-icon icon-more" 
-            :class="{'store-button-active': showStore}" 
+        <span
+            class="tabbar-store-button tofu-icon icon-more"
+            :class="{'store-button-active': showStore}"
             @click.stop="toggleStore"
             v-if="mode === 'right' ? true : (tabsInStore.length ? true : false)">
         </span>
         <div class="tab-store" v-show="showStore"  @click="toggleStore">
-            <TabStoreItem 
+            <TabStoreItem
                 v-for="tab in tabsInStore"
                 :key="tab.id"
                 :tab="tab"
                 :activeId="activeId"
                 @store-activate="activateTab"
-                @store-destroy="destroyTab"
-            />
+                @store-destroy="destroyTab">
+            </TabStoreItem>
         </div>
     </div>
 </template>
@@ -188,7 +188,7 @@
                     const matchedRoutes = this.$router.currentRoute.matched
                     const matchedRoute = matchedRoutes[matchedRoutes.length - 1]
                     const matchedComponent = matchedRoute.components.default
-                    const pageName = matchedComponent.name
+                    const pageName = matchedComponent.name || matchedComponent._Ctor[0].options.name
                     const pageData = matchedComponent.data && matchedComponent.data()
                     if (pageData) {
                         tab.notBindTab = pageData._notBindTab
@@ -216,7 +216,7 @@
                         }
                     }
                     this.insertTab(tab, idx)
-                    this.reorderTabs()          
+                    this.reorderTabs()
                 } else if (this.tabAmount && this.tabs.length >= this.tabAmount) { // 如果当前 tabs 数量已经超过限制
                     this.pushAndShift(tab, this.tabAmount, true)
                     this.reorderTabs()
@@ -268,7 +268,7 @@
                         } else {
                             this.pushAndShift(curTab, this.tabAmount)
                             this.reorderTabs()
-                        } 
+                        }
                     }
                 }
 
@@ -307,6 +307,17 @@
                 }
 
                 // 同步至 sessionStorage
+                this.syncToStorage()
+            },
+
+            /**
+             * 关闭所有 Tab
+             */
+            destroyAllTabs () {
+                this.tabs = [this.tabs[0]]
+                this.pageCache = [this.pageCache[0]]
+                TabManager['cache'] = this.pageCache.join(',')
+                this.activateTab(this.tabs[0].id)
                 this.syncToStorage()
             },
 
@@ -358,7 +369,7 @@
 
                 const rightBoundary = this.tabs.length >= this.tabAmount ? this.tabAmount - 1 : this.tabs.length - 1
                 const leftBoundary = this.getFirstNotFixedTab().idx // 第一个不是固定的 tab 的索引
-                
+
                 // 需要排除边界条件
                 if ((offset > 0 && curIdx !== rightBoundary) || (offset < 0 && curIdx !== leftBoundary)) {
 
@@ -369,7 +380,7 @@
                     } else if (pos < leftBoundary) {
                         pos = leftBoundary
                     }
-                    
+
                     this.moveTab(this.tabs[curIdx], pos)
                 }
                 this.reorderTabs(true)
@@ -424,6 +435,22 @@
                 // 恢复激活状态
                 this.$nextTick(() => {
                     this.activateTab(data.activeId)
+                })
+            },
+
+            /**
+             * 模拟刷新
+             */
+            flushTabs () {
+                let originData = {}
+                originData.tabs = this.tabs.slice(0)
+                originData.computedId = this.computedId
+                originData.pageCache = this.pageCache
+                originData.activeId = this.activeId
+
+                this.destroyAllTabs()
+                this.$nextTick(() => {
+                    this.recoverTabs(originData)
                 })
             },
 
@@ -502,7 +529,9 @@
             // 与管理器的通讯
             TabManager.on({
                 'tab-manager-createTab': this.createTab.bind(this),
-                'tab-manager-init': this.init.bind(this)
+                'tab-manager-init': this.init.bind(this),
+                'tab-manager-destroyAll': this.destroyAllTabs.bind(this),
+                'tab-manager-flush': this.flushTabs.bind(this)
             })
             // 挂载完成后，获取初始化配置进行初始化
             TabManager.emit('tabbar-init')
@@ -601,7 +630,7 @@
                 content: '';
                 width: 100%;
                 height: 100%;
-                
+
                 position: fixed;
                 left: 0;
                 top: 0;
