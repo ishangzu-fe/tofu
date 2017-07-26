@@ -1,0 +1,40 @@
+.el-badge{
+    position: relative;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.el-badge-content{
+    background-color: $color-danger;
+    border-radius: 10px;
+    color: #fff;
+    display: inline-block;
+    font-size: $font-size-base;
+    height: 18px;
+    line-height: 18px;
+    padding: 0 6px;
+    text-align: center;
+    white-space: nowrap;
+    border: 1px solid #fff;
+
+    &.is-dot{
+        width: 8px;
+        height: 8px;
+        padding:0;
+        right: 0;
+        border-radius: 50%;
+    }
+
+    &.is-fixed{
+        top:0;
+        right:10px;
+        position: absolute;
+        -ms-transform: translateY(-50%) translateX(100%);
+        -webkit-transform: translateY(-50%) translateX(100%);
+        transform: translateY(-50%) translateX(100%);
+
+        &.is-dot{
+            right:5px;
+        }
+    }
+}

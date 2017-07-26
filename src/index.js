@@ -1,5 +1,6 @@
 import Alert from './components/alert';
 import Autocomplete from './components/autocomplete';
+import Badge from './components/badge';
 import { Button, ButtonGroup } from './components/button';
 import Card from './components/card';
 import { Checkbox, CheckboxGroup } from './components/checkbox';
@@ -54,6 +55,7 @@ const install = (Vue) => {
     Vue.component('i-autocomplete', Autocomplete);
     Vue.component('i-button', Button);
     Vue.component('i-button-group', ButtonGroup);
+    Vue.component('i-badge',Badge);
     Vue.component('i-card', Card);
     Vue.component('i-checkbox', Checkbox);
     Vue.component('i-checkbox-group', CheckboxGroup);
