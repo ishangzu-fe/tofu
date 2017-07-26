@@ -22,6 +22,7 @@
 
     &.over-hidden input{
       height: 28px !important;
+      line-height: 28px;
     }
 
     &.over-hidden .el-select-tags{
@@ -33,6 +34,7 @@
     & input{
       border-radius: 2px;
       height: 28px;
+      line-height: 28px;
     }
   }
 
