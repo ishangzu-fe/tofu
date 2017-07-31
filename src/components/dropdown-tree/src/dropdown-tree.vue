@@ -1,19 +1,23 @@
 <template>
-    <i-dropdown 
+    <i-dropdown
         class="dropdown-tree"
-        trigger="click" 
+        trigger="click"
         menu-align="start"
         @click.native="handleClick">
-        <i-input 
-            class="title" 
+        <i-input
+            class="title"
             :class="{'title-active': isDropdownShow}"
-            v-model="title" 
+            v-model="title"
             :size="size"
             :placeholder="placeholder"
-            :readonly="true" 
+            :readonly="true"
             :icon="iconClass">
         </i-input>
-        <i-dropdown-menu ref="panel" class="panel" slot="dropdown">
+        <i-dropdown-menu
+            ref="panel"
+            class="panel"
+            slot="dropdown"
+            v-show="isDropdownShow">
             <slot></slot>
         </i-dropdown-menu>
     </i-dropdown>
@@ -99,7 +103,7 @@ export default {
 
         &:before {
             content: '';
-            
+
             position: fixed;
             left: 0;
             right: 0;

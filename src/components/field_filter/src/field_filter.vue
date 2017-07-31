@@ -9,8 +9,8 @@
                 <i-checkbox-group
                     v-model="checked"
                     @change="handleCheckChange">
-                    <li class="list-item" v-for="item in items" :key="item">
-                        <i-checkbox :label="item"></i-checkbox>
+                    <li class="list-item" v-for="field in fields" :key="field.label">
+                        <i-checkbox :label="field.label + ''"></i-checkbox>
                     </li>
                 </i-checkbox-group>
             </ul>
@@ -29,7 +29,7 @@ export default {
     },
 
     props: {
-        items: Array
+        value: Object
     },
 
     data () {
@@ -39,27 +39,49 @@ export default {
     },
 
     methods: {
-        handleCheckChange (event) {
-            this.$emit('change', event);
+        handleCheckChange (checkedLabels) {
+            for (let key in this.fields) {
+                this.fields[key].checked = false;
+
+                checkedLabels.forEach(label => {
+                    if (label === this.fields[key].label) {
+                        this.fields[key].checked = true;
+                    }
+                });
+            }
+
+            this.$emit('input', this.fields);
         }
     },
 
     created () {
-        this.checked = this.items;
+        this.fields = this.value;
+
+        for (let key in this.fields) {
+            this.checked.push(this.fields[key].label);
+        }
     }
 };
 </script>
 
 <style lang="scss">
 .field-filter {
+    display: inline-block;
+
     .list {
         padding: 6px 10px;
 
         .list-item {
             margin-bottom: 6px;
 
-            .el-checkbox-inner {
-                border-radius: 4px;
+            text-align: left;
+
+            .el-checkbox {
+                width: 100%;
+
+                .el-checkbox-inner {
+                    border-radius: 4px;
+                }
             }
 
             &:last-child {
