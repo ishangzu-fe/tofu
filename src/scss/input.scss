@@ -24,6 +24,7 @@
   }
 
   & .el-icon-loading{
+    -webkit-animation: validating-rotating 1s linear infinite;    
     animation: validating-rotating 1s linear infinite;
   }
 }
@@ -217,6 +218,16 @@
 
 
 @keyframes validating-rotating {
+  0% {
+    transform: translate(0,-50%) rotateZ(0deg);
+  }
+  100% {
+    transform: translate(0,-50%) rotateZ(360deg);
+  }
+}
+
+
+@-webkit-keyframes validating-rotating {
   0% {
     transform: translate(0,-50%) rotateZ(0deg);
   }
