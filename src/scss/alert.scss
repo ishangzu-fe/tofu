@@ -10,6 +10,7 @@
   color:$color-white;
   opacity: 1;
   display: table;
+  -webkit-transition: opacity .2s;  
   transition: opacity .2s;
 }
 

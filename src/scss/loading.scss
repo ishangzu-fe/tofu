@@ -33,10 +33,12 @@
 
   .circular{
     width: $loading-spinner-size;
+    -webkit-animation:rotate 2s linear infinite;    
     animation:rotate 2s linear infinite;
   }
 
   .path{
+    -webkit-animation:dash 1.5s ease-in-out infinite;    
     animation:dash 1.5s ease-in-out infinite;
     stroke-dasharray: 1,200;
     stroke-dashoffset:0;
@@ -57,6 +59,7 @@
 @keyframes rotate {
 
   100% {
+    -webkit-transform: rotate(360deg);    
     transform: rotate(360deg);
   }
 }

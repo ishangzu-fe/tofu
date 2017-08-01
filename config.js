@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
     dev: {
         env: { NODE_ENV: '"development"' },
-        port: 8081,
+        port: 80,
         autoOpenBrowser: true,
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
