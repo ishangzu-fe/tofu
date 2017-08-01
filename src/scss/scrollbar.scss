@@ -1,63 +1,64 @@
-.el-scrollbar {
-    overflow: hidden;
-    position: relative
-}
+.el-scrollbar{
+  overflow: hidden;
+  position: relative;
 
-.el-scrollbar:active .el-scrollbar-bar,
-.el-scrollbar:focus .el-scrollbar-bar,
-.el-scrollbar:hover .el-scrollbar-bar {
+  &:hover,
+  &:active,
+  &:focus{
     opacity: 1;
-    transition: opacity 340ms ease-out
-}
+    transition: opacity 340ms ease-out;
+  }
 
-.el-scrollbar-wrap {
-    overflow: scroll
-}
 
-.el-scrollbar-wrap--hidden-default::-webkit-scrollbar {
-    width: 0;
-    height: 0
-}
+  .el-scrollbar-wrap{
+    overflow: scroll;
 
-.el-scrollbar-thumb {
+    .el-scrollbar-wrap-hidden-default::-webkit-scrollbar{
+      width: 0;
+      height: 0;
+    }
+  }
+
+  .el-scrollbar-thumb{
     position: relative;
     display: block;
-    width: 0;
-    height: 0;
+    width:0;
+    height:0;
     cursor: pointer;
     border-radius: inherit;
-    background-color: rgba(151, 168, 190, .3);
-    transition: .3s background-color
-}
+    background-color: rgba(151,168,190,.3);
+    transition: .3s background-color;
 
-.el-scrollbar-thumb:hover {
-    background-color: rgba(151, 168, 190, .5)
-}
+    &:hover{
+      background-color: rgba(151,168,190,.5);
+    }
+  }
 
-.el-scrollbar-bar {
+  .el-scrollbar-bar{
     position: absolute;
     right: 2px;
     bottom: 2px;
-    z-index: 1;
+    z-index:1;
     border-radius: 4px;
     opacity: 0;
-    transition: opacity 120ms ease-out
-}
+    transition: opacity 120ms ease-out;
 
-.el-scrollbar-bar.is-horizontal {
-    height: 6px;
-    left: 2px
-}
+    &.is-horizontal{
+      height: 6px;
+      left: 2px;
 
-.el-scrollbar-bar.is-horizontal>div {
-    height: 100%
-}
+      > div{
+        height: 100%;
+      }
+    }
 
-.el-scrollbar-bar.is-vertical {
-    width: 6px;
-    top: 2px
-}
+    &.is-vertical{
+      width: 6px;
+      top:2px;
 
-.el-scrollbar-bar.is-vertical>div {
-    width: 100%
+      > div{
+        width: 100%;
+      }
+    }
+  }
 }

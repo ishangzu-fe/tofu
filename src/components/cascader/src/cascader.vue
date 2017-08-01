@@ -144,6 +144,9 @@
             childrenKey () {
                 return this.props.children || 'children';
             },
+            currentValue() {
+                return this.value ? this.value : '';
+            },
             //根据值转换为相应的label
             currentLabel () {
                 if (!this.currentValue || this.currentValue.length <= 0) {

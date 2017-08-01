@@ -28,7 +28,6 @@ import Tooltip from './components/tooltip';
 import { Tree, TreeNode } from './components/tree';
 import Upload from './components/upload';
 import Menu from './components/menu';
-import { SelectTree, SelectTreeOption } from './components/select-tree';
 import Editor from './components/editor';
 import TabMenu from './components/tab-menu';
 import Popover from './components/popover';
@@ -45,6 +44,8 @@ import NewTabbar from './components/new-tabbar';
 import FiledFilter from './components/field_filter';
 import Popup from './components/popup';
 import Uploader from './components/uploader';
+import Preview from './components/preview';
+import IUTree from './components/i-tree';
 
 import Draggable from './directives/drag/';
 
@@ -92,8 +93,6 @@ const install = (Vue) => {
     Vue.component('i-tree', Tree);
     Vue.component('i-tree-node', TreeNode);
     Vue.component('i-upload', Upload);
-    Vue.component('i-select-tree', SelectTree);
-    Vue.component('i-select-tree-option', SelectTreeOption);
     Vue.component('i-popover', Popover);
     Vue.component('i-menu', Menu);
     Vue.component('i-tab-menu', TabMenu);
@@ -109,6 +108,7 @@ const install = (Vue) => {
     Vue.component('i-popup', Popup);
     Vue.component('i-field-filter', FiledFilter);
     Vue.component('i-uploader', Uploader);
+    Vue.component('iu-tree', IUTree);
 
     Vue.prototype.$message = Message;
     Vue.prototype.$msgbox = MessageBox;
@@ -125,5 +125,6 @@ const install = (Vue) => {
 module.exports = {
     install,
     TabManager: Tabbar.manager,
-    Tabbar: NewTabbar
+    Tabbar: NewTabbar,
+    previewer: Preview
 }

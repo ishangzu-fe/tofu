@@ -42,13 +42,15 @@ export default {
     },
 
     methods: {
-        handleMenuClick () {
-
-        },
-
         handleTriggerClick () {
             this.trigger = !this.trigger;
         }
+    },
+
+    created () {
+        document.addEventListener('click', e => {
+            this.trigger = false
+        });
     }
 }
 </script>
@@ -58,18 +60,6 @@ export default {
     display: inline-block;
 
     position: relative;
-
-    &:before {
-        content: '';
-        width: 100%;
-        height: 100%;
-
-        position: fixed;
-        left: 0;
-        top: 0;
-
-        background: transparent;
-    }
 
     // 触发器
     .popup-trigger {

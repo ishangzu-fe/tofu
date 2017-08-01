@@ -127,6 +127,7 @@
                 if(!this.filterNodeMethod){
                     throw new Error('[Tree] filterNodeMethod is required when filter');
                 }
+                this.store.filter(value);
             },
             getNodeKey(node,index){
                 const nodeKey = this.nodeKey;

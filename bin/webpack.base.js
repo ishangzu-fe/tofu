@@ -15,7 +15,7 @@ module.exports = function (config) {
 
     return {
         entry: {
-            app: env == 'production' ? resolve('src/index.js') : resolve('src/dev/index.js'),
+            app: env == 'production' ? resolve('src/index.js') : resolve('dev/index.js'),
         },
         output: {
             path: resolve('dist'),
@@ -27,6 +27,7 @@ module.exports = function (config) {
             alias: {
                 'vue$': 'vue/dist/vue.common.js',
                 '@': resolve('src'),
+                'dev': resolve('dev'),
                 'dist': resolve('dist')
             }
         },

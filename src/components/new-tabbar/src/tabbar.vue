@@ -176,11 +176,13 @@
             */
             createTab (tab) {
                 if (this.useRouter && this.$router) {
+                    tab.path = tab.path || (tab.route && tab.route.path)
+
                     let isExists = this.tabs.some(_tab => {
                         return _tab.path === tab.path
                     })
 
-                    this.$router.push(tab.path)
+                    this.$router.push((tab.route || tab.path))
 
                     if (isExists) return // 如果已经存在 Tab，则仅仅激活路由，保证 tab 与路由的映射唯一性
 
@@ -274,7 +276,10 @@
 
                 if (this.useRouter && this.$router) {
                     const path = this.tabMap.get(tabId).path
-                    this.$router.push(path)
+
+                    if (this.$route.path !== path) {
+                        this.$router.push(path)
+                    }
                 }
 
                 // 同步至 sessionStorage
@@ -420,10 +425,6 @@
                 this.computedId = data.computedId
                 this.tabs = data.tabs
                 data.tabs.forEach(tab => {
-                    // if (this.useRouter && this.$router) {
-                    //     this.$router.push(tab.path)
-                    // }
-
                     // 添加映射
                     this.tabMap.set(tab.id, tab)
                 })
@@ -435,6 +436,7 @@
                 // 恢复激活状态
                 this.$nextTick(() => {
                     this.activateTab(data.activeId)
+                    TabManager.emit('inited')
                 })
             },
 
@@ -541,6 +543,8 @@
             let data = this.syncFromStorage()
             if (data) {
                 this.recoverTabs(data)
+            } else { // 或者在 recover 之后抛出 inited
+                TabManager.emit('inited')
             }
         }
     }

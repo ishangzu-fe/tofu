@@ -2,7 +2,7 @@
   <div
     class="el-select"
     v-clickoutside="handleClose"
-    :class="{'over-hidden': !multipleShowAll}">
+    :class="{'over-hidden': !multipleShowAll, 'is-small': size === 'small'}">
     <div
       class="el-select-tags"
       v-if="multiple"
@@ -98,7 +98,7 @@
   import ElSelectMenu from './select-dropdown.vue';
   import ElOption from './option.vue';
   import ElTag from './dependencies/packages/tag';
-  import ElScrollbar from '@/components/scrollbar';
+  import ElScrollbar from './dependencies/packages/scrollbar';
   import debounce from 'throttle-debounce/debounce';
   import Clickoutside from '@/utils/clickoutside';
   import { addClass, removeClass, hasClass } from '@/utils/dom';
