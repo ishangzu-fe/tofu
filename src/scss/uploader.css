@@ -131,6 +131,15 @@
     }
 }
 
+@-webkit-keyframes progress {
+    0% {
+        background-position: 0 0
+    }
+    100% {
+        background-position: 32px 0
+    }
+}
+
 .el-upload {
     display: inline-block;
     text-align: center;

@@ -64,7 +64,31 @@
   }
 }
 
+@-webkit-keyframes rotate {
+
+  100% {
+    -webkit-transform: rotate(360deg);    
+    transform: rotate(360deg);
+  }
+}
+
 @keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35;
+  }
+  to {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124;
+  }
+}
+
+
+@-webkit-keyframes dash {
   0% {
     stroke-dasharray: 1, 200;
     stroke-dashoffset: 0;

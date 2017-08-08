@@ -1,8 +1,10 @@
 .v-modal-enter {
+  -webkit-animation: v-modal-in .2s ease;  
   animation: v-modal-in .2s ease;
 }
 
 .v-modal-leave {
+  -webkit-animation: v-modal-out .2s ease forwards;  
   animation: v-modal-out .2s ease forwards;
 }
 
@@ -14,7 +16,23 @@
   }
 }
 
+@-webkit-keyframes v-modal-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+  }
+}
+
 @keyframes v-modal-out {
+  0% {
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes v-modal-out {
   0% {
   }
   100% {

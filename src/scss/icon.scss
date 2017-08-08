@@ -82,10 +82,20 @@
 .el-icon-upload2:before{content:"\e686";}
 
 .el-icon-loading {
+  -webkit-animation: rotating 1s linear infinite;  
   animation: rotating 1s linear infinite;
 }
 
 @keyframes rotating {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
+@-webkit-keyframes rotating {
   0% {
     transform: rotateZ(0deg);
   }
