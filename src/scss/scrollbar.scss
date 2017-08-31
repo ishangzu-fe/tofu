@@ -2,36 +2,11 @@
   overflow: hidden;
   position: relative;
 
-  &:hover,
-  &:active,
-  &:focus{
+  &:hover .el-scrollbar-bar,
+  &:active .el-scrollbar-bar,
+  &:focus .el-scrollbar-bar{
     opacity: 1;
     transition: opacity 340ms ease-out;
-  }
-
-
-  .el-scrollbar-wrap{
-    overflow: scroll;
-
-    .el-scrollbar-wrap-hidden-default::-webkit-scrollbar{
-      width: 0;
-      height: 0;
-    }
-  }
-
-  .el-scrollbar-thumb{
-    position: relative;
-    display: block;
-    width:0;
-    height:0;
-    cursor: pointer;
-    border-radius: inherit;
-    background-color: rgba(151,168,190,.3);
-    transition: .3s background-color;
-
-    &:hover{
-      background-color: rgba(151,168,190,.5);
-    }
   }
 
   .el-scrollbar-bar{
@@ -62,3 +37,27 @@
     }
   }
 }
+
+.el-scrollbar-wrap{
+    overflow: scroll;
+  }
+
+  .el-scrollbar-wrap-hidden-default::-webkit-scrollbar{
+    width: 0;
+    height: 0;
+  }
+
+  .el-scrollbar-thumb{
+    position: relative;
+    display: block;
+    width:0;
+    height:0;
+    cursor: pointer;
+    border-radius: inherit;
+    background-color: rgba(151,168,190,.3);
+    transition: .3s background-color;
+
+    &:hover{
+      background-color: rgba(151,168,190,.5);
+    }
+  }
