@@ -98,7 +98,7 @@
   import ElSelectMenu from './select-dropdown.vue';
   import ElOption from './option.vue';
   import ElTag from './dependencies/packages/tag';
-  import ElScrollbar from './dependencies/packages/scrollbar';
+  import ElScrollbar from '../../scrollbar';
   import debounce from 'throttle-debounce/debounce';
   import Clickoutside from '@/utils/clickoutside';
   import { addClass, removeClass, hasClass } from '@/utils/dom';

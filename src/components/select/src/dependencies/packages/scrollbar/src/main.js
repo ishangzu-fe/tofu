@@ -2,7 +2,7 @@
 
 import { addResizeListener, removeResizeListener } from '@/utils/resize-event';
 import scrollbarWidth from '@/utils/scrollbar-width';
-import { toObject } from '../../../utils/util';
+import { toObject } from '@/utils/util';
 import Bar from './bar';
 
 /* istanbul ignore next */
@@ -66,7 +66,7 @@ export default {
         ref="wrap"
         style={ style }
         onScroll={ this.handleScroll }
-        class={ [this.wrapClass, 'el-scrollbar-wrap', gutter ? '' : 'el-scrollbar-wrap--hidden-default'] }>
+        class={ [this.wrapClass, 'el-scrollbar-wrap', gutter ? '' : 'el-scrollbar-wrap-hidden-default'] }>
         { [view] }
       </div>
     );
