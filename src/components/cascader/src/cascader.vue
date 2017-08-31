@@ -131,7 +131,6 @@
                 searchOptions: [],
                 showFMenu: false,
                 isFocus: false,//输入框是否进入焦点
-                currentValue: this.value ? this.value: ''
             }
         },
         computed: {
@@ -145,7 +144,7 @@
                 return this.props.children || 'children';
             },
             currentValue() {
-                return this.value ? this.value : '';
+                return this.value;
             },
             //根据值转换为相应的label
             currentLabel () {

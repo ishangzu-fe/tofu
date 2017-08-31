@@ -251,13 +251,13 @@ export default {
             }
 
             return _self.showOverflowTooltip || _self.showTooltipWhenOverflow
-                ? <el-tooltip
-                effect={ this.effect }
-                placement="top"
-                disabled={ this.tooltipDisabled }>
-                <div class="cell">{ renderCell(h, data) }</div>
-                <span slot="content">{ renderCell(h, data) }</span>
-            </el-tooltip>
+                ? <i-tooltip
+                    effect={ this.effect }
+                    placement="top"
+                    disabled={ this.tooltipDisabled }>
+                    <div class="cell">{ renderCell(h, data) }</div>
+                    <span slot="content">{ renderCell(h, data) }</span>
+                </i-tooltip>
                 : <div class="cell">{ renderCell(h, data) }</div>;
         };
 

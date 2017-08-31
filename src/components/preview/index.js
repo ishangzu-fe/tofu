@@ -7,8 +7,8 @@ document.body.appendChild(div);
 const P = Vue.extend(Preview);
 const instance = new P({ el: div });
 
-Preview.install = (Ctor) => {
+Preview.install = function (Ctor) {
     Ctor.prototype.$preview = instance.preview;
 }
 
-export default Preview;
+module.exports = Preview;
