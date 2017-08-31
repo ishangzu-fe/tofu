@@ -1,3 +1,4 @@
+import Affix from './components/affix';
 import Alert from './components/alert';
 import Autocomplete from './components/autocomplete';
 import Badge from './components/badge';
@@ -52,6 +53,7 @@ import Draggable from './directives/drag/';
 import './scss/index.scss';
 
 const install = (Vue) => {
+    Vue.component('i-affix',Affix);
     Vue.component('i-alert', Alert);
     Vue.component('i-autocomplete', Autocomplete);
     Vue.component('i-button', Button);
