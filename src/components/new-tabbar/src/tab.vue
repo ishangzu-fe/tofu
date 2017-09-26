@@ -2,10 +2,10 @@
     <div
         class="tab"
         :class="{'tab-active': tab.id === activeId,
-                'is-moving': isMoving, 
+                'is-moving': isMoving,
                 'is-not-moving': !isMoving && hasTabMoving}"
-        :style="{width: `${width}px`, 
-                transform: tab.fixed ? 
+        :style="{width: `${width}px`,
+                transform: tab.fixed ?
                 'none' : `translateX(${tab.moveOffset}px)`}"
         @click="activate"
         v-drag.x="!tab.fixed"
@@ -13,7 +13,7 @@
         v-drag:move="onDrag"
         v-drag:end="onDragend">
         <span class="tab-label" :title="tab.label">
-            <span 
+            <span
                 class="tab-label-container"
                 :style="{transform: `translateX(${-labelTranslate}px)`}"
                 @click.stop="activate"
@@ -22,9 +22,9 @@
                 {{tab.label}}
             </span>
         </span>
-        <span 
-            class="tab-close tofu-icon icon-close" 
-            v-if="!tab.fixed" 
+        <span
+            class="tab-close tofu-icon icon-close"
+            v-if="!tab.fixed"
             @click.stop="destroy">
         </span>
     </div>
@@ -187,6 +187,30 @@
         cursor: pointer;
         user-select: none;
 
+        &.in-electron {
+            color: #1F2D3D;
+            border: 1px solid #DFE2E5;
+            border-bottom: none;
+            background: #EFF3F6;
+
+            &.tab-active {
+                color: #1F2D3D;
+                border: 1px solid #DFE2E5;
+                border-bottom: none;
+                background: #fff;
+            }
+
+            &:hover:not(.tab-active) {
+                color: #1F2D3D;
+                background: #EFF3F6;
+                transition: background .3s ease-in;
+
+                .tab-close {
+                    color: #1F2D3D;
+                }
+            }
+        }
+
         &:hover:not(.tab-active) {
             color: $tab-color-active;
 
@@ -207,7 +231,7 @@
                color: $tab-close-color-active-hover;
 
                &.tofu-icon.icon-close:before {
-                   content: "\e6bf"; 
+                   content: "\e6bf";
                }
            }
 
@@ -223,7 +247,7 @@
             content: '';
             width: 300%;
             height: 999px;
-            
+
             position: absolute;
             top: -10px;
             left: -50%;
@@ -266,13 +290,13 @@
             position: absolute;
             right: 0;
             top: 0;
-            
+
             color: $tab-close-color-inactive;
             text-align: center;
 
-            background: transparent;         
+            background: transparent;
 
-            cursor: pointer;         
+            cursor: pointer;
         }
     }
 </style>

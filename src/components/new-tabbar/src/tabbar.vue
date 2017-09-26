@@ -1,7 +1,8 @@
 <template>
-    <div class="tabbar">
+    <div class="tabbar" :class="{'in-electron': electron}">
         <div class="tabbar-tab-container">
             <Tab
+                :class="{'in-electron': electron}"
                 v-for="tab in tabsInStage"
                 :key="tab.id"
                 :tab="tab"
@@ -22,7 +23,10 @@
             @click.stop="toggleStore"
             v-if="mode === 'right' ? true : (tabsInStore.length ? true : false)">
         </span>
-        <div class="tab-store" v-show="showStore"  @click="toggleStore">
+        <div
+            class="tab-store"
+            v-show="showStore"
+            @click="toggleStore">
             <TabStoreItem
                 v-for="tab in tabsInStore"
                 :key="tab.id"
@@ -130,6 +134,7 @@
                 if (options.mode) this.mode = options.mode
                 if (options.useRouter) this.useRouter = options.useRouter
                 if (options.createPos) this.createPos = options.createPos
+                if (options.electron) this.electron = true
 
                 // 生成默认 tab
                 if (options.defaultTab) {
@@ -571,6 +576,30 @@
         position: relative;
 
         background: transparent;
+
+        &.in-electron {
+            border-bottom: 1px solid #DFE2E5;
+
+            .tab-store {
+                right: 35px;
+            }
+
+            .tabbar-store-button {
+                right: 20px;
+                color: #DFE2E5;
+                border: 1px solid #DFE2E5;
+                border-bottom: none;
+                background: #fff;
+
+                &:hover,
+                &.store-button-active {
+                    color: #1F2D3D;
+                    border: 1px solid #DFE2E5;
+                    border-bottom: none;
+                    background: #fff;
+                }
+            }
+        }
 
         .tabbar-tab-container {
             position: absolute;

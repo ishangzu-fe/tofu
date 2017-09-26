@@ -1,5 +1,5 @@
 <template>
-    <div class="previewer" id="previewer-cover">
+    <div class="previewer" id="previewer-cover" @keyup.stop.prevent="handleKeyup">
         <transition name="cover">
             <div
                 class="cover"
@@ -283,6 +283,17 @@ export default {
             }
         },
 
+        handleKeyup (e) {
+            switch (e.key) {
+                case "ArrowLeft":
+                    this.switchImage('left');
+                case "ArrowRight":
+                    this.switchImage('right')
+                default:
+                    return;
+            }
+        },
+
         /**
          * 切换图片
          */
@@ -328,7 +339,7 @@ export default {
                 } else {
                     this.jumpTo(this.fakeIndex)
                 }
-            }, 300);
+            }, 100);
         },
 
         enter (el, done) {

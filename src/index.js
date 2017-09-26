@@ -126,7 +126,8 @@ const install = (Vue) => {
 
 module.exports = {
     install,
+    MessageBox,
     TabManager: Tabbar.manager,
     Tabbar: NewTabbar,
-    previewer: Preview
+    Previewer: Preview
 }
