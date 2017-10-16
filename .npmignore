@@ -4,5 +4,8 @@ node_modules/
 npm-debug.log
 .idea/
 .vscode/
-src/dev/
+bin/
+src/
+dev/
+config/
 index.html
