@@ -32,13 +32,16 @@ var Message = function(options) {
 
 ['success', 'warning', 'info', 'error'].forEach(type => {
     Message[type] = options => {
-        if (typeof options === 'string') {
-            options = {
-                message: options
-            };
+        if (options) {
+            if (typeof options === 'string') {
+                options = {
+                    message: options
+                };
+            }
+            options.type = type;
+
+            return Message(options);
         }
-        options.type = type;
-        return Message(options);
     };
 });
 
