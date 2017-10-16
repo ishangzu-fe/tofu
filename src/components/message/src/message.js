@@ -36,8 +36,9 @@ var Message = function(options) {
             options = {
                 message: options
             };
+        } else {
+            options.type = type;
         }
-        options.type = type;
         return Message(options);
     };
 });
