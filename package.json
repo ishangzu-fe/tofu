@@ -9,7 +9,7 @@
     "email": "frontend@ishangzu.com"
   },
   "scripts": {
-    "dev": "node bin/server.js",
+    "dev": "node bin/dev-server.js",
     "build": "node bin/build.js",
     "test": "ava"
   },

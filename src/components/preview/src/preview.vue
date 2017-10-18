@@ -1,12 +1,16 @@
 <template>
-    <div class="previewer" id="previewer-cover" @keyup.stop.prevent="handleKeyup">
+    <div class="previewer" id="previewer-cover">
         <transition name="cover">
             <div
                 class="cover"
                 ref="cover"
                 v-show="showCover">
-                <div class="cover-top-bar">
+                <div class="cover-header">
                     <span class="serial">{{(parseInt(fakeIndex) + 1)}} / {{loadedImages.length}}</span>
+                    <p class="cover-header-title"
+                        v-show="loadedImages[this.curImgIdx] && loadedImages[this.curImgIdx].title"
+                        v-html="loadedImages[this.curImgIdx] && loadedImages[this.curImgIdx].title">
+                    </p>
                     <span
                         class="close-button tofu-icon icon-close"
                         @click="close">
@@ -22,6 +26,40 @@
                     class="arrow tofu-icon icon-point-right"
                     @click="switchImage('right')"
                 ></span>
+                <transition name="slide">
+                    <ul class="cover-info" v-show="showInfo">
+                        <li v-for="(info, idx) in (loadedImages[this.curImgIdx] && loadedImages[this.curImgIdx].infos)"
+                            :key="idx"
+                            v-html="info">
+                        </li>
+                    </ul>
+                </transition>
+                <div class="cover-footer">
+                    <span
+                        class="cover-footer-button"
+                        v-show="loadedImages[this.curImgIdx] && loadedImages[this.curImgIdx].infos"
+                        @click="showInfo = !showInfo">
+                        <img src="../assets/info.svg">
+                    </span>
+                    <span class="cover-footer-button float-right">
+                        <img src="../assets/download.svg">
+                        <a :href="loadedImages[this.curImgIdx]
+                                && loadedImages[this.curImgIdx].src"
+                            download>
+                        </a>
+                    </span>
+                    <div class="cover-footer-toolbar">
+                        <span class="toolbar-button" @click="rotate">
+                            <img src="../assets/rotate.svg">
+                        </span>
+                        <span class="toolbar-button" @click="zoomOut">
+                            <img src="../assets/minus.svg">
+                        </span>
+                        <span class="toolbar-button" @click="zoomIn">
+                            <img src="../assets/plus.svg">
+                        </span>
+                    </div>
+                </div>
                 <img
                     v-show="loadedImages[this.curImgIdx] && !loadedImages[this.curImgIdx].cached"
                     :src="loadedImages[this.curImgIdx] && loadedImages[this.curImgIdx].src"
@@ -38,6 +76,7 @@
                     :key="image.id">
                     <img
                         class="preview-image"
+                        :ref="`img-${idx}`"
                         v-show="image.id === curImgId && image.cached"
                         :src="image.src"
                         :data-idx="idx"
@@ -88,6 +127,8 @@ export default {
             isJumping: false,
 
             isSwitch: false, // 判断图片的出现是否是切换
+
+            showInfo: false, // 是否展示图片附带信息
         };
     },
 
@@ -125,6 +166,7 @@ export default {
                 data = images
             } else if (typeof images === 'object') {
                 defaultIndex = images.defaultIndex || defaultIndex;
+                this.showInfo = !!images.alwaysShowInfos;
                 data = images.images
             }
 
@@ -287,8 +329,10 @@ export default {
             switch (e.key) {
                 case "ArrowLeft":
                     this.switchImage('left');
+                    break;
                 case "ArrowRight":
-                    this.switchImage('right')
+                    this.switchImage('right');
+                    break;
                 default:
                     return;
             }
@@ -415,6 +459,65 @@ export default {
             el.style.left = '';
             el.style.right = '';
             el.style.transform = '';
+        },
+
+        /**
+         * 旋转图片
+         */
+        rotate () {
+            let transform = this.$refs[`img-${this.curImgIdx}`][0].style.transform;
+            if (~transform.indexOf('rotate')) {
+                let willRotateDeg;
+                const rotatedDeg = transform.match(/rotate\((\d*)deg\)/)[1] - 0;
+                willRotateDeg = rotatedDeg + 90;
+                transform = transform.replace(/rotate\((\d*)deg\)/, `rotate(${willRotateDeg}deg)`);
+            } else {
+                transform += ' rotate(90deg)';
+            }
+
+            console.log(transform);
+
+            this.$refs[`img-${this.curImgIdx}`][0].style.transform = transform;
+        },
+
+        zoomOut () {
+            let transform = this.$refs[`img-${this.curImgIdx}`][0].style.transform;
+            if (~transform.indexOf('scale')) {
+                let willScale;
+                const scaled = transform.match(/scale\((.*)\)/)[1] - 0;
+                if (scaled === .4) {
+                    willScale = .4;
+                } else {
+                    willScale = (scaled - .2).toFixed(1);
+                }
+                transform = transform.replace(/scale\((.*)\)/, `scale(${willScale})`);
+            } else {
+                transform += ' scale(.8)';
+            }
+
+            console.log(transform);
+
+            this.$refs[`img-${this.curImgIdx}`][0].style.transform = transform;
+        },
+
+        zoomIn () {
+            let transform = this.$refs[`img-${this.curImgIdx}`][0].style.transform;
+            if (~transform.indexOf('scale')) {
+                let willScale;
+                const scaled = transform.match(/scale\((.*)\)/)[1] - 0;
+                if (scaled === 2) {
+                    willScale = 2;
+                } else {
+                    willScale = (scaled + .2).toFixed(1);
+                }
+                transform = transform.replace(/scale\((.*)\)/, `scale(${willScale})`);
+            } else {
+                transform += ' scale(1.2)';
+            }
+
+            console.log(transform);
+
+            this.$refs[`img-${this.curImgIdx}`][0].style.transform = transform;
         }
     },
 
@@ -429,6 +532,8 @@ export default {
             this.size = getDimension();
             this.handleResize();
         }
+
+        window.addEventListener('keyup', this.handleKeyup);
     }
 }
 </script>
@@ -449,11 +554,11 @@ export default {
         width: 100%;
         height: 100%;
 
-        background: #000;
+        background: rgba(0, 0, 0, .85);
 
         transition: opacity .500s cubic-bezier(0.4, 0, 0.22, 1);
 
-        .cover-top-bar {
+        .cover-header {
             width: 100%;
             height: 44px;
 
@@ -461,7 +566,18 @@ export default {
             left: 0;
             top: 0;
 
-            background: rgba(0, 0, 0, .3);
+            background: rgb(0, 0, 0);
+
+            .cover-header-title {
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                height: 44px;
+                line-height: 44px;
+
+                color: #fff;
+            }
 
             .serial {
                 height: 44px;
@@ -490,21 +606,112 @@ export default {
             }
         }
 
+        .cover-info {
+            position: absolute;
+            left: 8px;
+            bottom: 50px;
+
+            padding: 10px 12px;
+            line-height: 20px;
+
+            color: #fff;
+            font-size: 12px;
+            border-radius: 6px;
+
+            background: transparent;
+        }
+
+        .cover-footer {
+            width: 100%;
+            height: 44px;
+            line-height: 44px;
+            padding: 0 18px;
+
+            position: absolute;
+            left: 0;
+            bottom: 0;
+
+            color: #fff;
+            background: rgba(0, 0, 0, .3);
+
+            .cover-footer-button {
+                float: left;
+                margin: 0 12px 0 0;
+                width: 24px;
+                height: 44px;
+                cursor: pointer;
+
+                &.float-right {
+                    float: right;
+                    margin: 0 0 0 12px;
+                }
+
+                img {
+                    width: 100%;
+                    height: 24px;
+                    vertical-align: middle;
+                }
+            }
+
+            .cover-footer-toolbar {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                height: 44px;
+                line-height: 44px;
+                margin: 0 auto;
+
+                .toolbar-button {
+                    display: inline-block;
+                    width: 24px;
+                    height: 24px;
+                    line-height: 24px;
+
+                    position: relative;
+                    margin-right: 6px;
+
+                    vertical-align: middle;
+
+                    cursor: pointer;
+
+                    img {
+                        width: 100%;
+                        vertical-align: top;
+                    }
+
+                    a {
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+        }
+
         .arrow {
-            width: 30px;
-            height: 30px;
-            line-height: 30px;
+            width: 34px;
+            height: 80px;
+            line-height: 80px;
 
             position: absolute;
             top: 50%;
 
             color: #fff;
+            font-size: 24px;
             text-align: center;
+
+            border-radius: 4px;
 
             transform: translateY(-50%);
             background: rgba(0, 0, 0, .3);
 
             cursor: pointer;
+
+            &:hover {
+                background: rgba(0, 0, 0, 1);
+            }
 
             &.icon-point-left {
                 left: 6px;
@@ -548,5 +755,17 @@ export default {
 }
 .cover-enter {
     opacity: 0;
+}
+
+.slide-enter-active, .slide-leave-active {
+    transition: all .25s cubic-bezier(0.4, 0, 0.22, 1);
+}
+.slide-enter {
+    opacity: 0;
+    transform: translateY(100px);
+}
+.slide-leave-to {
+    opacity: 0;
+    transform: translateY(100px);
 }
 </style>
