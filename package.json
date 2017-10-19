@@ -1,6 +1,6 @@
 {
   "name": "i-tofu",
-  "version": "0.3.28",
+  "version": "0.3.31",
   "description": "UI Library.",
   "author": "vincent",
   "main": "dist/js/tofu.js",
@@ -9,7 +9,7 @@
     "email": "frontend@ishangzu.com"
   },
   "scripts": {
-    "dev": "node bin/server.js",
+    "dev": "node bin/dev-server.js",
     "build": "node bin/build.js",
     "test": "ava"
   },
