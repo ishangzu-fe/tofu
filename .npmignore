@@ -7,5 +7,6 @@ npm-debug.log
 bin/
 src/
 dev/
+examples/
 config/
 index.html

@@ -8,7 +8,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 Object.keys(baseWebpackConfig.entry).forEach(function (name) {
-  baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
+  baseWebpackConfig.entry[name] = ['./bin/dev-client'].concat(baseWebpackConfig.entry[name])
 })
 
 module.exports = merge(baseWebpackConfig, {
@@ -24,7 +24,7 @@ module.exports = merge(baseWebpackConfig, {
     new webpack.NoEmitOnErrorsPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: 'index.html',
+      template: 'dev/index.html',
       inject: true
     }),
     new FriendlyErrorsPlugin()

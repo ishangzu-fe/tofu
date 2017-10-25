@@ -1,4 +1,4 @@
-import {on,off} from '../../utils/dom';
+import Vue from 'vue'
 
 // 仅沿x或y或两轴移动
 let moveX, moveY, moveAll
@@ -21,9 +21,9 @@ export default (el, binding, vnode) => {
         eventList.mousedown = onMousedown.bind(el)
         eventList.mouseup = onMouseup.bind(el)
         eventList.mousemove = onMousemove.bind(el)
-        on(el, 'mousedown', eventList.mounsedown)
-        on(el, 'mouseup', eventList.mounseup)
-        on(el, 'mousemove', eventList.mounsemove)
+        addListener(el, 'mousedown', eventList.mounsedown)
+        addListener(el, 'mouseup', eventList.mounseup)
+        addListener(el, 'mousemove', eventList.mounsemove)
         // addListener(el, 'mouseleave', onMouseup.bind(el))
 
         el.dataset.canDrag = "true"
@@ -74,6 +74,14 @@ export default (el, binding, vnode) => {
     }
 }
 
+function addListener (el, eventName, fn) {
+    el.addEventListener(eventName, fn)
+}
+
+function removeListener (el, eventName, fn) {
+    el.removeEventListener(eventName, fn)
+}
+
 /**
  * 移除再添加事件句柄
  * @param {HTMLElement} el 
@@ -82,8 +90,8 @@ export default (el, binding, vnode) => {
  * @param {Function} newFn 
  */
 function removeAndAdd (el, eventName, oldFn, newFn) {
-    off(el, eventName, oldFn)
-    on(el, eventName, newFn)
+    removeListener(el, eventName, oldFn)
+    addListener(el, eventName, newFn)
 }
 
 function getHandler (fn, ...params) {

@@ -12,6 +12,9 @@ const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const env = config.build.env
 
 const webpackConfig = merge(baseWebpackConfig, {
+  externals:{
+    'vue':'vue'
+  },
   module: {
     rules: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
@@ -21,27 +24,25 @@ const webpackConfig = merge(baseWebpackConfig, {
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {
     path: config.build.assetsRoot,
-    filename: utils.assetsPath('js/[name].js'),
+    filename: '[name].js',
+    publicPath: config.build.assetsPublicPath,
+    library: "i-tofu",
+    libraryTarget: "commonjs2"
   },
   plugins: [
     new webpack.DefinePlugin({
       'process.env': env
     }),
+    new webpack.optimize.OccurrenceOrderPlugin(true),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
       },
     }),
     new ExtractTextPlugin({
-      filename: utils.assetsPath('css/[name].css')
+      filename: utils.assetsPath('[name].css')
     }),
-    new OptimizeCSSPlugin({
-      cssProcessorOptions: {
-        safe: true
-      }
-    }),
-   
-    new webpack.HashedModuleIdsPlugin(),
+    new OptimizeCSSPlugin(),
    
     // new CopyWebpackPlugin([
     //   {

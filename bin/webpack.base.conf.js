@@ -8,26 +8,27 @@ const vueLoaderConfig = require('./vue-loader.conf')
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
-
+console.log(vueLoaderConfig);
 module.exports = {
   entry: {
-    tofu: resolve('src/index.js')
+    tofu: process.env.NODE_ENV === 'production' 
+        ? resolve('src/index.js')
+        : resolve('dev/index.js')
   },
   output: {
-    path: config.build.assetsRoot,
+    path: resolve('dist'),
     filename: '[name].js',
     publicPath: process.env.NODE_ENV === 'production'
       ? config.build.assetsPublicPath
       : config.dev.assetsPublicPath
   },
-  externals:{
-    'vue':'vue'
-  },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      'vue$': 'vue/dist/vue.esm.js',
+      'vue$': 'vue/dist/vue.common.js',
       '@': resolve('src'),
+      'dev': resolve('dev'),
+      'dist': resolve('dist')
     }
   },
   module: {
@@ -38,10 +39,11 @@ module.exports = {
         options: vueLoaderConfig
       },
       {
-        test: /\.js$/,
+        test: /\.js(x)*$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test')]
+        include: [resolve('src')]
       },
+      
       {
         test: /\.(png|jpe?g|gif)(\?.*)?$/,
         loader: 'url-loader',
@@ -54,7 +56,7 @@ module.exports = {
         test: /\.(woff2?|eot|ttf|otf|svg)(\?.*)?$/,
         loader: 'url-loader',
         options: {
-          limit: 10000,
+          limit: 100000,
           name: utils.assetsPath('fonts/[name].[ext]')
         }
       }
