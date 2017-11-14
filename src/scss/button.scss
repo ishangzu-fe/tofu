@@ -131,14 +131,21 @@
   color:$color-primary;
   background: transparent;
 
+  &.is-disabled{
+    background: none;
+  }
+
   &:hover{
     color:lighten($color-primary,$button-hover-tint-percent);
+
+    &.is-disabled{
+      background: none
+    }
   }
 
   &:active{
     color:darken($color-primary,$button-active-shade-percent);
   }
-
 }
 
 .el-button-large{
@@ -208,6 +215,9 @@
     }
   }
 
+  .el-button+.el-button{
+    margin-left: 0px;
+  }
 }
 
 .el-button+.el-button{

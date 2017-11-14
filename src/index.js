@@ -12,6 +12,7 @@ import { Dropdown, DropdownItem, DropdownMenu } from './components/dropdown';
 import { Form, FormItem } from './components/form';
 import Input from './components/input';
 import InputNumber from './components/input-number';
+import ImgList from './components/imgList';
 import { Loading, LoadingService } from './components/loading';
 import LoadingBar from './components/loading-bar';
 import Message from './components/message';
@@ -74,6 +75,7 @@ const install = (Vue) => {
     Vue.component('i-form-item', FormItem);
     Vue.component('i-input', Input);
     Vue.component('i-input-number', InputNumber);
+    Vue.component('i-img-list',ImgList);
     Vue.component('i-loading-bar', LoadingBar);
     Vue.component('i-pagination', Pagination);
     Vue.component('i-progress', Progress);
