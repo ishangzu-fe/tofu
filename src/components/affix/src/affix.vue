@@ -44,9 +44,6 @@
               offsetTop:{
                   type:Number,
                   default:0
-              },
-              offsetBottom:{
-                  type:Number
               }
           },
           data(){
@@ -56,14 +53,6 @@
               }
           },
           computed:{
-              offsetType(){
-                  let type = 'top';
-                  if(this.offsetBottom >= 0){
-                      type = 'bottom';
-                  }
-
-                  return type;
-              },
               classes(){
                   return [
                       {
@@ -72,47 +61,32 @@
                   ]
               }
           },
-          method:{
+          methods:{
               handleScroll(){
+                  
                 const affix = this.affix;
                 const scrollTop = getScroll(window,true);
                 const elOffset = getOffset(this.$el);
-                const windowHeight = windowHeight;
-                const elHeight = this.$el.getElementByTagName('div')[0].offsetHeight;
-
                 // Fixed Top
-                if ((elOffset.top - this.offsetTop) < scrollTop && this.offsetType == 'top' && !affix) {
+                if ((elOffset.top - this.offsetTop) < scrollTop && !affix) {
                     this.affix = true;
                     this.styles = {
                         top: `${this.offsetTop}px`,
                         left: `${elOffset.left}px`,
                         width: `${this.$el.offsetWidth}px`
                     };
-                    this.$emit('on-change', true);
-                } else if ((elOffset.top - this.offsetTop) > scrollTop && this.offsetType == 'top' && affix) {
+                    this.$emit('change', true);
+                } else if ((elOffset.top - this.offsetTop) > scrollTop && affix) {
                     this.affix = false;
                     this.styles = null;
-                    this.$emit('on-change', false);
+                    this.$emit('change', false);
                 }
-                // Fixed Bottom
-                if ((elOffset.top + this.offsetBottom + elHeight) > (scrollTop + windowHeight) && this.offsetType == 'bottom' && !affix) {
-                    this.affix = true;
-                    this.styles = {
-                        bottom: `${this.offsetBottom}px`,
-                        left: `${elOffset.left}px`,
-                        width: `${this.$el.offsetWidth}px`
-                    };
-                    this.$emit('on-change', true);
-                } else if ((elOffset.top + this.offsetBottom + elHeight) < (scrollTop + windowHeight) && this.offsetType == 'bottom' && affix) {
-                    this.affix = false;
-                    this.styles = null;
-                    this.$emit('on-change', false);
-                }
+                
               }
           },
           mounted(){
               on(window,'scroll',this.handleScroll);
-              on(window,'resize',this.handleScroll)
+              on(window,'resize',this.handleScroll);              
           },
           beforeDestory(){
               off(window,'scroll',this.handleScroll);

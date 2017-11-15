@@ -642,8 +642,17 @@ export default {
                 cursor: pointer;
 
                 &.float-right {
+                    position: relative;
                     float: right;
                     margin: 0 0 0 12px;
+
+                    a{
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        top: 0px;
+                        left: 0px;
+                    }
                 }
 
                 img {
