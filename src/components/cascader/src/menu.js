@@ -58,7 +58,7 @@ export default {
                 this.$emit('pick', this.activeValue, false);
             } else {
                 //触发item改变事件
-                this.$emit('active-item-change', this.activeValue);
+                this.$emit('active-item-change', this.activeValue,item,menuIndex);
             }
         },
         /**

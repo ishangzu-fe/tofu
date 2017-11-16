@@ -122,6 +122,7 @@
         },
         data () {
             return {
+                currentValue:this.value || [],
                 inputHover: false,//鼠标是否经过选择器
                 hasMenu: false,//是否存在菜单
                 showMenu: false,//是否显示菜单
@@ -143,9 +144,7 @@
             childrenKey () {
                 return this.props.children || 'children';
             },
-            currentValue() {
-                return this.value;
-            },
+
             //根据值转换为相应的label
             currentLabel () {
                 if (!this.currentValue || this.currentValue.length <= 0) {
@@ -185,6 +184,9 @@
             }
         },
         watch: {
+            value(val){
+                this.currentValue = val;
+            },
             currentValue(value) {
                 this.dispatch('form-item', 'el.form.change', [value]);
             }
@@ -275,7 +277,7 @@
              */
             handleActiveItemChange (val) {
                 this.$forceUpdate();
-                this.$emit('active-item-change', val);
+                this.$emit('active-item-change', ...arguments);
             }
         },
         created () {
