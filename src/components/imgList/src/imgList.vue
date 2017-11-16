@@ -1,7 +1,11 @@
 <template>
     <ul class="img-list">
-        <li v-for="(item,index) in files" :key="item.url">
+        <li v-for="(item,index) in files" :key="item.url" :class="{'has-input':hasEdit}">
             <img :src="item.url + '@115w_115h_1c_1e'">
+            <i-input size="small" v-model="item[props.name]" v-if="hasInput"></i-input>
+            <i-select size="small" v-model="item[props.type]" v-if="hasSelect">
+                <i-option v-for="o in typeOptions" :key="o[props.selectValue]" :label="o[props.selectLabel]" :value="o[props.selectValue]"></i-option>
+            </i-select>
             <span class="img-actions">
                 <span class="img-item prev" :class="{'hidden':index==0}" @click="handlePrev(index)" v-if="order">
                     <i class="el-icon-arrow-left" style="transform: scale(0.8);"></i>
@@ -44,6 +48,31 @@ export default {
     deleteTip: {
       type: Boolean,
       default: false
+    },
+    hasInput:{
+      type: Boolean,
+      default: false
+    },
+    hasSelect:{
+      type: Boolean,
+      default: false
+    },
+    typeOptions:{
+        type:Array,
+        default() {
+            return [];
+        }
+    },
+    props:{
+        type: Object,
+        default() {
+            return {
+                name: 'name',
+                type: 'type',
+                selectLabel:'label',
+                selectValue:'value'
+            }
+        }
     }
   },
   methods: {
@@ -103,6 +132,9 @@ export default {
     },
     imgLength() {
       return this.value.length;
+    },
+    hasEdit(){
+      return this.hasInput || this.hasSelect;
     }
   }
 };
@@ -116,18 +148,22 @@ export default {
     float: left;
     position: relative;
     margin-right: 10px;
-    border-radius: 2px;
     overflow: hidden;
+
+    &.has-input{
+        height: 146px;
+    }
   }
   img {
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
+      width: 100%;
+      height: 115px;
+      border-radius: 2px;
+      cursor: pointer;
   }
   .img-actions {
     position: absolute;
     width: 100%;
-    height: 100%;
+    height: 115px;
     line-height: 115px;
     left: 0;
     top: 0;
