@@ -64,8 +64,7 @@
                     v-show="loadedImages[this.curImgIdx] && !loadedImages[this.curImgIdx].cached"
                     :src="loadedImages[this.curImgIdx] && loadedImages[this.curImgIdx].src"
                     class="loading-image"
-                    alt="图片加载失败">
-                </img>
+                    alt="图片加载失败" />
                 <transition
                     name="scale"
                     @enter="enter"
@@ -482,15 +481,17 @@ export default {
 
         zoomOut () {
             let transform = this.$refs[`img-${this.curImgIdx}`][0].style.transform;
+            console.log(transform);
             if (~transform.indexOf('scale')) {
                 let willScale;
-                const scaled = transform.match(/scale\((.*)\)/)[1] - 0;
+                const scaled = transform.match(/scale\((.*?)\)/)[1] - 0;
+                console.log(scaled);
                 if (scaled === .4) {
                     willScale = .4;
                 } else {
                     willScale = (scaled - .2).toFixed(1);
                 }
-                transform = transform.replace(/scale\((.*)\)/, `scale(${willScale})`);
+                transform = transform.replace(/scale\((.*?)\)/, `scale(${willScale})`);
             } else {
                 transform += ' scale(.8)';
             }
@@ -504,13 +505,13 @@ export default {
             let transform = this.$refs[`img-${this.curImgIdx}`][0].style.transform;
             if (~transform.indexOf('scale')) {
                 let willScale;
-                const scaled = transform.match(/scale\((.*)\)/)[1] - 0;
+                const scaled = transform.match(/scale\((.*?)\)/)[1] - 0;
                 if (scaled === 2) {
                     willScale = 2;
                 } else {
                     willScale = (scaled + .2).toFixed(1);
                 }
-                transform = transform.replace(/scale\((.*)\)/, `scale(${willScale})`);
+                transform = transform.replace(/scale\((.*?)\)/, `scale(${willScale})`);
             } else {
                 transform += ' scale(1.2)';
             }
