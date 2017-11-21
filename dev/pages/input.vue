@@ -1,8 +1,9 @@
 <template>
     <div id="input">
+        <div>{{input}}</div>
         <demo-block title="基础用法">
             <i-col :span="4">
-                <i-input v-model="input" placeholder="请输入内容"></i-input>
+                <i-input v-model="input" placeholder="请输入内容"  ></i-input>
             </i-col>
         </demo-block>
         <demo-block title="禁用状态">
@@ -26,28 +27,66 @@
                     <template slot="prepend">Http://</template>
                 </i-input>
             </i-col>
-            <!--<i-col :span="6">-->
-                <!--<i-input placeholder="请输入内容" v-model="input6">-->
-                    <!--<template slot="append">.com</template>-->
-                <!--</i-input>-->
-            <!--</i-col>-->
+            <i-col :span="6" :offset="1">
+                <i-input placeholder="请输入内容" v-model="input6">
+                    <template slot="append">.com</template>
+                </i-input>
+            </i-col>
+            <i-col :span="8" :offset="1">
+                <i-input placeholder="请输入内容" v-model="input7">
+                    <i-select v-model="select" slot="prepend" placeholder="请选择">
+                        <i-option label="西湖区" value="1"></i-option>
+                        <i-option label="萧山区" value="2"></i-option>
+                        <i-option label="滨江区" value="3"></i-option>
+                    </i-select>
+                    <i-button slot="append" icon="search"></i-button>
+                </i-input>
+            </i-col>
+        </demo-block>
+        <demo-block title="不同尺寸">
+            <i-row :gutter="10">
+                <i-col :span="6">
+                    <i-input size="large" placeholder="请输入内容"></i-input>
+                </i-col>
+                <i-col :span="6">
+                    <i-input placeholder="请输入内容"></i-input>
+                </i-col>
+                <i-col :span="6">
+                    <i-input placeholder="请输入内容" size="small"></i-input>
+                </i-col>
+                <i-col :span="6">
+                    <i-input placeholder="请输入内容" size="mini"></i-input>
+                </i-col>
+            </i-row>
         </demo-block>
     </div>
 </template>
 <script>
+
     export default {
         data(){
             return {
-                input:'',
+                input:'fff',
                 input2:'',
                 input3:'',
                 input4:'',
                 input5:'',
-                input6:''
+                input6:'',
+                input7:'',
+                select:'',
+                test:''
             }
         },
         methods:{
-
+            handleInput(val){
+                console.log(val)
+            }
         }
     }
 </script>
+<style lang="scss" scoped>
+    .el-select{
+        width: 90px;
+
+    }
+</style>

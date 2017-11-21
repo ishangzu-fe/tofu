@@ -1,5 +1,5 @@
-import {on,off} from '../../../utils/dom';
-import { renderThumbStyle, BAR_MAP } from './util';
+import {on, off} from '@/utils/dom';
+import {renderThumbStyle, BAR_MAP} from './util';
 
 /* istanbul ignore next */
 export default {
@@ -22,17 +22,17 @@ export default {
     },
 
     render(h) {
-        const { size, move, bar } = this;
+        const {size, move, bar} = this;
 
         return (
             <div
-                class={ ['el-scrollbar-bar', 'is-' + bar.key] }
-                onMousedown={ this.clickTrackHandler } >
+                class={['el-scrollbar-bar', 'is-' + bar.key]}
+                onMousedown={this.clickTrackHandler}>
                 <div
                     ref="thumb"
                     class="el-scrollbar-thumb"
-                    onMousedown={ this.clickThumbHandler }
-                    style={ renderThumbStyle({ size, move, bar }) }>
+                    onMousedown={this.clickThumbHandler}
+                    style={renderThumbStyle({size, move, bar})}>
                 </div>
             </div>
         );

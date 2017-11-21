@@ -1,5 +1,3 @@
-import Vue from 'vue';
-
 export const BAR_MAP = {
     vertical: {
         offset: 'offsetHeight',
@@ -23,7 +21,7 @@ export const BAR_MAP = {
     }
 };
 
-export function renderThumbStyle({ move, size, bar }) {
+export function renderThumbStyle({move, size, bar}) {
     const style = {};
     const translate = `translate${bar.axis}(${ move }%)`;
 
@@ -34,5 +32,3 @@ export function renderThumbStyle({ move, size, bar }) {
 
     return style;
 };
-
-export const toObject = Vue.util.toObject;

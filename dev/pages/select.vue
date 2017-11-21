@@ -29,19 +29,19 @@
                     value: '选项5',
                     label: '北京烤鸭'
                 }, {
-                    value: '选项5',
+                    value: '选项6',
                     label: '北京烤鸭'
                 }, {
-                    value: '选项5',
+                    value: '选项7',
                     label: '北京烤鸭'
                 }, {
-                    value: '选项5',
+                    value: '选项8',
                     label: '北京烤鸭'
                 }, {
-                    value: '选项5',
+                    value: '选项9',
                     label: '北京烤鸭'
                 }, {
-                    value: '选项5',
+                    value: '选项10',
                     label: '北京烤鸭'
                 }],
                 value:''

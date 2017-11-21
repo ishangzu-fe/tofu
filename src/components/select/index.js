@@ -1,9 +1,7 @@
 import Select from './src/select';
-import Option from './src/option';
-import OptionGroup from './src/option-group';
+import SelectOption from './src/option';
+import SelectOptionGroup from './src/option-group';
 
-export {
-    Select,
-    Option,
-    OptionGroup
-};
+module.exports = {
+    Select,SelectOption,SelectOptionGroup
+}

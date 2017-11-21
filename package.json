@@ -16,7 +16,7 @@
   "dependencies": {
     "async-validator": "^1.6.8",
     "throttle-debounce": "^1.0.1",
-    "vue": "^2.2.1",
+    "vue": "^2.3.0",
     "wind-dom": "^0.0.3"
   },
   "devDependencies": {
@@ -36,6 +36,7 @@
     "connect-history-api-fallback": "^1.3.0",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.0",
+    "deepmerge": "^2.0.1",
     "eventsource-polyfill": "^0.9.6",
     "express": "^4.14.1",
     "extract-text-webpack-plugin": "^2.1.0",
@@ -57,7 +58,7 @@
     "vue-loader": "^10.0.4",
     "vue-router": "2.7.0",
     "vue-style-loader": "^1.0.0",
-    "vue-template-compiler": "^2.2.5",
+    "vue-template-compiler": "^2.3.0",
     "webpack": "^2.2.1",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-middleware": "^1.12.0",

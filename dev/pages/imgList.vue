@@ -7,20 +7,22 @@
         <demo-block title="可设置图片描述">
             <i-img-list v-model="files" :has-input="true"></i-img-list>
             <i-button @click="show">查看数据</i-button>
+
         </demo-block>
         <demo-block title="可设置图片类型">
             <i-img-list v-model="files" :has-select="true" :type-options="options"></i-img-list>
             <i-button @click="show">查看数据</i-button>
+
         </demo-block>
         <demo-block title="图片排序">
-            <i-img-list v-model="files2" :order="true" ></i-img-list>            
-        </demo-block>  
+            <i-img-list v-model="files2" :order="true" ></i-img-list>
+        </demo-block>
         <demo-block title="禁止图片删除">
-            <i-img-list v-model="files2" :disabled="true" ></i-img-list>            
-        </demo-block> 
+            <i-img-list v-model="files2" :disabled="true" ></i-img-list>
+        </demo-block>
         <demo-block title="图片删除提示">
-            <i-img-list v-model="files2" :delete-tip="true" ></i-img-list>            
-        </demo-block> 
+            <i-img-list v-model="files2" :delete-tip="true" ></i-img-list>
+        </demo-block>
     </div>
 </template>
 
@@ -69,7 +71,7 @@
                     url:'http://img.ishangzu.com/erp/2017/11/7/20/35f69a82-cb4b-4eda-8bd5-ed2326105e1a.JPG',
                     name:'图片test',
                     infos:['test-fffff','1981-01-01']
-                })
+                });
             },
             show(){
                 console.log(this.files)
