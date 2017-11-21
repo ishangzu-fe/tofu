@@ -10,5 +10,4 @@ yarn-error.log
 src/test/
 karma.conf.js
 
-dev/
 package-lock.json
