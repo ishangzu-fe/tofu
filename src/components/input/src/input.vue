@@ -5,8 +5,8 @@
             {
                 'is-disabled': disabled,
                 'el-input-group': $slots.prepend || $slots.append,
-                'el-input-group-append': $slots.append,
-                'el-input-group-prepend': $slots.prepend
+                'el-input-group-append-wrap': $slots.append,
+                'el-input-group-prepend-wrap': $slots.prepend
             }
         ]">
         <template v-if="type !== 'textarea'">
@@ -181,7 +181,7 @@
                     this.resizeTextarea();
                 });
                 this.currentValue = value;
-                this.$emit('input', value);
+//                this.$emit('input', value);
                 this.$emit('change', value);
                 if (this.validateEvent) {
                     this.dispatch('form-item', 'el.form.change', [value]);
