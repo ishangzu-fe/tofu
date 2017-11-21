@@ -189,7 +189,7 @@
             placeholder: {
                 type: String,
                 default() {
-                    return t('el.select.placeholder');
+                    return $t('el.select.placeholder');
                 }
             },
             defaultFirstOption: Boolean,
@@ -246,7 +246,7 @@
                 if (this.filterable && !this.multiple) {
                     this.inputLength = 20;
                 }
-//                this.$emit('change', val);
+                this.$emit('change', val);
                 this.dispatch('ElFormItem', 'el.form.change', val);
             },
 
@@ -324,7 +324,7 @@
                         }
                     }
                 }
-//                this.$emit('visible-change', val);
+                this.$emit('visible-change', val);
             },
 
             options(val) {
@@ -345,14 +345,14 @@
 
         methods: {
             handleIconHide() {
-                let icon = this.$el.querySelector('.el-input__icon');
+                let icon = this.$el.querySelector('.el-input-icon');
                 if (icon) {
                     removeClass(icon, 'is-reverse');
                 }
             },
 
             handleIconShow() {
-                let icon = this.$el.querySelector('.el-input__icon');
+                let icon = this.$el.querySelector('.el-input-icon');
                 if (icon && !hasClass(icon, 'el-icon-circle-close')) {
                     addClass(icon, 'is-reverse');
                 }
@@ -678,10 +678,10 @@
         created() {
             this.cachedPlaceHolder = this.currentPlaceholder = this.placeholder;
             if (this.multiple && !Array.isArray(this.value)) {
-//                this.$emit('input', []);
+                this.$emit('input', []);
             }
             if (!this.multiple && Array.isArray(this.value)) {
-//                this.$emit('input', '');
+                this.$emit('input', '');
             }
 
             this.debouncedOnInputChange = debounce(this.debounce, () => {
