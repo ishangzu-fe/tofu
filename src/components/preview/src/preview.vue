@@ -325,6 +325,9 @@ export default {
         },
 
         handleKeyup (e) {
+            if(this.$el.children[0].style['display'] == 'none'){
+                return;
+            }
             switch (e.key) {
                 case "ArrowLeft":
                     this.switchImage('left');
@@ -357,7 +360,6 @@ export default {
 
                 this.fakeIndex += 1;
             }
-
             this.jumpTo(this.fakeIndex);
         },
 
