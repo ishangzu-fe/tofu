@@ -1,21 +1,28 @@
 <template>
     <transition name="md-fade-bottom" @after-leave="$emit('dodestroy')">
-        <div v-show="visible"
+        <div ref="popper"
+             v-show="visible"
              :style="{ width: width + 'px' }"
+             :class="popperClass"
              class="el-picker-panel time-select">
-            <div class="el-picker-panel-content">
+            <el-scrollbar noresize wrap-class="el-picker-panel-content">
                 <div class="time-select-item"
                      v-for="item in items"
+                     :key="item.value"
                      :class="{ selected: value === item.value, disabled: item.disabled }"
                      :disabled="item.disabled"
-                     @click="handleClick(item)">{{ item.value }}</div>
-            </div>
+                     @click="handleClick(item)">{{ item.value }}
+                </div>
+            </el-scrollbar>
         </div>
     </transition>
 </template>
 
 <script type="text/babel">
-    const parseTime = function(time) {
+    import ElScrollbar from '@/components/scrollbar';
+    import scrollIntoView from '@/utils/scroll-into-view'
+
+    const parseTime = function (time) {
         const values = ('' || time).split(':');
         if (values.length >= 2) {
             const hours = parseInt(values[0], 10);
@@ -30,7 +37,7 @@
         return null;
     };
 
-    const compareTime = function(time1, time2) {
+    const compareTime = function (time1, time2) {
         const value1 = parseTime(time1);
         const value2 = parseTime(time2);
 
@@ -44,11 +51,11 @@
         return minutes1 > minutes2 ? 1 : -1;
     };
 
-    const formatTime = function(time) {
+    const formatTime = function (time) {
         return (time.hours < 10 ? '0' + time.hours : time.hours) + ':' + (time.minutes < 10 ? '0' + time.minutes : time.minutes);
     };
 
-    const nextTime = function(time, step) {
+    const nextTime = function (time, step) {
         const timeValue = parseTime(time);
         const stepValue = parseTime(step);
 
@@ -67,11 +74,16 @@
     };
 
     export default {
+        components: {ElScrollbar},
         watch: {
-            minTime(val) {
-                if (this.value && val && compareTime(this.value, val) === -1) {
+            value(val) {
+                if (!val) return;
+                if (this.minTime && compareTime(val, this.minTime) < 0) {
+                    this.$emit('pick');
+                } else if (this.maxTime && compareTime(val, this.maxTime) > 0) {
                     this.$emit('pick');
                 }
+                this.$nextTick(() => this.scrollToOption());
             }
         },
 
@@ -81,19 +93,28 @@
                     this.$emit('pick', item.value);
                 }
             },
-            handleClear(){
-                this.$emit('pick','');
+            handleClear() {
+                this.$emit('pick', '');
+            },
+            scrollToOption(className = 'selected') {
+                const menu = this.$refs.popper.querySelector('.el-picker-panel-content');
+                scrollIntoView(menu, menu.getElementsByClassName(className)[0]);
+            },
+            handleMenuEnter() {
+                this.$nextTick(() => this.scrollToOption());
             }
         },
 
         data() {
             return {
+                popperClass: '',
                 start: '09:00',
                 end: '18:00',
                 step: '00:30',
                 value: '',
                 visible: false,
                 minTime: '',
+                maxTime: '',
                 width: 0
             };
         },
@@ -111,7 +132,8 @@
                     while (compareTime(current, end) <= 0) {
                         result.push({
                             value: current,
-                            disabled: compareTime(current, this.minTime || '00:00') <= 0
+                            disabled: compareTime(current, this.minTime || '00:00') <= 0 ||
+                            compareTime(current, this.maxTime || '100:100') >= 0
                         });
                         current = nextTime(current, step);
                     }
