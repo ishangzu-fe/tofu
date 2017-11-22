@@ -8,6 +8,7 @@ import Card from '../pages/card'
 import Cascader from '../pages/cascader'
 import Checkbox from '../pages/checkbox'
 import DatePicker from '../pages/datePicker'
+import TimePicker from '../pages/timePicker'
 import Input from '../pages/input'
 import ImgList from '../pages/imgList'
 import Layout from '../pages/layout'
@@ -25,6 +26,7 @@ let routes = [
     {path: '/cascader', component:Cascader},
     {path: '/checkbox', component:Checkbox},
     {path: '/datePicker', component:DatePicker},
+    {path: '/timePicker', component:TimePicker},
     {path: '/input', component:Input},
     {path: '/imgList', component:ImgList},
     {path: '/layout', component:Layout},

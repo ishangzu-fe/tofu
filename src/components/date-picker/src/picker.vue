@@ -1,5 +1,5 @@
 <template>
-    <i-input
+    <el-input
             class="el-date-editor"
             :class="'el-date-editor-' + type"
             :readonly="!editable || readonly"
@@ -22,16 +22,16 @@
            @mouseleave="showClose = false"
            v-if="haveTrigger">
         </i>
-    </i-input>
+    </el-input>
 </template>
 
 <script>
     import Vue from 'vue';
-    import Clickoutside from '../../../utils/clickoutside';
+    import Clickoutside from '@/utils/clickoutside';
     import { formatDate, parseDate, getWeekNumber, equalDate, isDate } from './util';
-    import Popper from '../../../utils/vue-popper';
-    import Emitter from '../../../utils/emitter';
-    import ElInput from '../../input';
+    import Popper from '@/utils/vue-popper';
+    import Emitter from '@/utils/emitter';
+    import ElInput from '@/components/input';
 
     const NewPopper = {
         props: {
@@ -211,7 +211,7 @@
             pickerOptions: {}
         },
 
-        components: { 'i-input':ElInput },
+        components: { ElInput },
 
         directives: { Clickoutside },
 
@@ -391,7 +391,6 @@
 
             handleKeydown(event) {
                 const keyCode = event.keyCode;
-                console.log('xxxx')
                 // tab
                 if (keyCode === 9) {
                     this.pickerVisible = false;

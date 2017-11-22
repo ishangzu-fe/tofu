@@ -17,9 +17,9 @@
 
 .el-time-panel-content{
   font-size: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  //display: -webkit-box;
+  //display: -ms-flexbox;
+  //display: flex;
   position: relative;
   overflow: hidden;
 
@@ -32,7 +32,7 @@
     font-size: 14px;
     margin-top: -15px;
     line-height: 16px;
-    background-color: #20a0ff;
+    background-color: $color-primary;
     height: 32px;
     z-index: -1;
     left: 0;
@@ -43,12 +43,12 @@
   }
 
   &::after{
-    left: calc(100%/3*2) ;
+    left: 66.66667% ;
     margin-left: -2px;
   }
 
   &::before{
-    padding-left: calc(100%/3);
+    padding-left: 33.3333333%;
     margin-right: -2px;
   }
 }

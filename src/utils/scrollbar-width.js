@@ -25,6 +25,5 @@ export default function() {
     outer.parentNode.removeChild(outer);
     scrollBarWidth = widthNoScroll - widthWithScroll;
 
-
     return scrollBarWidth;
 };

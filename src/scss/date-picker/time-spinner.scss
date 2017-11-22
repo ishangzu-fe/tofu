@@ -1,20 +1,26 @@
 .el-time-spinner{
-  display: flex;
   width: 100%;
+  white-space: nowrap;
+
+  &.has-seconds{
+    .el-time-spinner-wrapper{
+      width: 33.33333%;
+    }
+  }
+
+  .el-scrollbar-wrap{
+    margin-bottom: auto !important;
+    //margin-right: auto !important;
+  }
 }
 
 .el-time-spinner-wrapper{
-  height: 190px;
-  overflow: hidden;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  max-height: 190px;
+  overflow: auto;
+  display: inline-block;
   vertical-align: top;
   position: relative;
 
-  &:hover{
-    overflow-y: auto;
-  }
 }
 
 .el-time-spinner-list{

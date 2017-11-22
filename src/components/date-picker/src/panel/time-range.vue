@@ -1,41 +1,54 @@
 <template>
-    <transition name="md-fade-bottom" @after-leave="$emit('dodestroy')">
-        <div v-show="visible"
-             :style="{ width: width + 'px' }"
-             class="el-time-range-picker el-picker-panel">
+    <transition
+            name="el-zoom-in-top"
+            @before-enter="panelCreated"
+            @after-leave="$emit('dodestroy')">
+        <div
+                v-show="visible"
+                :style="{ width: width + 'px' }"
+                class="el-time-range-picker el-picker-panel"
+                :class="popperClass">
             <div class="el-time-range-picker-content">
                 <div class="el-time-range-picker-cell">
                     <div class="el-time-range-picker-header">{{ $t('el.datepicker.startTime') }}</div>
-                    <div class="el-time-range-picker-body el-time-panel-content">
-                        <time-spinner ref="minSpinner"
-                                      :show-seconds="showSeconds"
-                                      @change="handleMinChange"
-                                      @select-range="setMinSelectionRange"
-                                      :hours="minHours"
-                                      :minutes="minMinutes"
-                                      :seconds="minSeconds">
+                    <div
+                            :class="{ 'has-seconds': showSeconds }"
+                            class="el-time-range-picker-body el-time-panel-content">
+                        <time-spinner
+                                ref="minSpinner"
+                                :show-seconds="showSeconds"
+                                @change="handleMinChange"
+                                @select-range="setMinSelectionRange"
+                                :hours="minHours"
+                                :minutes="minMinutes"
+                                :seconds="minSeconds">
                         </time-spinner>
                     </div>
                 </div>
                 <div class="el-time-range-picker-cell">
                     <div class="el-time-range-picker-header">{{ $t('el.datepicker.endTime') }}</div>
-                    <div class="el-time-range-picker-body el-time-panel-content">
-                        <time-spinner ref="maxSpinner"
-                                      :show-seconds="showSeconds"
-                                      @change="handleMaxChange"
-                                      @select-range="setMaxSelectionRange"
-                                      :hours="maxHours"
-                                      :minutes="maxMinutes"
-                                      :seconds="maxSeconds">
+                    <div
+                            :class="{ 'has-seconds': showSeconds }"
+                            class="el-time-range-picker-body el-time-panel-content">
+                        <time-spinner
+                                ref="maxSpinner"
+                                :show-seconds="showSeconds"
+                                @change="handleMaxChange"
+                                @select-range="setMaxSelectionRange"
+                                :hours="maxHours"
+                                :minutes="maxMinutes"
+                                :seconds="maxSeconds">
                         </time-spinner>
                     </div>
                 </div>
             </div>
             <div class="el-time-panel-footer">
-                <button type="button"
+                <button
+                        type="button"
                         class="el-time-panel-btn cancel"
                         @click="handleCancel()">{{ $t('el.datepicker.cancel') }}</button>
-                <button type="button"
+                <button
+                        type="button"
                         class="el-time-panel-btn confirm"
                         @click="handleConfirm()"
                         :disabled="btnDisabled">{{ $t('el.datepicker.confirm') }}</button>
@@ -46,7 +59,8 @@
 
 <script type="text/babel">
     import { parseDate, limitRange } from '../util';
-    import Locale from '../../../../mixins/locale';
+    import Locale from '@/mixins/locale';
+    import TimeSpinner from '../basic/time-spinner';
 
     const MIN_TIME = parseDate('00:00:00', 'HH:mm:ss');
     const MAX_TIME = parseDate('23:59:59', 'HH:mm:ss');
@@ -70,9 +84,7 @@
     export default {
         mixins: [Locale],
 
-        components: {
-            TimeSpinner: require('../basic/time-spinner')
-        },
+        components: { TimeSpinner },
 
         computed: {
             showSeconds() {
@@ -82,30 +94,11 @@
 
         props: ['value'],
 
-        watch: {
-            value(val) {
-                const time = clacTime(val);
-                if (time.minTime === this.minTime && time.maxTime === this.maxTime) {
-                    return;
-                }
-
-                this.handleMinChange({
-                    hours: time.minTime.getHours(),
-                    minutes: time.minTime.getMinutes(),
-                    seconds: time.minTime.getSeconds()
-                });
-                this.handleMaxChange({
-                    hours: time.maxTime.getHours(),
-                    minutes: time.maxTime.getMinutes(),
-                    seconds: time.maxTime.getSeconds()
-                });
-            }
-        },
-
         data() {
             const time = clacTime(this.$options.defaultValue);
 
             return {
+                popperClass: '',
                 minTime: time.minTime,
                 maxTime: time.maxTime,
                 btnDisabled: isDisabled(time.minTime, time.maxTime),
@@ -121,15 +114,46 @@
             };
         },
 
+        watch: {
+            value(newVal) {
+                this.panelCreated();
+                this.$nextTick(_ => this.ajustScrollTop());
+            }
+        },
+
         methods: {
+            panelCreated() {
+                const time = clacTime(this.value);
+                if (time.minTime === this.minTime && time.maxTime === this.maxTime) {
+                    return;
+                }
+
+                this.handleMinChange({
+                    hours: time.minTime.getHours(),
+                    minutes: time.minTime.getMinutes(),
+                    seconds: time.minTime.getSeconds()
+                });
+                this.handleMaxChange({
+                    hours: time.maxTime.getHours(),
+                    minutes: time.maxTime.getMinutes(),
+                    seconds: time.maxTime.getSeconds()
+                });
+            },
+
             handleClear() {
                 this.handleCancel();
             },
+
             handleCancel() {
                 this.$emit('pick');
             },
 
             handleChange() {
+                if (this.minTime > this.maxTime) return;
+                MIN_TIME.setFullYear(this.minTime.getFullYear());
+                MIN_TIME.setMonth(this.minTime.getMonth(), this.minTime.getDate());
+                MAX_TIME.setFullYear(this.maxTime.getFullYear());
+                MAX_TIME.setMonth(this.maxTime.getMonth(), this.maxTime.getDate());
                 this.$refs.minSpinner.selectableRange = [[MIN_TIME, this.maxTime]];
                 this.$refs.maxSpinner.selectableRange = [[this.minTime, MAX_TIME]];
                 this.handleConfirm(true);
