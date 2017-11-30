@@ -14,6 +14,7 @@ import ImgList from '../pages/imgList'
 import Layout from '../pages/layout'
 import Message from '../pages/message'
 import Select from '../pages/select'
+import Switch from '../pages/switch'
 
 let routes = [
     {path: '/',component:Hello},
@@ -31,7 +32,8 @@ let routes = [
     {path: '/imgList', component:ImgList},
     {path: '/layout', component:Layout},
     {path: '/message', component:Message},
-    {path: '/select', component:Select}
+    {path: '/select', component:Select},
+    {path: '/switch', component:Switch}
 ]
 
 export default routes;
