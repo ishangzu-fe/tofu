@@ -254,10 +254,17 @@ $button-hover-tint-percent:20%;
 $button-active-shade-percent:10%;
 
 //Switch
-$switch-on-color:#20a0ff;
+$switch-on-color:$color-primary;
 $switch-oof-color:#c0ccda;
 $switch-disabled-color:#e5e9f3;
 $switch-disabled-text-color:#f9fafc;
+
+$switch-font-size:$font-size-base;
+$switch-core-border-radius:12px;
+$switch-width:46px;
+$switch-height:22px;
+$switch-button-size:16px;
+$switch-focus-border:$color-primary;
 
 //Dialog
 $dialog-background-color:$color-blue;
@@ -393,3 +400,4 @@ $datepicker-text-hover-color: #20a0ff;
 //loading
 $loading-spinner-size:42px;
 $loading-fullscreen-spinner-size:50px;
+
