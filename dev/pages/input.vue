@@ -1,6 +1,5 @@
 <template>
     <div id="input">
-        <div>{{input}}</div>
         <demo-block title="基础用法">
             <i-col :span="4">
                 <i-input v-model="input" placeholder="请输入内容"  ></i-input>
@@ -74,13 +73,11 @@
                 input6:'',
                 input7:'',
                 select:'',
-                test:''
+                test:this.value
             }
         },
-        methods:{
-            handleInput(val){
-                console.log(val)
-            }
+        props:{
+          value:[String,Number]
         }
     }
 </script>
