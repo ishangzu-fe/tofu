@@ -1,8 +1,7 @@
 <template>
-    <div class="tabbar" :class="{'in-electron': electron}">
+    <div class="tabbar">
         <div class="tabbar-tab-container">
             <Tab
-                :class="{'in-electron': electron}"
                 v-for="tab in tabsInStage"
                 :key="tab.id"
                 :tab="tab"
@@ -134,7 +133,6 @@
                 if (options.mode) this.mode = options.mode
                 if (options.useRouter) this.useRouter = options.useRouter
                 if (options.createPos) this.createPos = options.createPos
-                if (options.electron) this.electron = true
 
                 // 生成默认 tab
                 if (options.defaultTab) {
@@ -556,13 +554,13 @@
 </script>
 
 <style lang="scss">
-    $tabbar-left-padding: 20px;
+    $tabbar-left-padding: 10px;
     $tabbar-height: 30px;
 
-    $store-button-color-inactive: #fff;
+    $store-button-color-inactive: #DFE2E5;
     $store-button-width: 30px;
-    $store-button-hover: #313D4F;
-    $store-button-active: #14161A;
+    $store-button-hover: #fff;
+    $store-button-active: #fff;
     $store-width: 140px;
 
     $tab-border-radius: 2px 2px 0 0;
@@ -577,29 +575,29 @@
 
         background: transparent;
 
-        &.in-electron {
-            border-bottom: 1px solid #DFE2E5;
+        // &.in-electron {
+            // border-bottom: 1px solid #DFE2E5;
 
-            .tab-store {
-                right: 35px;
-            }
+            // .tab-store {
+            //     right: 35px;
+            // }
 
-            .tabbar-store-button {
-                right: 20px;
-                color: #DFE2E5;
-                border: 1px solid #DFE2E5;
-                border-bottom: none;
-                background: #fff;
+            // .tabbar-store-button {
+            //     right: 20px;
+            //     color: #DFE2E5;
+            //     border: 1px solid #DFE2E5;
+            //     border-bottom: none;
+            //     background: #fff;
 
-                &:hover,
-                &.store-button-active {
-                    color: #1F2D3D;
-                    border: 1px solid #DFE2E5;
-                    border-bottom: none;
-                    background: #fff;
-                }
-            }
-        }
+            //     &:hover,
+            //     &.store-button-active {
+            //         color: #1F2D3D;
+            //         border: 1px solid #DFE2E5;
+            //         border-bottom: none;
+            //         background: #fff;
+            //     }
+            // }
+        // }
 
         .tabbar-tab-container {
             position: absolute;
@@ -619,14 +617,14 @@
             line-height: $tabbar-height;
 
             position: absolute;
-            right: 0;
+            right: 20px;
             bottom: 0;
 
             color: $store-button-color-inactive;
             font-size: 12px;
             text-align: center;
 
-            border: 1px solid #364357;
+            border: 1px solid #DFE2E5;
             border-bottom: none;
             border-radius: $tab-border-radius;
 
@@ -635,11 +633,15 @@
             cursor: pointer;
 
             &:hover {
+                color: #1F2D3D;
+                border: 1px solid #DFE2E5;
                 background: $store-button-hover;
             }
 
             &.store-button-active {
-                border: 1px solid transparent;
+                color: #1F2D3D;
+                border: 1px solid #DFE2E5;
+                border-bottom: none;
                 background: $store-button-active;
             }
         }
@@ -650,7 +652,7 @@
             width: $store-width;
 
             position: absolute;
-            right: $store-button-width / 2 - $store-width;
+            right: 35px;
             top: 75%;
             z-index: 3;
 

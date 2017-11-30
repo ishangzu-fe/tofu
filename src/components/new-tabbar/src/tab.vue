@@ -152,10 +152,10 @@
     $tab-border-radius: 2px;
     $tab-margin-right: 6px;
     $tab-background-active: #fff;
-    $tab-background-inactive: #313D4F;
-    $tab-background-hover: #C7CFDA;
+    $tab-background-inactive: #EFF3F6;
+    $tab-background-hover: #EFF3F6;
     $tab-font-size: 12px;
-    $tab-color-inactive: #A3ACBA;
+    $tab-color-inactive: #1F2D3D;
     $tab-color-active: #1F2D3D;
 
     $tab-close-width: 24px;
@@ -179,6 +179,8 @@
         color: $tab-color-inactive;
         font-size: $tab-font-size;
 
+        border: 1px solid #DFE2E5;
+        border-bottom: none;
         border-top-left-radius: $tab-border-radius;
         border-top-right-radius: $tab-border-radius;
 
@@ -186,30 +188,6 @@
 
         cursor: pointer;
         user-select: none;
-
-        &.in-electron {
-            color: #1F2D3D;
-            border: 1px solid #DFE2E5;
-            border-bottom: none;
-            background: #EFF3F6;
-
-            &.tab-active {
-                color: #1F2D3D;
-                border: 1px solid #DFE2E5;
-                border-bottom: none;
-                background: #fff;
-            }
-
-            &:hover:not(.tab-active) {
-                color: #1F2D3D;
-                background: #EFF3F6;
-                transition: background .3s ease-in;
-
-                .tab-close {
-                    color: #1F2D3D;
-                }
-            }
-        }
 
         &:hover:not(.tab-active) {
             color: $tab-color-active;
