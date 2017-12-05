@@ -12,7 +12,9 @@
             :iconURL="menu.iconURL"
             :iconClass="menu.iconClass"
             :path="menu.path"
-            :children="menu.children">
+            :children="menu.children"
+
+            @activated="handleChildrenActivated">
         </i-menu-item>
     </div>
 </template>
@@ -29,6 +31,12 @@ export default {
 
     props: {
         menus: Array
+    },
+
+    methods: {
+        handleChildrenActivated(menuInfo) {
+            this.$emit('activated', menuInfo);
+        }
     }
 }
 </script>

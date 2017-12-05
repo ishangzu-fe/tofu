@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { addClass, removeClass } from '/Users/wchen/Documents/code/work/tofu/src/utils/dom.js';
+import { addClass, removeClass } from '@/utils/dom.js';
 export default {
     name: 'i-menu-item',
 
@@ -92,7 +92,11 @@ export default {
                 this.$router.push(this.path);
                 this.state = 'activated';
                 // 上抛事件
-                this.$emit('activated', this.id);
+                this.$emit('activated', {
+                    id: this.id,
+                    path: this.path,
+                    label: this.label
+                }, false);
             } else {
                 this.foldOrExpand();
             }
@@ -112,17 +116,17 @@ export default {
         /**
          * 当子菜单激活或者取消激活时进行的行为
          */
-        handleChildrenActivated(id) {
-            this.currentActivatedID = id;
+        handleChildrenActivated(menuInfo, passive) {
+            this.currentActivatedID = menuInfo.id;
             this.state = 'expand';
-            if (this.parentID) this.$emit('activated');
+            if ((!this.parentID && !passive) || this.parentID)this.$emit('activated', menuInfo);
         },
-        handleChildrenDeactivated(id) {
+        handleChildrenDeactivated(menuInfo) {
             // 检测是否是激活的子菜单取消激活
-            if (id !== this.currentActivatedID) return;
+            if (menuInfo.id !== this.currentActivatedID) return;
 
             this.state = 'fold';
-            if (this.parentID) this.$emit('deactivated');
+            if (this.parentID) this.$emit('deactivated', menuInfo);
         },
 
         /* 简单的高度动画，参考 Element */
@@ -208,10 +212,18 @@ export default {
                 const { path } = newRoute;
                 if (this.state !== 'activated' && this.path === path) {
                     this.state = 'activated';
-                    this.$emit('activated', this.id);
+                    this.$emit('activated', {
+                        id: this.id,
+                        path: this.path,
+                        label: this.label
+                    }, true);
                 } else if (this.state === 'activated' && this.path !== path) {
                     this.state = 'deactivated';
-                    this.$emit('deactivated', this.id);
+                    this.$emit('deactivated', {
+                        id: this.id,
+                        path: this.path,
+                        label: this.label
+                    }, true);
                 }
             });
         }
