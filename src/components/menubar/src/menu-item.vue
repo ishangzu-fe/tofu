@@ -14,7 +14,7 @@
                 {{label}}
             </div>
             <div class="item__arrow" v-if="hasChildren">
-                <img src="static/ra.png">
+                <img src="../../assets/ra.png">
             </div>
         </div>
         <!-- 过渡动画使用简单的高度动画，参考 Element -->
