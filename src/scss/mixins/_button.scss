@@ -1,3 +1,10 @@
+@mixin button-ripple-color($color){
+
+  &:after{
+    background-image: radial-gradient(circle, $color 10%, transparent 10.01%);
+  }
+}
+
 @mixin button-style($color,$background-color,$border-color){
   color: $color;
   background-color: $background-color;
