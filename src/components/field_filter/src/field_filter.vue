@@ -50,7 +50,7 @@ export default {
             handler(newFields) {
                 this.fields = newFields;
                 for (let field of Object.values(this.fields)) {
-                    if (checked in field && !field.checked) {
+                    if ('checked' in field && !field.checked) {
                         continue;
                     }
                     this.checked.push(field.label);
