@@ -8,7 +8,7 @@
             <ul class="list">
                 <i-checkbox-group
                     v-model="checked"
-                    @change="handleCheckChange">
+                    @change="handleChange">
                     <li class="list-item" v-for="field in fields" :key="field.label">
                         <i-checkbox :label="field.label + ''"></i-checkbox>
                     </li>
@@ -29,6 +29,12 @@ export default {
     },
 
     props: {
+        /**
+         * {
+         *   label,
+         *   checked
+         * }
+         */
         value: Object
     },
 
@@ -38,27 +44,33 @@ export default {
         };
     },
 
-    methods: {
-        handleCheckChange (checkedLabels) {
-            for (let key in this.fields) {
-                this.fields[key].checked = false;
-
-                checkedLabels.forEach(label => {
-                    if (label === this.fields[key].label) {
-                        this.fields[key].checked = true;
+    watch: {
+        value: {
+            immediate: true,
+            handler(newFields) {
+                this.fields = newFields;
+                for (let field of Object.values(this.fields)) {
+                    if (checked in field && !field.checked) {
+                        continue;
                     }
-                });
+                    this.checked.push(field.label);
+                }
             }
-
-            this.$emit('input', this.fields);
         }
     },
 
-    created () {
-        this.fields = this.value;
+    methods: {
+        handleChange (checkedLabels) {
+            for (let key in this.fields) {
+                const label = this.fields[key].label;
+                if (~checkedLabels.indexOf(label)) {
+                    this.fields[key].checked = true;
+                } else {
+                    this.fields[key].checked = false;
+                }
+            }
 
-        for (let key in this.fields) {
-            this.checked.push(this.fields[key].label);
+            this.$emit('input', this.fields);
         }
     }
 };
@@ -70,6 +82,8 @@ export default {
 
     .list {
         padding: 6px 10px;
+        max-height: 300px;
+        overflow: auto;
 
         .list-item {
             margin-bottom: 6px;

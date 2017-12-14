@@ -3,21 +3,29 @@ import Node from './node'
 export default (function () {
     let instance
 
-    return function () {
-        // if (!instance) {
-        //     instance = new Tree()
-        // }
-        // return instance
-        return new Tree()
+    return function (singleton = false, config) {
+        if (singleton) {
+            if (!instance) {
+                instance = new Tree(config)
+            }
+            return instance
+        }
+
+        return new Tree(config)
     }
 })()
 
 class Tree {
-    constructor () {
+    constructor ({ checkChildren = true, checkedNodes = [] }) {
         this._cache = {}
         this._checkedCache = {}
         this._checkQueueOnInit = []
         this._inited = false
+        this._checkChildren = checkChildren
+
+        if (!this._checkChildren) {
+            this.checkedNodeIDsOnInit = checkedNodes
+        }
     }
 
     /**
@@ -55,10 +63,6 @@ class Tree {
             default:
                 break
         }
-    }
-
-    _getNodeFromCache (type, id) {
-
     }
 
     checkAll () {
@@ -99,31 +103,34 @@ class Tree {
     checkNode (parentNode, newV = true) {
         if (parentNode._checked === newV) return
         parentNode._checked = newV
-        parentNode._hasChildChecked = newV
         this._cacheNode('checked', parentNode)
 
-        let childNodes = parentNode.childNodes
+        // 默认勾选父节点下的所有节点
+        if (this._checkChildren) {
+            parentNode._hasChildChecked = newV
+            let childNodes = parentNode.childNodes
 
-        childNodes.length
-        && traverseBreadth.call(this, childNodes, (node, nextArr) => {
-            let hasChecked = node._checked
+            childNodes.length
+            && traverseBreadth.call(this, childNodes, (node, nextArr) => {
+                let hasChecked = node._checked
 
-            node._checked = newV
-            node._hasChildChecked = newV
-            this._cacheNode('checked', node)
+                node._checked = newV
+                node._hasChildChecked = newV
+                this._cacheNode('checked', node)
 
-            if (node['childNodes'] && (newV && !hasChecked)) {
-                // 如果节点已经展开，则优先遍历
-                if (node._expanded) {
-                    nextArr.unshift(...node['childNodes'])
-                } else {
-                    nextArr.push(...node['childNodes'])
+                if (node['childNodes'] && (newV && !hasChecked)) {
+                    // 如果节点已经展开，则优先遍历
+                    if (node._expanded) {
+                        nextArr.unshift(...node['childNodes'])
+                    } else {
+                        nextArr.push(...node['childNodes'])
+                    }
                 }
-            }
-        })
+            })
 
-        parentNode.parentNode
-        && checkParentNodes.call(this, parentNode)
+            parentNode.parentNode
+            && checkParentNodes.call(this, parentNode)
+        }
 
         function traverseBreadth (arr, fn) {
             let nextArr = []
@@ -174,26 +181,29 @@ class Tree {
             this._deleteNodeCache('checked', node)
         }
 
-        let hasChildChecked = false
-        let allChildChecked = true
-        node.childNodes.length && node.childNodes.forEach(node => {
-            if (node._checked === false) {
-                allChildChecked = false
-            } else if (node._checked === true) {
-                hasChildChecked = true
+        // 默认关联子节点
+        if (this._checkChildren) {
+            let hasChildChecked = false
+            let allChildChecked = true
+            node.childNodes.length && node.childNodes.forEach(node => {
+                if (node._checked === false) {
+                    allChildChecked = false
+                } else if (node._checked === true) {
+                    hasChildChecked = true
+                }
+            })
+
+            if (allChildChecked) {
+                node._hasChildChecked = false
+                uncheckChildNodes.call(this, node)
+            } else {
+                node._hasChildChecked = hasChildChecked
             }
-        })
 
-        if (allChildChecked) {
-            node._hasChildChecked = false
-            uncheckChildNodes.call(this, node)
-        } else {
-            node._hasChildChecked = hasChildChecked
-        }
-
-        if (node.parentNode
-            && (node.parentNode._checked || node.parentNode._hasChildChecked)) {
-            this.uncheckNode(node.parentNode)
+            if (node.parentNode
+                && (node.parentNode._checked || node.parentNode._hasChildChecked)) {
+                this.uncheckNode(node.parentNode)
+            }
         }
 
         function traverseBreadth (arr, fn) {
@@ -251,7 +261,14 @@ class Tree {
         !dict['label'] && (dict['label'] = 'label')
 
         const nodes = data.map(v => {
-            return this.createNode(v, parentNode, dict)
+            const node = this.createNode(v, parentNode, dict)
+            if (this.checkedNodeIDsOnInit
+                && this.checkedNodeIDsOnInit.length
+                && ~this.checkedNodeIDsOnInit.indexOf(v[dict['id']])) {
+                this.checkNode(node)
+            }
+
+            return node
         })
 
         if (parentNode === null) {

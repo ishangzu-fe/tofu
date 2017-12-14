@@ -12,7 +12,7 @@
 </template>
 
 <script>
-    import getTreeSingleton from './model/tree'
+    import getTreeInstance from './model/tree'
     import Node from './node'
 
     export default {
@@ -28,12 +28,21 @@
             showCounter: {
                 type: Boolean,
                 default: false
-            }
+            },
+            checkChildren: {
+                type: Boolean,
+                default: true
+            },
+            singleton: {
+                type: Boolean,
+                default: false
+            },
+            checkedNodes: Array
         },
 
         data () {
             return {
-                TreeModel: getTreeSingleton(),
+                TreeModel: {},
                 nodes: []
             }
         },
@@ -53,8 +62,14 @@
         },
 
         created () {
+            // 获取新的树
+            this.TreeModel = getTreeInstance(this.singleton, {
+                checkChildren: this.checkChildren,
+                checkedNodes: this.checkedNodes
+            })
+
             if (this.data) {
-                this.nodes = this.TreeModel.createNodes(this.data, null, this.dict);
+                this.nodes = this.TreeModel.createNodes(this.data, null, this.dict)
             }
         }
     }

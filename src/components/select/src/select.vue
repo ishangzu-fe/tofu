@@ -104,7 +104,7 @@
 
     const sizeMap = {
         'large': 42,
-        'small': 30,
+        'small': 28,
         'mini': 22
     };
 
