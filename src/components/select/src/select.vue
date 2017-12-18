@@ -1,7 +1,7 @@
 <template>
     <div class="el-select"
          v-clickoutside="handleClose"
-         :class="{ 'is-multiple': multiple, 'is-small': size === 'small' }">
+         :class="{ 'is-multiple': multiple, 'over-hidden': !multipleShowAll, 'is-small': size === 'small' }">
         <div class="el-select-tags"
              v-if="multiple"
              @click.stop="toggleMenu"
@@ -185,6 +185,10 @@
             multipleLimit: {
                 type: Number,
                 default: 0
+            },
+            multipleShowAll:{
+                type: Boolean,
+                default: true
             },
             placeholder: {
                 type: String,
