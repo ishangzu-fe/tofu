@@ -247,7 +247,8 @@
                     this.inputLength = 20;
                 }
                 this.$emit('change', val);
-                this.dispatch('ElFormItem', 'el.form.change', val);
+                this.dispatch('form-item', 'el.form.change', val);
+
             },
 
             query(val) {
