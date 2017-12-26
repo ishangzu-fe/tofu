@@ -76,11 +76,6 @@ export default {
         }
     }
   },
-  watch:{
-    files(val){
-      console.log(val)
-    }
-  },
   methods: {
     handlePreview(index) {
       this.$preview(this.imgList, index);
