@@ -18,6 +18,13 @@
                     <i-form-item label="电话:" prop="phone">
                         <i-input v-model="form1.phone"></i-input>
                     </i-form-item>
+                    <i-form-item label="是否抵押:" prop="pledge">
+                        <i-radio-group v-model="form1.pledge">
+                            <i-radio label="1">有</i-radio>
+                            <i-radio label="0">无</i-radio>
+                        </i-radio-group>
+
+                    </i-form-item> 
                 </i-form>
                 <i-button @click.stop="submit">提交</i-button>
             </div>
@@ -35,7 +42,8 @@
                 form1: {
                     sex: '',
                     city_code:[],
-                    phone:''
+                    phone:'',
+                    pledge:''
                 },
                 formRules: {
                     sex: [{
