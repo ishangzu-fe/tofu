@@ -1,7 +1,7 @@
 <template>
     <ul class="img-list">
         <li v-for="(item,index) in files" :key="item[opts.url]" :class="{'has-input':hasEdit}">
-            <img :src="perfix + item[opts.url] + '@115w_115h_1c_1e'">
+            <img :src="perfix + item[opts.url] + crop">
             <i-input size="small" v-model="item[opts.name]" v-if="hasInput"></i-input>
             <i-select size="small" v-model="item[opts.type]" v-if="hasSelect">
                 <i-option v-for="o in typeOptions" :key="o[opts.selectValue]" :label="o[opts.selectLabel]" :value="o[opts.selectValue]"></i-option>
@@ -35,6 +35,10 @@ export default {
     };
   },
   props: {
+    crop:{
+      type:String,
+      default:'@115w_115h_1c_1e'
+    },
     perfix:{
       type:String,
       default:''
