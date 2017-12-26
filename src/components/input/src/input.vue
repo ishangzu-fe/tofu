@@ -132,7 +132,7 @@
       handleBlur(event) {
         this.$emit('blur', event);
         if (this.validateEvent) {
-          this.dispatch('ElFormItem', 'el.form.blur', [this.currentValue]);
+          this.dispatch('form-item', 'el.form.blur', [this.currentValue]);
         }
       },
       inputSelect() {
@@ -175,7 +175,7 @@
         });
         this.currentValue = value;
         if (this.validateEvent) {
-          this.dispatch('ElFormItem', 'el.form.change', [value]);
+          this.dispatch('form-item', 'el.form.change', [value]);
         }
       }
     },
