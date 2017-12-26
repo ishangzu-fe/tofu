@@ -2,7 +2,7 @@
     <div class="tree-node" v-show="!node.parentNode || node.parentNode._expanded">
         <div
             class="node-main"
-            :style="{'padding-left': 16 * (node.level - 1) + 'px'}"
+            :style="{'padding-left': (16 * (node.level - 1) + 10) + 'px'}"
             @click.stop="expandOrCollapse">
             <span
                 class="node-triangle tofu-icon icon-triangle-right"
@@ -55,11 +55,11 @@
         },
 
         methods: {
-            expandOrCollapse () {
+            expandOrCollapse() {
                 this.node._expanded = this.node._expanded ? false : true
             },
 
-            toggle () {
+            toggle() {
                 // console.time()
                 if (this.node._checked) {
                     this.TreeModel.uncheckNode(this.node)
@@ -95,7 +95,7 @@
             width: 100%;
             height: 26px;
             line-height: 26px;
-            padding-right: 10px;
+            padding: 0 10px;
 
             cursor: pointer;
 

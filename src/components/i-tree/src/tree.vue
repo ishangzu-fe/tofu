@@ -47,6 +47,12 @@
             }
         },
 
+        watch: {
+            data(newData) {
+                if (newData) this.createTree()
+            }
+        },
+
         methods: {
             emitCheck (checkedNodes) {
                 this.$emit('change', checkedNodes)
@@ -58,19 +64,23 @@
 
             checkAll () {
                 return this.TreeModel.checkAll()
+            },
+
+            createTree() {
+                this.TreeModel = getTreeInstance(this.singleton, {
+                    checkChildren: this.checkChildren,
+                    checkedNodes: this.checkedNodes
+                })
+
+                if (this.data) {
+                    this.nodes = this.TreeModel.createNodes(this.data, null, this.dict)
+                }
             }
         },
 
         created () {
             // 获取新的树
-            this.TreeModel = getTreeInstance(this.singleton, {
-                checkChildren: this.checkChildren,
-                checkedNodes: this.checkedNodes
-            })
-
-            if (this.data) {
-                this.nodes = this.TreeModel.createNodes(this.data, null, this.dict)
-            }
+            this.createTree()
         }
     }
 </script>

@@ -31,6 +31,9 @@
 </template>
 
 <script>
+    import getTabManager from './tab-manager'
+    const TabManager = getTabManager()
+
     const computeOffset = (moveX, tabWidth) => {
         const moveXABS = Math.abs(moveX)
         const direction = moveX > 0 ? 1 : -1
@@ -88,7 +91,13 @@
             },
 
             destroy () {
-                this.$emit('tab-destroy', this.tab.id)
+                if (this.tab.beforeDestroy) {
+                    this.tab.beforeDestroy(this.tab, () => {
+                        this.$emit('tab-destroy', this.tab.id)
+                    })
+                } else {
+                    this.$emit('tab-destroy', this.tab.id)
+                }
             },
 
             /**
@@ -143,6 +152,17 @@
             onLabelLeave () {
                 this.labelTranslate = 0
             }
+        },
+
+        mounted() {
+            TabManager.on({
+                'tab-manager-destroy': (path) => {
+                    if (!path && this.tab.id === activeId) {
+                        this.destroy()
+                    }
+                    if (path === this.tab.path) this.destroy()
+                }
+            })
         }
     }
 </script>

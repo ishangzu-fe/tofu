@@ -198,11 +198,13 @@
                     if (pageData) {
                         tab.notBindTab = pageData._notBindTab
                     }
-                    tab.pageName = pageName
-                    if (this.pageCache.indexOf(pageName) === -1) {
-                        this.pageCache.push(pageName)
+                    if (tab.notBindTab) {
+                        tab.pageName = pageName
+                        if (this.pageCache.indexOf(pageName) === -1) {
+                            this.pageCache.push(pageName)
+                        }
+                        TabManager['cache'] = this.pageCache.join(',')
                     }
-                    TabManager['cache'] = this.pageCache.join(',')
                 }
 
                 // 生成 id
