@@ -43,14 +43,6 @@ const webpackConfig = merge(baseWebpackConfig, {
       filename: utils.assetsPath('[name].css')
     }),
     new OptimizeCSSPlugin(),
-   
-    // new CopyWebpackPlugin([
-    //   {
-    //     from: path.resolve(__dirname, '../static'),
-    //     to: config.build.assetsSubDirectory,
-    //     ignore: ['.*']
-    //   }
-    // ])
   ]
 })
 

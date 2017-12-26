@@ -72,6 +72,10 @@ class TabManager {
         this.emit('tab-manager-destroyAll')
     }
 
+    destroyTab(path) {
+        this.emit('tab-manager-destroy', path)
+    }
+
     /**
      * 模拟刷新
      */

@@ -1,5 +1,6 @@
 <template>
     <i-dropdown
+        ref="dropdown"
         class="dropdown-tree"
         trigger="click"
         menu-align="start"
@@ -17,6 +18,7 @@
             ref="panel"
             class="panel"
             slot="dropdown"
+            :style="{width: menuWidth}"
             v-show="isDropdownShow">
             <slot></slot>
         </i-dropdown-menu>
@@ -41,12 +43,17 @@ export default {
 
     data () {
         return {
-            isDropdownShow: false
+            isDropdownShow: false,
+            menuWidth: '200px'
         }
     },
 
     methods: {
         handleClick (e) {
+            if (!this.isDropdownShow) {
+                this.menuWidth = this.$refs.dropdown.$el.clientWidth + 'px'
+            }
+
             this.isDropdownShow = !this.isDropdownShow;
         }
     },
@@ -63,7 +70,7 @@ export default {
 
 <style lang="scss">
     .dropdown-tree {
-        width: 200px;
+        width: 100%;
 
         cursor: pointer;
 
@@ -96,7 +103,6 @@ export default {
     }
     .el-dropdown-menu.panel {
         min-width: 200px;
-        max-width: 400px;
         max-height: 500px;
 
         overflow: auto;
@@ -120,6 +126,39 @@ export default {
 
         .el-tree-node-content {
             padding-right: 30px;
+        }
+
+        .tree {
+            max-height: 300px;
+            overflow: auto;
+            top: 28px;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            box-sizing: border-box;
+            z-index: 100;
+
+            .tree-node .node-main {
+                padding: 8px 10px;
+                height: 36px;
+                line-height: 20px;
+
+                .node-checkbox.tofu-icon {
+                    margin-top: 2px;
+                    vertical-align: top;
+                }
+
+                .node-checkbox {
+                    background: #fff;
+                    border: 1px solid #c0ccda;
+                    &.icon-check {
+                        background: #20a0ff;
+                    }
+                    &.icon-minus {
+                        background: #20a0ff;
+                    }
+                }
+            }
         }
     }
 </style>
