@@ -5,8 +5,8 @@
             <i-button @click="add">添加图片</i-button>
         </demo-block>
         <demo-block title="可设置图片描述">
-            <i-img-list v-model="files" :has-input="true"></i-img-list>
-            <i-button @click="show">查看数据</i-button>
+            <i-img-list v-model="filesList"  :props="opt" perfix="http://img.ishangzu.com/" :has-input="true"></i-img-list>
+            <i-button @click="show2">查看数据</i-button>
 
         </demo-block>
         <demo-block title="可设置图片类型">
@@ -30,6 +30,22 @@
     export default {
         data(){
             return {
+                opt:{
+                    url:'src',
+                    name:'text'
+                },
+                filesList:[
+                    {
+                        src:'erp/2017/11/7/20/81586f91-06b5-445e-a5c5-eaf173500fb3.JPG',
+                        text:'图片1',
+                        infos:['test-hhh','1981-01-01']
+                    },
+                    {
+                        src:'erp/2017/11/7/20/35f69a82-cb4b-4eda-8bd5-ed2326105e1a.JPG',
+                        text:'图片2',
+                        infos:['test-fffff','1981-01-01']
+                    }
+                ],
                 files:[
                     {
                         url:'http://img.ishangzu.com/erp/2017/11/7/20/81586f91-06b5-445e-a5c5-eaf173500fb3.JPG',
@@ -75,6 +91,9 @@
             },
             show(){
                 console.log(this.files)
+            },
+            show2(){
+                console.log(this.filesList)
             }
         }
     }
