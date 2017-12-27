@@ -23,5 +23,5 @@ inquirer.prompt({
     name: 'confirm',
     message: `确定发布版本 v${newVersion} 吗？`
 }).then(res => {
-    if (res) execSync(`npm version ${newVersion} && npm publish`)
+    if (res.confirm) execSync(`npm version ${newVersion} && npm publish`)
 }).catch(_ => {})
