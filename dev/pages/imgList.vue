@@ -1,5 +1,7 @@
 <template>
     <div id="imgList">
+        <div class="close"></div>
+        <div class="close2"></div>
         <demo-block title="基础用法">
             <i-img-list v-model="files"></i-img-list>
             <i-button @click="add">添加图片</i-button>
@@ -99,7 +101,61 @@
     }
 </script>
 <style scoped>
-    
+    .close{
+        width: 16px;
+        height: 16px;
+        background: red;
+        border-radius: 50%;
+        position: relative;
+        margin-bottom: 10px
+    }
+
+    .close::before{
+        content:' ';
+        height: 2px;
+        width: 10px;
+        background: #fff;
+        border-radius: 10px;
+        position: absolute;
+        top:50%;
+        left: 50%;
+        margin-top: -1px;
+        margin-left: -5px;
+    }
+
+    .close2{
+        width: 16px;
+        height: 16px;
+        background: red;
+        border-radius: 50%;
+        position: relative;
+    }
+
+    .close2::before{
+         content:' ';
+        height: 2px;
+        width: 10px;
+        background: #fff;
+        position: absolute;
+        top:50%;
+        left: 50%;
+        margin-top: -1px;
+        margin-left: -5px;
+        transform: rotate(45deg);
+    }
+
+    .close2::after{
+         content:' ';
+        height: 2px;
+        width: 10px;
+        background: #fff;
+        position: absolute;
+        top:50%;
+        left: 50%;
+        margin-top: -1px;
+        margin-left: -5px;
+        transform: rotate(-45deg);
+    }
 </style>
 
 

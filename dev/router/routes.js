@@ -16,6 +16,7 @@ import Layout from '../pages/layout'
 import Message from '../pages/message'
 import Select from '../pages/select'
 import Switch from '../pages/switch'
+import Tabs from '../pages/tabs'
 
 let routes = [
     {path: '/',component:Hello},
@@ -35,7 +36,8 @@ let routes = [
     {path: '/layout', component:Layout},
     {path: '/message', component:Message},
     {path: '/select', component:Select},
-    {path: '/switch', component:Switch}
+    {path: '/switch', component:Switch},
+    {path: '/tabs', component:Tabs}
 ]
 
 export default routes;
