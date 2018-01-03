@@ -1,5 +1,6 @@
 <template>
     <div class="context-menu-item"
+        :class="{'context-menu-item-disabled':disabled}"
         @mousemove="showPanel = true"
         @mouseout="showPanel = false">
         <li class="item-label" @click="handleClick">
@@ -44,7 +45,11 @@ export default {
         handler: Function,
         horDirection: String,
         index: Number,
-        panelY: Number
+        panelY: Number,
+        disabled:{
+            type:Boolean,
+            default:false
+        }
     },
 
     data() {
@@ -65,6 +70,10 @@ export default {
 
     methods: {
         handleClick(e) {
+            if(this.disabled){
+                e.stopPropagation();                
+                return;
+            }
             if (!this.children || !this.children.length) {
                 this.handler();
             } else {
@@ -98,11 +107,27 @@ export default {
 .context-menu-item {
     position: relative;
     width: 100%;
-    height: 22px;
-    line-height: 22px;
-    color: #000;
+    height: 26px;
+    line-height: 26px;
     font-size: 14px;
     cursor: pointer;
+
+    &.context-menu-item-disabled{
+        li{
+            color: #bfcbd9;
+
+            &:hover{
+                color: #bfcbd9;
+                cursor: not-allowed;
+            }
+        }
+       
+
+        &:hover{
+            background: none;
+        }
+    }
+
 
     &:hover {
         color: #fff;
@@ -114,11 +139,17 @@ export default {
     }
 
     li {
-        padding: 0 16px 0 12px;
+        padding: 0px 16px 0px 12px;
         width: 100%;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        color:#1f2d3d;
+
+       
+        &:hover{
+            color: #fff;
+        }
 
         i {
             position: absolute;

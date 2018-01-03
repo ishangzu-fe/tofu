@@ -49,6 +49,7 @@ import Popup from './components/popup';
 import Uploader from './components/uploader';
 import Preview from './components/preview';
 import IUTree from './components/i-tree';
+import ContextMenu from './components/context-menu';
 
 import Draggable from './directives/drag/';
 
@@ -133,5 +134,6 @@ module.exports = {
     MessageBox,
     TabManager: Tabbar.manager,
     Tabbar: NewTabbar,
-    Previewer: Preview
+    Previewer: Preview,
+    ContextMenu:ContextMenu
 }

@@ -8,6 +8,7 @@
                 :index="index"
                 :panelY="y"
                 :label="menuItem.label"
+                :disabled="(menuItem.disabled == undefined) ? false : menuItem.disabled"
                 :handler="menuItem.handler"
                 :key="menuItem.label"
                 :iconURL="menuItem.iconURL"
