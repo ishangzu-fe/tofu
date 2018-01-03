@@ -91,11 +91,10 @@ export default {
             confirmButtonText: "确定",
             cancelButtonText: "取消",
             type: "warning"
-          })
-            .then(() => {
+          }).then(() => {
               this.value.splice(index, 1);
-            })
-            .catch(() => {
+              this.$emit('delete',index);
+          }).catch(() => {
               this.$message({
                 type: "info",
                 message: "已取消删除"
