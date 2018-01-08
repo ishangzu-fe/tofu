@@ -58,8 +58,16 @@
                 this.$emit('change', checkedNodes)
             },
 
+            clean() {
+                this.clear()
+            },
+
             clear () {
                 this.TreeModel.clearTree()
+            },
+
+            selectAll() {
+                this.checkAll()
             },
 
             checkAll () {

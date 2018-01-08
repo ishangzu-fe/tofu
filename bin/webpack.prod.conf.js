@@ -35,6 +35,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     }),
     new webpack.optimize.OccurrenceOrderPlugin(true),
     new webpack.optimize.UglifyJsPlugin({
+      sourceMap: true,
       compress: {
         warnings: false
       },

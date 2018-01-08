@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import IPopup from '../../popup';
+import IPopup from '@/components/tofu-popup';
 
 export default {
     name: 'field-filter',

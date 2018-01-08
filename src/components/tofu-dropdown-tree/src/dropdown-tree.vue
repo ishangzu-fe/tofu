@@ -20,17 +20,26 @@
             slot="dropdown"
             :style="{width: menuWidth}"
             v-show="isDropdownShow">
-            <slot></slot>
+            <iu-tree ref="tree" v-bind="$attrs" v-on="$listeners"></iu-tree>
         </i-dropdown-menu>
     </i-dropdown>
 </template>
 
 <script>
+import IUTree from '@/components/tofu-tree';
+
 export default {
     name: 'dropdown-tree',
 
+    components: {
+        IUTree
+    },
+
     props: {
-        size: String,
+        size: {
+            type: String,
+            default: 'small'
+        },
         title: String,
         placeholder: String
     },
@@ -51,10 +60,14 @@ export default {
     methods: {
         handleClick (e) {
             if (!this.isDropdownShow) {
-                this.menuWidth = this.$refs.dropdown.$el.clientWidth + 'px'
+                this.menuWidth = this.$refs.dropdown.$el.clientWidth + 'px';
             }
 
             this.isDropdownShow = !this.isDropdownShow;
+        },
+
+        getTree() {
+            return this.$refs.tree;
         }
     },
 

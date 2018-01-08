@@ -8,5 +8,5 @@ module.exports = function (Vue, options) {
 
     Vue.prototype.$tab = tabManager
 
-    Vue.component('v-tabbar', Tabbar)
+    Vue.component('i-tabbar', Tabbar)
 }

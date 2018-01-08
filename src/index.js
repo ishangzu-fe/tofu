@@ -35,21 +35,16 @@ import Editor from './components/editor';
 import TabMenu from './components/tab-menu';
 import Popover from './components/popover';
 
-import Cascader from './components/cascader';
-import DropdownTree from './components/dropdown-tree';
-import Tabbar from './components/tabbar';
+import Cascader from './components/tofu-cascader';
+import DropdownTree from './components/tofu-dropdown-tree';
 import IMenu from './components/tofu-menu';
-import OIcon from './components/tofu-icon';
-import OButton from './components/tofu-button';
-import OPanel from './components/tofu-panel';
-import ODropdown from './components/tofu-dropdown';
-import NewTabbar from './components/new-tabbar';
-import FiledFilter from './components/field_filter';
-import Popup from './components/popup';
-import Uploader from './components/uploader';
-import Preview from './components/preview';
-import IUTree from './components/i-tree';
-import ContextMenu from './components/context-menu';
+import Tabbar from './components/tofu-tabbar';
+import FiledFilter from './components/tofu-field-filter';
+import Popup from './components/tofu-popup';
+import Uploader from './components/tofu-uploader';
+import Preview from './components/tofu-preview';
+import IUTree from './components/tofu-tree';
+import ContextMenu from './components/tofu-context-menu';
 
 import Draggable from './directives/drag/';
 
@@ -105,13 +100,8 @@ const install = (Vue) => {
     Vue.component('i-tab-menu', TabMenu);
 
     Vue.component('i-cascader', Cascader);
-    Vue.component('i-tabbar', Tabbar.component);
     Vue.component('i-menubar', IMenu);
     Vue.component('i-dropdown-tree', DropdownTree);
-    Vue.component('o-icon', OIcon);
-    Vue.component('o-button', OButton);
-    Vue.component('o-panel', OPanel);
-    Vue.component('o-dropdown', ODropdown);
     Vue.component('i-popup', Popup);
     Vue.component('i-field-filter', FiledFilter);
     Vue.component('i-uploader', Uploader);
@@ -132,8 +122,7 @@ const install = (Vue) => {
 module.exports = {
     install,
     MessageBox,
-    TabManager: Tabbar.manager,
-    Tabbar: NewTabbar,
+    Tabbar: Tabbar,
     Previewer: Preview,
     ContextMenu:ContextMenu
 }

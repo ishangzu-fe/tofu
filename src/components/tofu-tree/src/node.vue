@@ -100,7 +100,7 @@
             cursor: pointer;
 
             &:hover {
-                background: #eee;
+                background: #f5f7fa;
             }
 
             .node-label {
@@ -123,9 +123,8 @@
 
             .node-triangle {
                 display: inline-block;
-
+                font-size: 12px;
                 color: #b2b2b2;
-
                 transition: transform .3s ease-out;
 
                 &.node-triangle-hidden {
