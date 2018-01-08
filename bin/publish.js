@@ -1,4 +1,4 @@
-const { exec } = require('child_process')
+const { execSync } = require('child_process')
 const packageJSON = require('../package.json')
 const semver = require('semver')
 const inquirer = require('inquirer')
@@ -23,5 +23,5 @@ inquirer.prompt({
     name: 'confirm',
     message: `确定发布版本 v${newVersion} 吗？`
 }).then(res => {
-    if (res.confirm) execSync(`npm version ${newVersion} && npm publish`)
+    if (res.confirm) execSync(`npm version ${newVersion} -f --allow-same-version && npm publish`)
 }).catch(_ => {})
