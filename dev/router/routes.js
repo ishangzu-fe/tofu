@@ -15,6 +15,7 @@ import Input from '../pages/input'
 import ImgList from '../pages/imgList'
 import Layout from '../pages/layout'
 import Message from '../pages/message'
+import MessageBox from '../pages/message-box'
 import Select from '../pages/select'
 import Switch from '../pages/switch'
 import Tabs from '../pages/tabs'
@@ -37,6 +38,7 @@ let routes = [
     {path: '/imgList', component:ImgList},
     {path: '/layout', component:Layout},
     {path: '/message', component:Message},
+    {path: '/message-box',component:MessageBox},
     {path: '/select', component:Select},
     {path: '/switch', component:Switch},
     {path: '/tabs', component:Tabs}
