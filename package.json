@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "async-validator": "^1.6.8",
-    "puppeteer": "^0.13.0",
     "throttle-debounce": "^1.0.1",
     "vue": "^2.3.0",
     "wind-dom": "^0.0.3"
@@ -62,6 +61,7 @@
     "ora": "^1.2.0",
     "portfinder": "^1.0.13",
     "power-assert": "^1.4.4",
+    "puppeteer": "^0.13.0",
     "rimraf": "^2.6.0",
     "sass-loader": "^6.0.6",
     "semver": "^5.4.1",
