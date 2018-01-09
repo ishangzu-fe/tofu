@@ -30,7 +30,6 @@ import Tag from './components/tag';
 import Tooltip from './components/tooltip';
 import { Tree, TreeNode } from './components/tree';
 import Upload from './components/upload';
-import Menu from './components/menu';
 import Editor from './components/editor';
 import TabMenu from './components/tab-menu';
 import Popover from './components/popover';
@@ -96,7 +95,6 @@ const install = (Vue) => {
     Vue.component('i-tree-node', TreeNode);
     Vue.component('i-upload', Upload);
     Vue.component('i-popover', Popover);
-    Vue.component('i-menu', Menu);
     Vue.component('i-tab-menu', TabMenu);
 
     Vue.component('i-cascader', Cascader);

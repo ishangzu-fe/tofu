@@ -37,7 +37,11 @@
                 type: Boolean,
                 default: false
             },
-            checkedNodes: Array
+            checkedNodes: Array,
+            radio: {
+                type: Boolean,
+                default: false
+            }
         },
 
         data () {
@@ -77,7 +81,8 @@
             createTree() {
                 this.TreeModel = getTreeInstance(this.singleton, {
                     checkChildren: this.checkChildren,
-                    checkedNodes: this.checkedNodes
+                    checkedNodes: this.checkedNodes,
+                    radio: this.radio
                 })
 
                 if (this.data) {

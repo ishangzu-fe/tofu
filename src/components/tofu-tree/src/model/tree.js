@@ -16,12 +16,13 @@ export default (function () {
 })()
 
 class Tree {
-    constructor ({ checkChildren = true, checkedNodes = [] }) {
+    constructor ({ checkChildren = true, checkedNodes = [], radio = false }) {
         this._cache = {}
         this._checkedCache = {}
         this._checkQueueOnInit = []
         this._inited = false
-        this._checkChildren = checkChildren
+        this._radio = radio
+        this._checkChildren = radio ? false : checkChildren
 
         if (!this._checkChildren) {
             this.checkedNodeIDsOnInit = checkedNodes
@@ -80,10 +81,6 @@ class Tree {
     }
 
     clearTree () {
-        // this._cache['1'].forEach(node => {
-        //     this.uncheckNode(node)
-        // })
-
         let checkedNodes = []
 
         for (let key in this._checkedCache) {
@@ -102,6 +99,7 @@ class Tree {
      */
     checkNode (parentNode, newV = true) {
         if (parentNode._checked === newV) return
+        if (this._radio) this.clearTree()
         parentNode._checked = newV
         this._cacheNode('checked', parentNode)
 
@@ -141,7 +139,6 @@ class Tree {
 
             nextArr.length && traverseBreadth.call(this, nextArr, fn)
         }
-
 
         /**
          * 检查并更改父级节点状态
