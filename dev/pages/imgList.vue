@@ -12,7 +12,7 @@
 
         </demo-block>
         <demo-block title="可设置图片类型">
-            <i-img-list v-model="files" :has-select="true" :type-options="options"></i-img-list>
+            <i-img-list v-model="files" :props="opt1" :has-select="true" :type-options="options"></i-img-list>
             <i-button @click="show">查看数据</i-button>
 
         </demo-block>
@@ -25,6 +25,10 @@
         <demo-block title="图片删除提示">
             <i-img-list v-model="files2" :delete-tip="true" ></i-img-list>
         </demo-block>
+        <demo-block title="测试">
+            <i-img-list v-model="imgs" :props="opt" ref="img"></i-img-list>
+            <i-button @click.stop="addList">添加图片</i-button>
+        </demo-block>
     </div>
 </template>
 
@@ -35,6 +39,9 @@
                 opt:{
                     url:'src',
                     name:'text'
+                },
+                opt1:{
+                    url:'url'
                 },
                 filesList:[
                     {
@@ -76,6 +83,7 @@
                         infos:['test-fffff','1983-01-01']                        
                     }
                 ],
+                imgs:[],
                 options:[
                     {label:'one',value:'one'},
                     {label:'two',value:'two'},
@@ -96,6 +104,19 @@
             },
             show2(){
                 console.log(this.filesList)
+            },
+            addList(){
+                let list = [
+                    {
+                        src:'http://img.ishangzu.com/erp/2017/11/7/20/81586f91-06b5-445e-a5c5-eaf173500fb3.JPG',
+                        img_id:1
+                    },
+                    {
+                        src:'http://img.ishangzu.com/app/2017/11/8/0/81660b63-379d-4255-9b56-f4a62e008c74.jpg',                        
+                        img_id:2
+                    }
+                ]
+                this.imgs = list;
             }
         }
     }

@@ -80,6 +80,11 @@ export default {
         }
     }
   },
+  watch:{
+    value(val){
+      this.files = val
+    }
+  },
   methods: {
     handlePreview(index) {
       this.$preview(this.imgList, index);
