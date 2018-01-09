@@ -16,13 +16,13 @@ export default (function () {
 })()
 
 class Tree {
-    constructor ({ checkChildren = true, checkedNodes = [], radio = false }) {
+    constructor ({ checkChildren = true, checkedNodes = [], multiple = true }) {
         this._cache = {}
         this._checkedCache = {}
         this._checkQueueOnInit = []
         this._inited = false
-        this._radio = radio
-        this._checkChildren = radio ? false : checkChildren
+        this._multiple = multiple
+        this._checkChildren = multiple ? checkChildren : false
 
         if (!this._checkChildren) {
             this.checkedNodeIDsOnInit = checkedNodes
@@ -99,7 +99,7 @@ class Tree {
      */
     checkNode (parentNode, newV = true) {
         if (parentNode._checked === newV) return
-        if (this._radio) this.clearTree()
+        if (!this._multiple) this.clearTree()
         parentNode._checked = newV
         this._cacheNode('checked', parentNode)
 

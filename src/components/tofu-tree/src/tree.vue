@@ -12,11 +12,14 @@
 </template>
 
 <script>
+    import emitter from '@/mixins/emitter';
     import getTreeInstance from './model/tree'
     import Node from './node'
 
     export default {
         name: 'tree',
+
+        mixins: [emitter],
 
         components: {
             Node
@@ -38,9 +41,9 @@
                 default: false
             },
             checkedNodes: Array,
-            radio: {
+            multiple: {
                 type: Boolean,
-                default: false
+                default: true
             }
         },
 
@@ -60,6 +63,7 @@
         methods: {
             emitCheck (checkedNodes) {
                 this.$emit('change', checkedNodes)
+                this.dispatch('form-item', 'el.form.change', [checkedNodes])
             },
 
             clean() {
@@ -82,7 +86,7 @@
                 this.TreeModel = getTreeInstance(this.singleton, {
                     checkChildren: this.checkChildren,
                     checkedNodes: this.checkedNodes,
-                    radio: this.radio
+                    multiple: this.multiple
                 })
 
                 if (this.data) {
