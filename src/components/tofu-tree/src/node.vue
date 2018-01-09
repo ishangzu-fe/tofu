@@ -26,7 +26,7 @@
             :key="node.id"
             :node="node"
             :TreeModel="TreeModel"
-            @check="emitCheck"
+            @check="$emit('check')"
         ></tree-node>
     </div>
 </template>
@@ -67,19 +67,8 @@
                     this.TreeModel.checkNode(this.node)
                 }
 
-                let checkedNodes = []
-                for (let key of Object.keys(this.TreeModel._checkedCache)) {
-                    this.TreeModel._checkedCache[key].forEach(node => {
-                        checkedNodes.push(node)
-                    })
-                }
-
-                this.$emit('check', checkedNodes)
+                this.$emit('check')
                 // console.timeEnd()
-            },
-
-            emitCheck (checkedNodes) {
-                this.$emit('check', checkedNodes)
             }
         }
     }
