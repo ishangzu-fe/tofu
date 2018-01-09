@@ -3,12 +3,11 @@
         ref="dropdown"
         class="dropdown-tree"
         trigger="click"
-        menu-align="start"
         @click.native="handleClick">
         <i-input
             class="title"
             :class="{'title-active': isDropdownShow}"
-            v-model="title"
+            v-model="inputTitle"
             :size="size"
             :placeholder="placeholder"
             :readonly="true"
@@ -20,45 +19,71 @@
             slot="dropdown"
             :style="{width: menuWidth}"
             v-show="isDropdownShow">
-            <iu-tree ref="tree" v-bind="$attrs" v-on="$listeners"></iu-tree>
+            <iu-tree ref="tree"
+                :inDropdown="true"
+                v-bind="$attrs"
+                v-on="$listeners"
+                @change="handleChange">
+            </iu-tree>
         </i-dropdown-menu>
     </i-dropdown>
 </template>
 
 <script>
+import emitter from '@/mixins/emitter';
 import IUTree from '@/components/tofu-tree';
 
 export default {
     name: 'dropdown-tree',
+
+    mixins: [emitter],
 
     components: {
         IUTree
     },
 
     props: {
-        size: {
-            type: String,
-            default: 'small'
-        },
+        size: String,
         title: String,
         placeholder: String
     },
 
     computed: {
-        iconClass () {
+        iconClass() {
             return this.isDropdownShow ? 'arrow-down reverse' : 'arrow-down'
+        },
+        inputTitle() {
+            return (this.title || this.checkedNodes.map(node => {
+                return (node.label || '');
+            }).join('，'));
         }
     },
 
-    data () {
+    data() {
         return {
             isDropdownShow: false,
-            menuWidth: '200px'
+            menuWidth: '200px',
+            checkedNodes: []
         }
     },
 
     methods: {
-        handleClick (e) {
+        // 访问器
+        selectAll() {
+            if (this.$refs.tree) {
+                thsi.$refs.tree.selectAll();
+            }
+        },
+        cleanTree() {
+            if (this.$refs.tree) {
+                thsi.$refs.tree.clean();
+            }
+        },
+        getTree() {
+            return this.$refs.tree;
+        },
+
+        handleClick(e) {
             if (!this.isDropdownShow) {
                 this.menuWidth = this.$refs.dropdown.$el.clientWidth + 'px';
             }
@@ -66,18 +91,20 @@ export default {
             this.isDropdownShow = !this.isDropdownShow;
         },
 
-        getTree() {
-            return this.$refs.tree;
-        }
+        handleChange(checkedNodes, onInit) {
+            this.checkedNodes = checkedNodes;
+            if (!onInit) {
+                this.dispatch('form-item', 'el.form.change', [checkedNodes]);
+            }
+        },
     },
 
-    mounted () {
+    mounted() {
         this.$refs.panel.$el.addEventListener('click', () => {
             this.handleClick();
             (document.body || document.documentElement).click();
         })
     }
-
 }
 </script>
 
@@ -141,7 +168,7 @@ export default {
             padding-right: 30px;
         }
 
-        .tree {
+        .tofu-tree {
             max-height: 300px;
             overflow: auto;
             top: 28px;

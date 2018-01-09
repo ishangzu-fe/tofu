@@ -1,5 +1,5 @@
 <template>
-    <div class="tree">
+    <div class="tofu-tree">
         <node
             v-for="node in nodes"
             :key="node.id"
@@ -12,14 +12,11 @@
 </template>
 
 <script>
-    import emitter from '@/mixins/emitter';
     import getTreeInstance from './model/tree'
     import Node from './node'
 
     export default {
-        name: 'tree',
-
-        mixins: [emitter],
+        name: 'tofu-tree',
 
         components: {
             Node
@@ -44,7 +41,8 @@
             multiple: {
                 type: Boolean,
                 default: true
-            }
+            },
+            inDropdown: Boolean
         },
 
         data () {
@@ -61,9 +59,18 @@
         },
 
         methods: {
-            emitCheck (checkedNodes) {
-                this.$emit('change', checkedNodes)
-                this.dispatch('form-item', 'el.form.change', [checkedNodes])
+            emitCheck (onInit = false) {
+                this.$emit('change', this.getAllCheckedNodes(), onInit)
+            },
+
+            getAllCheckedNodes() {
+                let checkedNodes = []
+                for (let key of Object.keys(this.TreeModel._checkedCache)) {
+                    this.TreeModel._checkedCache[key].forEach(node => {
+                        checkedNodes.push(node)
+                    })
+                }
+                return checkedNodes;
             },
 
             clean() {
@@ -91,6 +98,9 @@
 
                 if (this.data) {
                     this.nodes = this.TreeModel.createNodes(this.data, null, this.dict)
+                }
+                if (this.inDropdown) {
+                    this.emitCheck(true);
                 }
             }
         },
