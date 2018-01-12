@@ -1,5 +1,5 @@
 <template>
-    <i-dropdown
+    <dropdown
         ref="dropdown"
         class="dropdown-tree"
         trigger="click"
@@ -13,11 +13,11 @@
             :readonly="true"
             :icon="iconClass">
         </i-input>
-        <i-dropdown-menu
+        <dropdown-menu
             ref="panel"
             class="panel"
             slot="dropdown"
-            :style="{width: menuWidth}"
+            :width="menuWidth"
             v-show="isDropdownShow">
             <iu-tree ref="tree"
                 :inDropdown="true"
@@ -25,13 +25,14 @@
                 v-on="$listeners"
                 @change="handleChange">
             </iu-tree>
-        </i-dropdown-menu>
-    </i-dropdown>
+        </dropdown-menu>
+    </dropdown>
 </template>
 
 <script>
 import emitter from '@/mixins/emitter';
 import IUTree from '@/components/tofu-tree';
+import { Dropdown, DropdownMenu } from './components/dropdown';
 
 export default {
     name: 'dropdown-tree',
@@ -39,7 +40,9 @@ export default {
     mixins: [emitter],
 
     components: {
-        IUTree
+        IUTree,
+        Dropdown,
+        DropdownMenu
     },
 
     props: {
@@ -62,7 +65,7 @@ export default {
     data() {
         return {
             isDropdownShow: false,
-            menuWidth: '200px',
+            menuWidth: 200,
             checkedNodes: []
         }
     },
@@ -85,7 +88,7 @@ export default {
 
         handleClick(e) {
             if (!this.isDropdownShow) {
-                this.menuWidth = this.$refs.dropdown.$el.clientWidth + 'px';
+                this.menuWidth = this.$refs.dropdown.$el.clientWidth;
             }
 
             this.isDropdownShow = !this.isDropdownShow;

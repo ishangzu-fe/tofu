@@ -16,7 +16,7 @@
                     'icon-minus': node._hasChildChecked && !node._checked }"
                 @click.stop="toggle">
             </span>
-            <span class="node-label">{{ node.label }}</span>
+            <span class="node-label" :title="node.label">{{ node.label }}</span>
             <span class="node-count" v-if="showCounter && node.childNodes.length">
                 {{checkedChildren}}/{{node.childNodes.length}}
             </span>
