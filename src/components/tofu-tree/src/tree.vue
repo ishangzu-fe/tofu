@@ -1,8 +1,8 @@
 <template>
     <div class="tofu-tree">
         <node
-            v-for="node in nodes"
-            :key="node.id"
+            v-for="(node, index) in nodes"
+            :key="`${node.id}-${node.level}-${index}`"
             :node="node"
             :TreeModel="TreeModel"
             :showCounter="showCounter"

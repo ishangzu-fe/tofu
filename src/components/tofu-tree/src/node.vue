@@ -22,8 +22,8 @@
             </span>
         </div>
         <tree-node
-            v-for="node in node.childNodes"
-            :key="node.id"
+            v-for="(node, index) in node.childNodes"
+            :key="`${node.id}-${node.level}-${index}`"
             :node="node"
             :TreeModel="TreeModel"
             @check="$emit('check')"
