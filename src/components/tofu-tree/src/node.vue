@@ -85,7 +85,9 @@
             height: 26px;
             line-height: 26px;
             padding: 0 10px;
-
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 10px solid transparent;
             cursor: pointer;
 
             &:hover {
