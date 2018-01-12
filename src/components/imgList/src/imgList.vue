@@ -1,6 +1,6 @@
 <template>
     <ul class="img-list">
-        <li v-for="(item,index) in files" :key="item[opts.url]" :class="{'has-input':hasEdit}">
+        <li v-for="(item,index) in files" :key="item[opts.url] + index" :class="{'has-input':hasEdit}">
             <img :src="perfix + item[opts.url] + crop">
             <i-input size="small" v-model="item[opts.name]" v-if="hasInput"></i-input>
             <i-select size="small" v-model="item[opts.type]" v-if="hasSelect">
