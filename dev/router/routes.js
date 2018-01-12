@@ -9,6 +9,7 @@ import Cascader from '../pages/cascader'
 import Checkbox from '../pages/checkbox'
 import Dialog from '../pages/dialog'
 import DatePicker from '../pages/datePicker'
+import DropdownTree from '../pages/dropdownTree'
 import Form from '../pages/form'
 import TimePicker from '../pages/timePicker'
 import Input from '../pages/input'
@@ -31,6 +32,7 @@ let routes = [
     {path: '/cascader', component:Cascader},
     {path: '/checkbox', component:Checkbox},
     {path: '/datePicker', component:DatePicker},
+    {path: '/dropdown-tree', component:DropdownTree},
     {path: '/dialog', component:Dialog},
     {path: '/timePicker', component:TimePicker},
     {path: '/form', component:Form},
