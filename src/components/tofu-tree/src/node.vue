@@ -22,6 +22,7 @@
             </span>
         </div>
         <tree-node
+            v-if="hasRenderChildren"
             v-for="(node, index) in node.childNodes"
             :key="`${node.id}-${node.level}-${index}`"
             :node="node"
@@ -46,6 +47,12 @@
             }
         },
 
+        data() {
+            return {
+                hasRenderChildren: false
+            }
+        },
+
         computed: {
             checkedChildren () {
                 return this.node.childNodes.filter(node => {
@@ -56,6 +63,7 @@
 
         methods: {
             expandOrCollapse() {
+                this.hasRenderChildren = true
                 this.node._expanded = this.node._expanded ? false : true
             },
 
