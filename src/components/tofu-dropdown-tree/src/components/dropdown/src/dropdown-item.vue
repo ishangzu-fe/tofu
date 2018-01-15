@@ -1,9 +1,9 @@
 <template>
     <li class="el-dropdown-menu-item"
         :class="{
-      'is-disabled': disabled,
-      'el-dropdown-menu-item-divided': divided
-    }"
+            'is-disabled': disabled,
+            'el-dropdown-menu-item-divided': divided
+        }"
         @click="handleClick"
     >
         <slot></slot>

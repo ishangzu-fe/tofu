@@ -2,14 +2,18 @@
     <div class="tree-node" v-show="!node.parentNode || node.parentNode._expanded">
         <div
             class="node-main"
+            :class="{ 'is-checked': !TreeModel._multiple && node._checked,
+                'no-checkbox': !TreeModel._multiple }"
             :style="{'padding-left': (16 * (node.level - 1) + 10) + 'px'}"
-            @click.stop="expandOrCollapse">
+            @click.stop="!TreeModel._multiple && toggle()">
             <span
                 class="node-triangle tofu-icon icon-triangle-right"
                 :class="{'node-triangle-hidden': !node.childNodes.length,
-                    'node-triangle-expand': node._expanded}">
+                    'node-triangle-expand': node._expanded}"
+                @click.stop="expandOrCollapse">
             </span>
             <span
+                v-if="TreeModel._multiple"
                 class="node-checkbox tofu-icon"
                 :class="{
                     'icon-check': node._checked,
@@ -100,6 +104,15 @@
 
             &:hover {
                 background: #f5f7fa;
+            }
+
+            &.no-checkbox:hover, &.is-checked {
+                background: #f5f7fa;
+
+                .node-label {
+                    color: #409eff;
+                    font-weight: 700;
+                }
             }
 
             .node-label {
