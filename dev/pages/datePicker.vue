@@ -115,7 +115,6 @@
             }
         },
         mounted(){
-            this.value1 = new Date('2021-01-15')
         }
     }
 </script>
