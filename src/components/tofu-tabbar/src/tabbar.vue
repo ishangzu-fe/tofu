@@ -185,20 +185,21 @@
                         return _tab.path === tab.path
                     })
 
-                    this.$router.push((tab.route || tab.path))
+                    // 获取路径匹配的组件配置对象
+                    const matchedComponents = this.$router.getMatchedComponents(tab.path)
+                    const tabComponent = matchedComponents.length && matchedComponents[matchedComponents.length - 1]
+
+                    if (tabComponent) {
+                        setTimeout(() => {
+                            this.$router.push(tab.path)
+                        }, 100)
+                    }
 
                     if (isExists) return // 如果已经存在 Tab，则仅仅激活路由，保证 tab 与路由的映射唯一性
 
-                    // 将 tab 与页面实例绑定
-                    const matchedRoutes = this.$router.currentRoute.matched
-                    const matchedRoute = matchedRoutes[matchedRoutes.length - 1]
-                    const matchedComponent = matchedRoute.components.default
-                    const pageName = matchedComponent.name || matchedComponent._Ctor[0].options.name
-                    const pageData = matchedComponent.data && matchedComponent.data()
-                    if (pageData) {
-                        tab.notBindTab = pageData._notBindTab
-                    }
-                    if (tab.notBindTab) {
+                    tab.notBindTab = tabComponent._notBindTab
+                    if (tab.notBindTab !== true) {
+                        let pageName = tabComponent.name
                         tab.pageName = pageName
                         if (this.pageCache.indexOf(pageName) === -1) {
                             this.pageCache.push(pageName)
