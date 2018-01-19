@@ -4,7 +4,7 @@
             <i-row :gutter="10">
                 <i-col :span="6">
                     <div class="is-left">默认</div>
-                    <i-date-picker v-model="value1" type="date" placeholder="请选择日期" :picker-options="pikcerOptions1"></i-date-picker>
+                    <i-date-picker v-model="value1" type="date" placeholder="请选择日期" :picker-options="pikcerOptions1" @change="handleChange"></i-date-picker>
                 </i-col>
                 <i-col :span="6">
                     <div class="is-left">带快捷选项</div>
@@ -108,6 +108,13 @@
                     }]
                 }
             }
+        },
+        methods:{
+            handleChange(val){
+                console.log(val,this.value1);
+            }
+        },
+        mounted(){
         }
     }
 </script>

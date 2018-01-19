@@ -198,7 +198,7 @@ export default {
     }
   }
   .img-item {
-    display: inline-block;
+    // display: inline-block;
     cursor: pointer;
     &.hidden {
       visibility: hidden;
