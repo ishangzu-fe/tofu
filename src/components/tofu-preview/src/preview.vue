@@ -81,7 +81,7 @@
                         :data-idx="idx"
                         :data-id="image.id"
                         @load="handleImageLoad"
-                    ></img>
+                    >
                 </transition>
             </div>
         </transition>
@@ -314,6 +314,9 @@ export default {
         close () {
             this.curImgId = -1;
             this.curImgIdx = -1;
+
+            this.loadedImages = [];
+            this.images = [];
 
             if (this.justPreview) {
                 this.showCover = false;
