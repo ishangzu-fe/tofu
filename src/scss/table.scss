@@ -74,6 +74,10 @@
     &.is-right{
       text-align: right;
     }
+
+    &.is-hidden{
+      visibility: hidden;
+    }
   }
 
   & th{
