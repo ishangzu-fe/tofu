@@ -24,6 +24,7 @@ import Row from './components/row';
 import Switch from './components/switch';
 import { Select, SelectOption, SelectOptionGroup } from './components/select';
 import { Step, Steps } from './components/steps';
+import Scrollbar from './components/scrollbar';
 import { Table, TableColumn } from './components/table';
 import { Tabs, TabPane } from './components/tabs';
 import Tag from './components/tag';
@@ -82,6 +83,7 @@ const install = (Vue) => {
     Vue.component('i-select', Select);
     Vue.component('i-option', SelectOption);
     Vue.component('i-option-group', SelectOptionGroup);
+    Vue.component('i-scrollbar', Scrollbar);
     Vue.component('i-switch', Switch);
     Vue.component('i-step', Step);
     Vue.component('i-steps', Steps);

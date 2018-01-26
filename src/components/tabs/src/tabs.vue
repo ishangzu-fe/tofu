@@ -1,11 +1,13 @@
 <script>
   import TabNav from './tab-nav';
+  import ScrollBar from '../../scrollbar';
 
   export default {
     name: 'ElTabs',
 
     components: {
-      TabNav
+      TabNav,
+      ScrollBar
     },
 
     props: {
@@ -13,6 +15,11 @@
       activeName: String,
       closable: Boolean,
       addable: Boolean,
+      scroll:{
+        type:Boolean,
+        default:false
+      },
+      contentHeight:String,
       value: {},
       editable: Boolean
     },
@@ -80,6 +87,8 @@
     render(h) {
       let {
         type,
+        scroll,
+        contentHeight,
         handleTabClick,
         handleTabRemove,
         handleTabAdd,
@@ -112,6 +121,8 @@
         ref: 'nav'
       };
 
+      const contentStyle = scroll ? 'height:' + contentHeight : '';
+
       return (
         <div class={{
           'el-tabs': true,
@@ -122,8 +133,11 @@
             {newButton}
             <tab-nav { ...navData }></tab-nav>
           </div>
-          <div class="el-tabs-content">
-            {this.$slots.default}
+          <div class={{
+            'el-tabs-content':true,
+            'is-scroll':scroll
+          }} style={contentStyle}>
+              {this.$slots.default}            
           </div>
         </div>
       );
