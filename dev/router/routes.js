@@ -20,6 +20,7 @@ import MessageBox from '../pages/message-box'
 import Select from '../pages/select'
 import Switch from '../pages/switch'
 import Tabs from '../pages/tabs'
+import Table from '../pages/table'
 
 let routes = [
     {path: '/',component:Hello},
@@ -43,7 +44,8 @@ let routes = [
     {path: '/message-box',component:MessageBox},
     {path: '/select', component:Select},
     {path: '/switch', component:Switch},
-    {path: '/tabs', component:Tabs}
+    {path: '/tabs', component:Tabs},
+    {path: '/table', component:Table}
 ]
 
 export default routes;

@@ -12,7 +12,7 @@
               <div>
                   <i-button @click.stop="dialog3 = true">打开嵌套dialog</i-button>
                   <i-dialog v-model="dialog3" title="嵌套" append-to-body>
-                      <div>嵌套</div>
+                      <div @click.stop="show">嵌套</div>
                   </i-dialog>
               </div>
           </i-dialog>
@@ -26,6 +26,25 @@ export default {
           dialog1:false,
           dialog2:false,
           dialog3:false
+      }
+  },
+  methods:{
+      show(){
+          this.$confirm('确定删除', '提示', {
+                confirmButtonText:'确定',
+                cancelButtonText:'取消',
+                type:'info'
+            }).then(() => {
+                this.$message({
+                    type:'success',
+                    message:'删除成功'
+                });
+            }).catch(() => {
+                this.$message({
+                    type:'info',
+                    message:'已取消删除'
+                });
+            });
       }
   }
 }

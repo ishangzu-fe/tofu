@@ -15,12 +15,13 @@
             open1() {
                 this.$alert('这是一段内容', '标题名称', {
                     confirmButtonText: '确定',
-                }).then(res => {
+                    callback:action => {
                         this.$message({
                             type: 'info',
-                            message: '哈哈哈哈'
+                            message: ` 嘿嘿嘿: ${action}`
                         })
-                });
+                    }
+                })
                 
             },
             open2(){

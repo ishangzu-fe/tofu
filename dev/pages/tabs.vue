@@ -4,15 +4,27 @@
         <demo-block title="基础用法" desc="基础用法">
             <i-tabs :active-name="activeName1" ref="tab">
                 <i-tab-pane label="用户管理" name="first" :disabled="true">用户管理</i-tab-pane>
-                <i-tab-pane label="配置管理" name="second"><i-button>配置管理</i-button></i-tab-pane>
+                <i-tab-pane label="配置管理" name="second">
+                    <i-scrollbar wrap-style="height:300px;">
+                        <div style="height:1200px">
+                            <div style="height:400px;background:red"></div>
+                            <div style="height:400px;background:yellow"></div>
+                        </div>
+                    </i-scrollbar>
+                </i-tab-pane>
                 <i-tab-pane label="角色管理" name="third">角色管理</i-tab-pane>
                 <i-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</i-tab-pane>
             </i-tabs>
         </demo-block>
     
         <demo-block title="选项卡样式">
-            <i-tabs :active-name="activeName2" type="card" @tab-click="handleClick">
-                <i-tab-pane label='用户管理' name="first">用户管理</i-tab-pane>
+            <i-tabs :active-name="activeName2" type="card" :scroll="true" content-height="300px" @tab-click="handleClick">
+                <i-tab-pane label='用户管理' name="first">
+                    <div style="height:1200px">
+                        <div style="height:400px;background:red"></div>
+                        <div style="height:400px;background:yellow"></div>
+                    </div>
+                </i-tab-pane>
                 <i-tab-pane label='配置管理' name="second">配置管理</i-tab-pane>
                 <i-tab-pane label='角色管理' name="third">角色管理</i-tab-pane>
                 <i-tab-pane label='定时任务补偿' name="fourth">定时任务补偿</i-tab-pane>
@@ -52,7 +64,7 @@
             return {
                 activeName1: 'second',
                 activeName2: 'second',
-                activeName3: '2',                
+                activeName3: '2',
                 editableTabs: [{
                     title: 'tab 1',
                     name: '1',
@@ -106,4 +118,11 @@
         }
     }
 </script>
+
+<style>
+    .el-tabs-content.is-scroll {
+        overflow-y: scroll;
+    }
+</style>
+
 
