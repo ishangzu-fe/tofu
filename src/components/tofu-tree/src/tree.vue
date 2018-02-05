@@ -23,6 +23,7 @@
         },
 
         props: {
+            value: Array,
             data: Array,
             dict: Object,
             showCounter: {

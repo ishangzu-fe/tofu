@@ -15,9 +15,8 @@
         </i-input>
         <dropdown-menu
             ref="panel"
-            class="panel"
+            class="tofu-dropdown-panel"
             slot="dropdown"
-            :width="menuWidth"
             v-show="isDropdownShow">
             <iu-tree ref="tree"
                 :inDropdown="true"
@@ -74,12 +73,12 @@ export default {
         // 访问器
         selectAll() {
             if (this.$refs.tree) {
-                thsi.$refs.tree.selectAll();
+                this.$refs.tree.selectAll();
             }
         },
         cleanTree() {
             if (this.$refs.tree) {
-                thsi.$refs.tree.clean();
+                this.$refs.tree.clean();
             }
         },
         getTree() {
@@ -144,8 +143,8 @@ export default {
             transform: rotate(-180deg);
         }
     }
-    .el-dropdown-menu.panel {
-        min-width: 200px;
+    .el-dropdown-menu.tofu-dropdown-panel {
+        min-width: 180px;
         max-height: 500px;
 
         overflow: auto;

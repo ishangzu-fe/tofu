@@ -5,7 +5,7 @@
             :class="{ 'is-checked': !TreeModel._multiple && node._checked,
                 'no-checkbox': !TreeModel._multiple }"
             :style="{'padding-left': (16 * (node.level - 1) + 10) + 'px'}"
-            @click.stop="!TreeModel._multiple && toggle()">
+            @click="!TreeModel._multiple && check()">
             <span
                 class="node-triangle tofu-icon icon-triangle-right"
                 :class="{'node-triangle-hidden': !node.childNodes.length,
@@ -69,6 +69,12 @@
             expandOrCollapse() {
                 this.hasRenderChildren = true
                 this.node._expanded = this.node._expanded ? false : true
+            },
+
+            check() {
+                if (this.node._checked) return
+                this.TreeModel.checkNode(this.node)
+                this.$emit('check')
             },
 
             toggle() {
