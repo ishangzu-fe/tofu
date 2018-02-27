@@ -136,7 +136,6 @@ export default {
 
         .el-icon-arrow-down {
             transition: transform .25s ease-in-out;
-
         }
         .reverse {
             transition: transform .25s ease-in-out;

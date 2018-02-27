@@ -5,7 +5,7 @@
             :class="{ 'is-checked': !TreeModel._multiple && node._checked,
                 'no-checkbox': !TreeModel._multiple }"
             :style="{'padding-left': (16 * (node.level - 1) + 10) + 'px'}"
-            @click="!TreeModel._multiple && check()">
+            @click.stop="!TreeModel._multiple && check()">
             <span
                 class="node-triangle tofu-icon icon-triangle-right"
                 :class="{'node-triangle-hidden': !node.childNodes.length,
@@ -31,6 +31,7 @@
             :key="`${node.id}-${node.level}-${index}`"
             :node="node"
             :TreeModel="TreeModel"
+            :watch="watch"
             @check="$emit('check')"
         ></tree-node>
     </div>
@@ -38,6 +39,7 @@
 
 <script>
     import Node from './model/node'
+    import Bus from './Bus'
 
     export default {
         name: 'tree-node',
@@ -48,7 +50,8 @@
             showCounter: {
                 type: Boolean,
                 default: false
-            }
+            },
+            watch: Array
         },
 
         data() {
@@ -71,22 +74,30 @@
                 this.node._expanded = this.node._expanded ? false : true
             },
 
+            // check() {
+            //     if (this.node._checked) return
+            //     this.TreeModel.checkNode(this.node)
+            //     this.$emit('check')
+            // },
+
             check() {
-                if (this.node._checked) return
                 this.TreeModel.checkNode(this.node)
-                this.$emit('check')
+            },
+            uncheck() {
+                this.TreeModel.uncheckNode(this.node)
             },
 
             toggle() {
-                // console.time()
                 if (this.node._checked) {
-                    this.TreeModel.uncheckNode(this.node)
+                    this.uncheck()
                 } else {
-                    this.TreeModel.checkNode(this.node)
+                    this.check()
                 }
 
                 this.$emit('check')
-                // console.timeEnd()
+                if (this.watch.includes(this.node.id)) {
+                    Bus.$emit('update', this.node.id, this.node._checked)
+                }
             }
         }
     }

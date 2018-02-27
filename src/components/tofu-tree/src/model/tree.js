@@ -16,7 +16,7 @@ export default (function () {
 })()
 
 class Tree {
-    constructor ({ checkChildren = true, checkedNodes = [], multiple = true }) {
+    constructor ({ checkChildren = true, checkedNodes = [], multiple = true}) {
         this._cache = {}
         this._checkedCache = {}
         this._checkQueueOnInit = []
@@ -91,6 +91,30 @@ class Tree {
             this.uncheckNode(node)
             this._deleteNodeCache('checked', node)
         })
+    }
+
+    checkNodeByID(id) {
+        for (let nodeLevel in this._cache) {
+            for (let i = 0; i < this._cache[nodeLevel].length; i++) {
+                if (this._cache[nodeLevel][i].id === id) {
+                    this.checkNode(this._cache[nodeLevel][i])
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    uncheckNodeByID(id) {
+        for (let nodeLevel in this._cache) {
+            for (let i = 0; i < this._cache[nodeLevel].length; i++) {
+                if (this._cache[nodeLevel][i].id === id) {
+                    this.uncheckNode(this._cache[nodeLevel][i])
+                    return true
+                }
+            }
+        }
+        return false
     }
 
     /**
@@ -259,6 +283,7 @@ class Tree {
 
         const nodes = data.map(v => {
             const node = this.createNode(v, parentNode, dict)
+            // 初始勾选状态
             if (this.checkedNodeIDsOnInit
                 && this.checkedNodeIDsOnInit.length
                 && ~this.checkedNodeIDsOnInit.indexOf(v[dict['id']])) {
