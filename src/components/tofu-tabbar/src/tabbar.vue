@@ -62,6 +62,7 @@
                 inited: false, // 用于辨别是否完成初始化
                 computedId: 0, // 用于计算 tab 的 id
                 tabs: [],
+                tabComponents: {},
                 tabMap: null, // tab 与 id 的映射
                 pageCache: [], // 需要缓存的名字的数组，会被暴露出去
                 activeId: null,
@@ -178,6 +179,11 @@
             * @param {Object} tab tab数据对象
             */
             createTab (tab) {
+                // 生成 id
+                tab.id = `tab_${tab.label}_${this.computedId++}`
+                // 初始化移动量
+                tab.moveOffset = 0
+
                 if (this.useRouter && this.$router) {
                     tab.path = tab.path || (tab.route && tab.route.path)
 
@@ -188,6 +194,7 @@
                     // 获取路径匹配的组件配置对象
                     const matchedComponents = this.$router.getMatchedComponents(tab.path)
                     const tabComponent = matchedComponents.length && matchedComponents[matchedComponents.length - 1]
+                    this.tabComponents[tab.id] = tabComponent
 
                     if (tabComponent) {
                         setTimeout(() => {
@@ -207,11 +214,6 @@
                         TabManager['cache'] = this.pageCache.join(',')
                     }
                 }
-
-                // 生成 id
-                tab.id = `tab_${tab.label}_${this.computedId++}`
-                // 初始化移动量
-                tab.moveOffset = 0
 
                 // 根据配置来确定 tab 添加的位置
                 if (this.createPos === 'left') {
@@ -302,6 +304,12 @@
 
                 // 处理缓存
                 if (this.useRouter) {
+                    const tabComponent = this.tabComponents[tabId]
+                    if (tabComponent && tabComponent._isVue) {
+                        tabComponent.$destroy()
+                        this.tabComponents[tabId] = null
+                    }
+
                     if (!destroyedTab.notBindTab) {
                         this.pageCache.splice(this.pageCache.indexOf(destroyedTab.pageName), 1)
                         TabManager['cache'] = this.pageCache.join(',')
