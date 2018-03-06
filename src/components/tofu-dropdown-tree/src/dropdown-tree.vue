@@ -180,14 +180,9 @@ export default {
             z-index: 100;
 
             .tree-node .node-main {
-                padding: 8px 10px;
-                height: 36px;
+                padding: 4px 6px;
+                height: 28px;
                 line-height: 20px;
-
-                .node-checkbox.tofu-icon {
-                    margin-top: 2px;
-                    vertical-align: top;
-                }
 
                 .node-checkbox {
                     background: #fff;
