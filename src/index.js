@@ -106,6 +106,7 @@ const install = (Vue) => {
     Vue.component('i-field-filter', FiledFilter);
     Vue.component('i-uploader', Uploader);
     Vue.component('iu-tree', IUTree);
+    Vue.component('i-tabbar', Tabbar);
 
     Vue.prototype.$message = Message;
     Vue.prototype.$msgbox = MessageBox;
@@ -122,7 +123,6 @@ const install = (Vue) => {
 module.exports = {
     install,
     MessageBox,
-    Tabbar: Tabbar,
     Previewer: Preview,
     ContextMenu:ContextMenu
 }
