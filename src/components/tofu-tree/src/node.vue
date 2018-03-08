@@ -34,6 +34,7 @@
             :TreeModel="TreeModel"
             :watch="watch"
             @check="$emit('check')"
+            @expandOrCollapse="$emit('expandOrCollapse')"
         ></tree-node>
     </div>
 </template>
@@ -73,6 +74,7 @@
             expandOrCollapse() {
                 this.hasRenderChildren = true
                 this.node._expanded = this.node._expanded ? false : true
+                this.$emit('expandOrCollapse')
             },
 
             check() {

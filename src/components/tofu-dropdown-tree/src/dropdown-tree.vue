@@ -3,6 +3,7 @@
         ref="dropdown"
         class="dropdown-tree"
         trigger="click"
+        :menuAlign="menuAlign"
         @click.native="handleClick">
         <i-input
             class="title"
@@ -22,7 +23,8 @@
                 :inDropdown="true"
                 v-bind="$attrs"
                 v-on="$listeners"
-                @change="handleChange">
+                @change="handleChange"
+                @expandOrCollapse="handleExpandOrCollapse">
             </iu-tree>
         </dropdown-menu>
     </dropdown>
@@ -47,7 +49,11 @@ export default {
     props: {
         size: String,
         title: String,
-        placeholder: String
+        placeholder: String,
+        menuAlign: {
+            type: String,
+            default: 'start'
+        }
     },
 
     computed: {
@@ -99,6 +105,12 @@ export default {
                 this.dispatch('form-item', 'el.form.change', [checkedNodes]);
             }
         },
+
+        handleExpandOrCollapse() {
+            const panel = this.$refs.panel;
+            panel.resetTransformOrigin();
+            this.$nextTick(panel.updatePopper);
+        }
     },
 
     mounted() {

@@ -8,6 +8,7 @@
             :showCounter="showCounter"
             :watch="watch"
             @check="emitCheck"
+            @expandOrCollapse="$emit('expandOrCollapse')"
         ></node>
     </div>
 </template>
