@@ -472,7 +472,7 @@ export default {
             // 恢复激活状态
             this.$nextTick(() => {
                 this.activateTab(data.activeId)
-                this.emit('inited')
+                this.$emit('inited')
             })
         },
 
