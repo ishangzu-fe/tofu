@@ -34,6 +34,7 @@ import Upload from './components/upload';
 import Editor from './components/editor';
 import TabMenu from './components/tab-menu';
 import Popover from './components/popover';
+import Breadcrumb from './components/breadcrumb';
 
 import Cascader from './components/tofu-cascader';
 import DropdownTree from './components/tofu-dropdown-tree';
@@ -118,6 +119,8 @@ const install = (Vue) => {
     Draggable(Vue); // 注册 drag 指令
     Loading.install(Vue);
     Editor.install(Vue);
+
+    Vue.use(Breadcrumb);
 };
 
 module.exports = {
