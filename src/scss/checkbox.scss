@@ -130,3 +130,12 @@
   font-size: 14px;
   padding-left: 5px;
 }
+
+.el-checkbox-group{
+  display: inline-block;
+  font-size: 0;
+
+  & .el-checkbox{
+    font-size: 14px;
+  }
+}
