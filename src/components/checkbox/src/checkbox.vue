@@ -46,7 +46,7 @@
 
         props: {
             value: {},
-            label: String,
+            label: [String, Number],
             indeterminate: Boolean,
             disabled: Boolean,
             checked: Boolean,
