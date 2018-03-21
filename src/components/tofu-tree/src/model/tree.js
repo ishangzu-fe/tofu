@@ -89,7 +89,7 @@ class Tree {
 
         checkedNodes.forEach(node => {
             this.uncheckNode(node)
-            this._deleteNodeCache('checked', node)
+            // this._deleteNodeCache('checked', node)
         })
     }
 

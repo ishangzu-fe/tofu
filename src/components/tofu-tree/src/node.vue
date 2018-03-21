@@ -70,6 +70,12 @@
             }
         },
 
+        watch: {
+            'node._checked'() {
+                this.$emit('check')
+            }
+        },
+
         methods: {
             expandOrCollapse() {
                 this.hasRenderChildren = true
@@ -87,7 +93,6 @@
                 if (this.node._checked) return
                 if (!this.TreeModel._multiple) {
                     this.TreeModel.checkNode(this.node)
-                    this.$emit('check')
                 } else {
                     e.stopPropagation();
                 }
@@ -100,7 +105,6 @@
                     this.check()
                 }
 
-                this.$emit('check')
                 if (this.watch.includes(this.node.id)) {
                     Bus.$emit('update', this.node.id, this.node._checked)
                 }
