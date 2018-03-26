@@ -11,7 +11,7 @@ function resolve (dir) {
 
 module.exports = {
   entry: {
-    tofu: process.env.NODE_ENV === 'production' 
+    tofu: process.env.NODE_ENV === 'production'
         ? resolve('src/index.js')
         : resolve('dev/index.js')
   },
@@ -43,7 +43,7 @@ module.exports = {
         loader: 'babel-loader',
         include: [resolve('src')]
       },
-      
+
       {
         test: /\.(png|jpe?g|gif)(\?.*)?$/,
         loader: 'url-loader',

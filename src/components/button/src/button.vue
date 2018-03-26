@@ -9,7 +9,8 @@
                 {
                     'is-disabled': !canUse,
                     'is-loading': loading,
-                    'is-plain': plain
+                    'is-plain': plain,
+                    'is-ripple': ripple
                 }
             ]">
         <i class="el-icon-loading" v-if="loading"></i>
@@ -39,6 +40,10 @@
                 default: 'button'
             },
             loading: {
+                type: Boolean,
+                default: false
+            },
+            ripple: {
                 type: Boolean,
                 default: false
             },

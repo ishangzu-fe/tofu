@@ -1,10 +1,10 @@
 <template>
     <ul class="img-list">
-        <li v-for="(item,index) in files" :key="item.url" :class="{'has-input':hasEdit}">
-            <img :src="item.url + '@115w_115h_1c_1e'">
-            <i-input size="small" v-model="item[props.name]" v-if="hasInput"></i-input>
-            <i-select size="small" v-model="item[props.type]" v-if="hasSelect">
-                <i-option v-for="o in typeOptions" :key="o[props.selectValue]" :label="o[props.selectLabel]" :value="o[props.selectValue]"></i-option>
+        <li v-for="(item,index) in files" :key="item[opts.url] + index" :class="{'has-input':hasEdit}">
+            <img :src="perfix + item[opts.url] + crop">
+            <i-input size="small" v-model="item[opts.name]" v-if="hasInput"></i-input>
+            <i-select size="small" v-model="item[opts.type]" v-if="hasSelect">
+                <i-option v-for="o in typeOptions" :key="o[opts.selectValue]" :label="o[opts.selectLabel]" :value="o[opts.selectValue]"></i-option>
             </i-select>
             <span class="img-actions">
                 <span class="img-item prev" :class="{'hidden':index==0}" @click="handlePrev(index)" v-if="order">
@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import merge from '@/utils/merge';
+
 export default {
   name: "imgList",
   data() {
@@ -33,6 +35,14 @@ export default {
     };
   },
   props: {
+    crop:{
+      type:String,
+      default:'@115w_115h_1c_1e'
+    },
+    perfix:{
+      type:String,
+      default:''
+    },
     value: {
       type: Array,
       default: []
@@ -66,13 +76,13 @@ export default {
     props:{
         type: Object,
         default() {
-            return {
-                name: 'name',
-                type: 'type',
-                selectLabel:'label',
-                selectValue:'value'
-            }
+            return {}
         }
+    }
+  },
+  watch:{
+    value(val){
+      this.files = val
     }
   },
   methods: {
@@ -86,11 +96,10 @@ export default {
             confirmButtonText: "确定",
             cancelButtonText: "取消",
             type: "warning"
-          })
-            .then(() => {
+          }).then(() => {
               this.value.splice(index, 1);
-            })
-            .catch(() => {
+              this.$emit('delete',index);
+          }).catch(() => {
               this.$message({
                 type: "info",
                 message: "已取消删除"
@@ -120,14 +129,14 @@ export default {
 
       this.value.forEach(item => {
         ary.push({
-          src: item.url,
+          src: this.perfix + item[this.opts.url],
           infos: [
             (item.create_name || "") + "-" + (item.create_dept || ""),
             "上传时间:" + (item.create_time || "")
           ]
         });
       });
-
+      
       return ary;
     },
     imgLength() {
@@ -135,6 +144,16 @@ export default {
     },
     hasEdit(){
       return this.hasInput || this.hasSelect;
+    },
+    opts(){
+      let opts = {
+          name: 'name',
+          type: 'type',
+          selectLabel:'label',
+          selectValue:'value',
+          url:'url'
+      }
+      return merge({}, opts, this.props);
     }
   }
 };
@@ -179,7 +198,7 @@ export default {
     }
   }
   .img-item {
-    display: inline-block;
+    // display: inline-block;
     cursor: pointer;
     &.hidden {
       visibility: hidden;

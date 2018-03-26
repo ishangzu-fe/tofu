@@ -10,3 +10,5 @@ dev/
 examples/
 config/
 index.html
+develop/
+package-lock.json

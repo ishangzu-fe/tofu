@@ -1,7 +1,7 @@
 <template>
     <div class="el-select"
          v-clickoutside="handleClose"
-         :class="{ 'is-multiple': multiple, 'is-small': size === 'small' }">
+         :class="{ 'is-multiple': multiple, 'over-hidden': !multipleShowAll, 'is-small': size === 'small' }">
         <div class="el-select-tags"
              v-if="multiple"
              @click.stop="toggleMenu"
@@ -104,7 +104,7 @@
 
     const sizeMap = {
         'large': 42,
-        'small': 30,
+        'small': 28,
         'mini': 22
     };
 
@@ -186,6 +186,10 @@
                 type: Number,
                 default: 0
             },
+            multipleShowAll:{
+                type: Boolean,
+                default: true
+            },
             placeholder: {
                 type: String,
                 default() {
@@ -247,7 +251,8 @@
                     this.inputLength = 20;
                 }
                 this.$emit('change', val);
-                this.dispatch('ElFormItem', 'el.form.change', val);
+                this.dispatch('form-item', 'el.form.change', val);
+
             },
 
             query(val) {

@@ -1,227 +1,300 @@
 <template>
-    <div class="menu-item">
-        <div
-            class="menu-item-main"
-            :class="{'menu-item-active': activeMenu === menu}"
-            :style="{'padding-left': paddingLeft}"
-            @click.stop="activate">
-            <i class="menu-item-icon" v-if="menu.iconClass || menu.imgSrc">
-                <v-icon :iconClass="menu.iconClass" :imgSrc="menu.imgSrc" :size="16"/>
-            </i>
-            <span class="menu-item-icon" v-else-if="menu._deep === 0"><slot></slot></span>
-            <span class="menu-item-label">{{ menu.label }}</span>
-            <span class="menu-item-sign"></span>
+    <div :class="`i-menu-item i-menu-item--${
+            hasChildren ? 'branch' : 'leaf'
+        }`">
+        <div class="item__main"
+            :class="{'item__main--active': this.state === 'activated' || this.state === 'expand'}"
+            @click="activate">
+            <div class="item__icon">
+                <img :src="iconURL" v-if="iconURL">
+                <i :class="iconClass" v-else-if="iconClass"></i>
+            </div
+            ><div class="item__label"
+                :style="`text-indent: ${level > 2 ? 14 * (level - 2) : 0}px`">
+                {{label}}
+            </div>
+            <div class="item__arrow" v-if="hasChildren">
+                <img src="../../../assets/ra.png">
+            </div>
         </div>
-        <menu-item
-            @menuItem_activate="emitSubActivate"
-            class="menu-item-child"
-            v-for="menu in menu.children"
-            :menu="menu"
-            :activeMenu="activeMenu"
-            :useRouter="useRouter"
-            v-show="childrenVisibility">
-        </menu-item>
+        <!-- 过渡动画使用简单的高度动画，参考 Element -->
+        <transition @before-enter="handleBeforeEnter"
+            @enter="handleEnter"
+            @after-enter="handleAfterEnter"
+            @before-leave="handleBeforeLeave"
+            @leave="handleLeave"
+            @after-leave="handleAfterLeave">
+            <div class="item__children" v-show="state === 'expand'">
+                <i-menu-item v-for="(child, index) in children"
+                    :key="`${id}-${level + 1}-${index}`"
+                    :id="`${id}-${level + 1}-${index}`"
+                    :parentID="id"
+                    :level="level + 1"
+
+                    :label="child.label"
+                    :iconURL="child.iconURL"
+                    :iconClass="child.iconClass"
+                    :path="child.path"
+                    :children="child.children"
+
+                    @activated="handleChildrenActivated"
+                    @deactivated="handleChildrenDeactivated">
+                </i-menu-item>
+            </div>
+        </transition>
     </div>
 </template>
 
 <script>
-import VIcon from '../../tofu-icon'
-
+import { addClass, removeClass } from '@/utils/dom.js';
 export default {
-    name:'menu-item',
+    name: 'i-menu-item',
 
-    components: {
-        VIcon
+    props: {
+        id: String | Number,
+        parentID: String | Number,
+        level: {
+            type: Number,
+            default: 1
+        },
+        label: String,
+        iconURL: String,
+        iconClass: String,
+        path: String,
+        children: Array
     },
 
-    props:{
-        useRouter: {
-            default: false
-        },
-        menu: {
-            required: true,
-        },
-        activeMenu: {
-            required: true
-        }
-    },
-
-    data () {
+    data() {
         return {
-            childrenVisibility: false,
-            visible: this.menu._visible
+            state: '',
+            currentActivatedID: '', // 用于检测是否是激活的子菜单取消激活
         }
     },
 
     computed: {
-        paddingLeft () {
-            return this.menu._deep * 32 + 24 + 'px' // TODO 有两个未知问题？
+        hasChildren() {
+            return !!(this.children && this.children.length);
         }
     },
 
     methods: {
-        activate () {
-            if (this.menu.children) {
-                this.childrenVisibility = !this.childrenVisibility;
+        /**
+         * 激活有两种情况：
+         * 1.主动激活，即用户点击的结果
+         * 2.被动激活，即外部路由切换，激活相应的菜单，并且此时可选择收起非激活的菜单
+         */
+        activate() {
+            if (this.state === 'activated') return;
+            if (this.path && !this.hasChildren) {
+                // 如果未检测到 this.$router 则报错
+                if (!this.$router) console.error('清先注册 Vue-router');
+
+                this.$router.push(this.path);
+                this.state = 'activated';
+                // 上抛事件
+                this.$emit('activated', {
+                    id: this.id,
+                    path: this.path,
+                    label: this.label
+                }, false);
             } else {
-                // 如果使用 vue-router，则 push 路径
-                // 否则就执行指定的函数
-                if (this.useRouter) {
-                    this.$router.push(this.menu.path)
-                }
-                // else {}
-
-                // 触发事件
-                this.$emit('menuItem_activate', this.menu)
+                this.foldOrExpand();
             }
         },
 
-        emitSubActivate (menu) {
-            this.$emit('menuItem_activate', menu)
+        /**
+         * 单纯地展开和折叠
+         */
+        foldOrExpand() {
+            if (this.hasChildren) {
+                this.state = this.state === 'fold' ?
+                    'expand' :
+                    'fold';
+            }
         },
 
-        checkVisibility (v) {
-            let parents = []
-            const extractParents = (v) => {
-                if (v._parent) {
-                    parents.push(v._parent._id)
-                    if (v._parent._parent) {
-                        extractParents(v._parent)
-                    }
-                }
+        /**
+         * 当子菜单激活或者取消激活时进行的行为
+         */
+        handleChildrenActivated(menuInfo, passive) {
+            this.currentActivatedID = menuInfo.id;
+            this.state = 'expand';
+            if ((!this.parentID && !passive) || this.parentID)this.$emit('activated', menuInfo);
+        },
+        handleChildrenDeactivated(menuInfo) {
+            // 检测是否是激活的子菜单取消激活
+            if (menuInfo.id !== this.currentActivatedID) return;
+
+            this.state = 'fold';
+            if (this.parentID) this.$emit('deactivated', menuInfo);
+        },
+
+        /* 简单的高度动画，参考 Element */
+
+        handleBeforeEnter(el) {
+            addClass(el, 'collapse-transition');
+            if (!el.dataset) el.dataset = {};
+
+            el.dataset.oldPaddingTop = el.style.paddingTop;
+            el.dataset.oldPaddingBottom = el.style.paddingBottom;
+
+            el.style.height = '0';
+            el.style.paddingTop = 0;
+            el.style.paddingBottom = 0;
+        },
+
+        handleEnter(el) {
+            el.dataset.oldOverflow = el.style.overflow;
+            if (el.scrollHeight !== 0) {
+                el.style.height = el.scrollHeight + 'px';
+                el.style.paddingTop = el.dataset.oldPaddingTop;
+                el.style.paddingBottom = el.dataset.oldPaddingBottom;
+            } else {
+                el.style.height = '';
+                el.style.paddingTop = el.dataset.oldPaddingTop;
+                el.style.paddingBottom = el.dataset.oldPaddingBottom;
             }
 
-            extractParents(v);
+            el.style.overflow = 'hidden';
+        },
 
-            return parents.indexOf(this.menu._id) !== -1
+        handleAfterEnter(el) {
+            // for safari: remove class then reset height is necessary
+            // removeClass(el, 'collapse-transition');
+            el.style.height = '';
+            el.style.overflow = el.dataset.oldOverflow;
+        },
+
+        handleBeforeLeave(el) {
+            if (!el.dataset) el.dataset = {};
+            el.dataset.oldPaddingTop = el.style.paddingTop;
+            el.dataset.oldPaddingBottom = el.style.paddingBottom;
+            el.dataset.oldOverflow = el.style.overflow;
+
+            el.style.height = el.scrollHeight + 'px';
+            el.style.overflow = 'hidden';
+        },
+
+        handleLeave(el) {
+            if (el.scrollHeight !== 0) {
+                // for safari: add class after set height, or it will jump to zero height suddenly, weired
+                // addClass(el, 'collapse-transition');
+                el.style.height = 0;
+                el.style.paddingTop = 0;
+                el.style.paddingBottom = 0;
+            }
+        },
+
+        handleAfterLeave(el) {
+            removeClass(el, 'collapse-transition');
+            el.style.height = '';
+            el.style.overflow = el.dataset.oldOverflow;
+            el.style.paddingTop = el.dataset.oldPaddingTop;
+            el.style.paddingBottom = el.dataset.oldPaddingBottom;
         }
     },
 
-    created () {
-        // 如果是父菜单，自动切换子菜单的可见性
-        if (this.useRouter && this.menu.children) {
-            this.$watch('activeMenu', (newV) => {
-                if (newV) {
-                    this.childrenVisibility = this.checkVisibility(newV)
-                } else {
-                    this.childrenVisibility = false
-                }
-            })
+    created() {
+        // Init state
+        this.state = this.hasChildren ? 'fold' : 'deactivated';
 
-            // 初始化时
-            if (this.activeMenu && this.checkVisibility(this.activeMenu)) {
-                this.childrenVisibility = true
-            }
+        /**
+         * 监听路由有两种情况：
+         * 1.外部监听，只要把激活的路径传进来，甚至只把激活的菜单 ID 传进来
+         *   优点：可以跟路由解耦，但是根据自身的业务场景，减少开发需要处理的代码，显得更合适
+         * 2.内部监听，内部监听也分为两种：
+         *      1.容器监听：只有一个监听器，但需要通知激活的菜单，但考虑到单一职责原则，似乎这种方式并不可取
+         *      2.组件监听：N 个监听器，但不需通知激活的菜单
+         */
+        // 被动激活以及取消激活
+        if (!this.hasChildren && this.path) {
+            this.$watch('$route', (newRoute) => {
+                const { path } = newRoute;
+                if (this.state !== 'activated' && this.path === path) {
+                    this.state = 'activated';
+                    this.$emit('activated', {
+                        id: this.id,
+                        path: this.path,
+                        label: this.label
+                    }, true);
+                } else if (this.state === 'activated' && this.path !== path) {
+                    this.state = 'deactivated';
+                    this.$emit('deactivated', {
+                        id: this.id,
+                        path: this.path,
+                        label: this.label
+                    }, true);
+                }
+            });
         }
     }
 }
 </script>
 
-<style lang="scss" scoped>
-.menu-item {
-    box-sizing: border-box;
+<style lang="scss">
+.collapse-transition {
+    transition: 0.3s height ease-in-out, 0.3s padding-top ease-in-out, 0.3s padding-bottom ease-in-out;
+}
+
+.i-menu-item {
+    // 各种边界问题，比如 label 长度
     width: 100%;
-
-    position: relative;
-
-    .menu-item-main {
+    .item__main {
         position: relative;
-
+        margin-bottom: 4px;
         box-sizing: border-box;
+        padding: 0 12px 0 20px;
         width: 100%;
-        height: 36px;
-        padding: 0 20px;
-        line-height: 36px;
-
-        margin: 4px 0;
-
-        color: #A3ACBA;
-        font-size: 14px;
-        font-weight: bold;
-
+        height: 40px;
+        line-height: 40px;
+        color: #fff;
         cursor: pointer;
-
-        transition: all .4s ease-in-out;
-
-        &:hover, &.menu-item-active {
-            color: #fff;
+        &.item__main--active {
+            background: #2B2D34;
+            .item__arrow img {
+                transform: rotate(90deg);
+            }
         }
         &:hover {
-            background: #313D4F;
-
-            .menu-item-sign {
-                position: absolute;
-                left: 0;
-                top: 50%;
-                transform: translateY(-50%);
-
-                width: 2px;
-                height: 36px;
-
-                opacity: 1;
-                background: #20A0FF;
+            background: #2A9BFD;
+        }
+        .item__icon {
+            display: inline-block;
+            width: 14px;
+            height: 100%;
+            vertical-align: top;
+            * {
+                width: 14px;
+                vertical-align: middle;
             }
         }
-        &.menu-item-active .menu-item-icon {
-            color: #1990EA;
-        }
-
-        .menu-item-label {
-            padding-left: 6px;
-            vertical-align: top;
-        }
-
-        .menu-item-icon {
+        .item__label {
             display: inline-block;
-
             box-sizing: border-box;
-            width: 28px;
-            height: 36px;
-            line-height: 36px;
-
-            color: #A3ACBA;
-            text-align: center;
+            padding-left: 18px;
+            height: 100%;
+            max-width: 140px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            vertical-align: middle;
+            text-align: left;
+            font-size: 14px;
         }
-
-        .menu-item-sign {
-            position: absolute;
-            left: 0;
-            top: 0;
-
-            width: 2px;
-            height: 0px;
-
-            opacity: 0;
-
-            transition: all .4s ease-in-out;
+        .item__arrow {
+            float: right;
+            display: inline-block;
+            height: 100%;
+            img {
+                vertical-align: middle;
+                transition: transform .3s ease-in-out;
+            }
         }
     }
-
-    .menu-item-child .menu-item-main {
-        font-family: PingFang-SC-Regular;
-        font-size: 12px;
-        font-weight: normal;
-
-        background: transparent;
-
-        &:hover, &.menu-item-active {
-            color: #fff;
-
-            background-origin: content-box;
-            background-color: #313D4F;
-
-            .menu-item-sign {
-                position: absolute;
-                left: 0;
-                top: 50%;
-                transform: translateY(-50%);
-
-                width: 2px;
-                height: 36px;
-
-                opacity: 1;
-                background: #20A0FF;
-            }
+    .item__children {
+        width: 100%;
+        .item__label {
+            font-size: 12px;
         }
     }
 }

@@ -33,12 +33,13 @@
 <script type="text/babel">
     import { limitRange } from '../util';
     import Locale from '@/mixins/locale';
+    import TimeSpinner from '../basic/time-spinner';
 
     export default {
         mixins: [Locale],
 
         components: {
-            TimeSpinner: require('../basic/time-spinner')
+            TimeSpinner
         },
 
         props: {
