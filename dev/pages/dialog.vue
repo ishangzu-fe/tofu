@@ -2,7 +2,7 @@
   <div id="dialog">
       <demo-block title="基础用法">
           <i-button @click.stop="dialog1 = true">打开dialog</i-button>
-          <i-dialog v-model="dialog1" title="dialog">
+          <i-dialog v-model="dialog1" title="dialog" :before-close="handleClose">
               <div>这是一个dialog</div>
           </i-dialog>
       </demo-block>
@@ -45,6 +45,11 @@ export default {
                     message:'已取消删除'
                 });
             });
+      },
+      handleClose(done){
+          this.$confirm('确定关闭?').then(_ => {
+              done();
+          });
       }
   }
 }
