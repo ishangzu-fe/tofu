@@ -4,7 +4,7 @@
             <div class="el-message-box" v-show="value">
                 <div class="el-message-box-header" v-if="title !== ''">
                     <div class="el-message-box-title">{{ title }}</div>
-                    <i class="el-message-box-close el-icon-close" @click="handleAction('cancel')" v-if="showClose"></i>
+                    <i class="el-message-box-close el-icon-close" @click="handleAction('close')" v-if="showClose"></i>
                 </div>
                 <div class="el-message-box-content" v-if="message !== ''">
                     <div class="el-message-box-status" :class="[ typeClass ]"></div>
