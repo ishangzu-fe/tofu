@@ -3,6 +3,7 @@
         ref="dropdown"
         class="dropdown-tree"
         trigger="click"
+        :menuAlign="menuAlign"
         @click.native="handleClick">
         <i-input
             class="title"
@@ -15,15 +16,15 @@
         </i-input>
         <dropdown-menu
             ref="panel"
-            class="panel"
+            class="tofu-dropdown-panel"
             slot="dropdown"
-            :width="menuWidth"
             v-show="isDropdownShow">
             <iu-tree ref="tree"
                 :inDropdown="true"
                 v-bind="$attrs"
                 v-on="$listeners"
-                @change="handleChange">
+                @change="handleChange"
+                @expandOrCollapse="handleExpandOrCollapse">
             </iu-tree>
         </dropdown-menu>
     </dropdown>
@@ -48,7 +49,11 @@ export default {
     props: {
         size: String,
         title: String,
-        placeholder: String
+        placeholder: String,
+        menuAlign: {
+            type: String,
+            default: 'start'
+        }
     },
 
     computed: {
@@ -74,12 +79,12 @@ export default {
         // 访问器
         selectAll() {
             if (this.$refs.tree) {
-                thsi.$refs.tree.selectAll();
+                this.$refs.tree.selectAll();
             }
         },
         cleanTree() {
             if (this.$refs.tree) {
-                thsi.$refs.tree.clean();
+                this.$refs.tree.clean();
             }
         },
         getTree() {
@@ -100,6 +105,12 @@ export default {
                 this.dispatch('form-item', 'el.form.change', [checkedNodes]);
             }
         },
+
+        handleExpandOrCollapse() {
+            const panel = this.$refs.panel;
+            panel.resetTransformOrigin();
+            this.$nextTick(panel.updatePopper);
+        }
     },
 
     mounted() {
@@ -137,15 +148,14 @@ export default {
 
         .el-icon-arrow-down {
             transition: transform .25s ease-in-out;
-
         }
         .reverse {
             transition: transform .25s ease-in-out;
             transform: rotate(-180deg);
         }
     }
-    .el-dropdown-menu.panel {
-        min-width: 200px;
+    .el-dropdown-menu.tofu-dropdown-panel {
+        min-width: 180px;
         max-height: 500px;
 
         overflow: auto;
@@ -182,14 +192,9 @@ export default {
             z-index: 100;
 
             .tree-node .node-main {
-                padding: 8px 10px;
-                height: 36px;
+                padding: 4px 6px;
+                height: 28px;
                 line-height: 20px;
-
-                .node-checkbox.tofu-icon {
-                    margin-top: 2px;
-                    vertical-align: top;
-                }
 
                 .node-checkbox {
                     background: #fff;

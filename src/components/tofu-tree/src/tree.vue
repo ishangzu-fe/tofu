@@ -6,7 +6,9 @@
             :node="node"
             :TreeModel="TreeModel"
             :showCounter="showCounter"
+            :watch="watch"
             @check="emitCheck"
+            @expandOrCollapse="$emit('expandOrCollapse')"
         ></node>
     </div>
 </template>
@@ -14,6 +16,7 @@
 <script>
     import getTreeInstance from './model/tree'
     import Node from './node'
+    import Bus from './Bus'
 
     export default {
         name: 'tofu-tree',
@@ -23,6 +26,7 @@
         },
 
         props: {
+            value: Array,
             data: Array,
             dict: Object,
             showCounter: {
@@ -42,7 +46,8 @@
                 type: Boolean,
                 default: true
             },
-            inDropdown: Boolean
+            inDropdown: Boolean,
+            watch: Array
         },
 
         data () {
@@ -89,6 +94,13 @@
                 return this.TreeModel.checkAll()
             },
 
+            checkNodeByID(id) {
+                this.TreeModel.checkNodeByID(id)
+            },
+            uncheckNodeByID(id) {
+                this.TreeModel.uncheckNodeByID(id)
+            },
+
             createTree() {
                 this.TreeModel = getTreeInstance(this.singleton, {
                     checkChildren: this.checkChildren,
@@ -108,6 +120,12 @@
         created () {
             // 获取新的树
             this.createTree()
+        },
+
+        mounted() {
+            Bus.$on('update', (id, newV) => {
+                this.$emit('update', id, newV)
+            })
         }
     }
 </script>

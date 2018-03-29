@@ -4,13 +4,14 @@
             class="node-main"
             :class="{ 'is-checked': !TreeModel._multiple && node._checked,
                 'no-checkbox': !TreeModel._multiple }"
-            :style="{'padding-left': (16 * (node.level - 1) + 10) + 'px'}"
-            @click.stop="!TreeModel._multiple && toggle()">
-            <span
-                class="node-triangle tofu-icon icon-triangle-right"
-                :class="{'node-triangle-hidden': !node.childNodes.length,
-                    'node-triangle-expand': node._expanded}"
+            @click="handleCheck">
+            <span class="node-triangle"
+                :style="{'padding-left': (16 * (node.level - 1) + 4) + 'px'}"
+                :class="{'node-triangle-hidden': !node.childNodes.length}"
                 @click.stop="expandOrCollapse">
+                <i class="tofu-icon icon-triangle-right"
+                    :class="{'rotate-90': node._expanded}">
+                </i>
             </span>
             <span
                 v-if="TreeModel._multiple"
@@ -31,13 +32,16 @@
             :key="`${node.id}-${node.level}-${index}`"
             :node="node"
             :TreeModel="TreeModel"
+            :watch="watch"
             @check="$emit('check')"
+            @expandOrCollapse="$emit('expandOrCollapse')"
         ></tree-node>
     </div>
 </template>
 
 <script>
     import Node from './model/node'
+    import Bus from './Bus'
 
     export default {
         name: 'tree-node',
@@ -48,7 +52,8 @@
             showCounter: {
                 type: Boolean,
                 default: false
-            }
+            },
+            watch: Array
         },
 
         data() {
@@ -65,22 +70,44 @@
             }
         },
 
+        watch: {
+            'node._checked'() {
+                this.$emit('check')
+            }
+        },
+
         methods: {
             expandOrCollapse() {
                 this.hasRenderChildren = true
                 this.node._expanded = this.node._expanded ? false : true
+                this.$emit('expandOrCollapse')
+            },
+
+            check() {
+                this.TreeModel.checkNode(this.node)
+            },
+            uncheck() {
+                this.TreeModel.uncheckNode(this.node)
+            },
+            handleCheck(e) {
+                if (this.node._checked) return
+                if (!this.TreeModel._multiple) {
+                    this.TreeModel.checkNode(this.node)
+                } else {
+                    e.stopPropagation();
+                }
             },
 
             toggle() {
-                // console.time()
                 if (this.node._checked) {
-                    this.TreeModel.uncheckNode(this.node)
+                    this.uncheck()
                 } else {
-                    this.TreeModel.checkNode(this.node)
+                    this.check()
                 }
 
-                this.$emit('check')
-                // console.timeEnd()
+                if (this.watch.includes(this.node.id)) {
+                    Bus.$emit('update', this.node.id, this.node._checked)
+                }
             }
         }
     }
@@ -111,7 +138,7 @@
 
                 .node-label {
                     color: #409eff;
-                    font-weight: 700;
+                    // font-weight: 700;
                 }
             }
 
@@ -135,52 +162,45 @@
 
             .node-triangle {
                 display: inline-block;
-                font-size: 12px;
                 color: #b2b2b2;
-                transition: transform .3s ease-out;
 
                 &.node-triangle-hidden {
                     visibility: hidden;
                 }
 
-                &.node-triangle-expand {
-                    transform: rotate(90deg);
+                .tofu-icon {
+                    display: inline-block;
+                    font-size: 12px;
+                    transition: transform .3s ease-out;
+
+                    &.rotate-90 {
+                        transform: rotate(90deg);
+                    }
                 }
             }
 
             .node-checkbox {
                 display: inline-block;
                 box-sizing: border-box;
-                width: 16px;
-                height: 16px;
-                line-height: 16px;
+                width: 14px;
+                height: 14px;
+                line-height: 12px;
 
                 color: #000;
                 font-size: 12px;
                 text-align: center;
-                vertical-align: text-bottom;
+                vertical-align: middle;
 
                 border: 1px solid #e5e5e5;
                 border-radius: 4px;
 
-                &:hover, &.icon-check, &.icon-minus {
+                &:hover {
                     border-color: #20a0ff;
                 }
 
-                &.icon-check {
+                &.icon-check, &.icon-minus {
                     color: #fff;
-                    background: #20a0ff;
-
-                    &:before {
-                        position: relative;
-                        top: -1px;
-                    }
-                }
-
-                &.icon-minus {
-                    color: #fff;
-                    font-size: 12px;
-
+                    border-color: #20a0ff;
                     background: #20a0ff;
                 }
             }
