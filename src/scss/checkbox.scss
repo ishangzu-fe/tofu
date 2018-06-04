@@ -6,7 +6,11 @@
   white-space: nowrap;
   -moz-user-select: none;
   -webkit-user-select: none;
-  -ms-user-select: none
+  -ms-user-select: none;
+
+  & + .el-checkbox{
+    margin-left: 30px;
+  }
 }
 
 .el-checkbox-input{

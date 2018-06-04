@@ -3,7 +3,7 @@
         <div class="close"></div>
         <div class="close2"></div>
         <demo-block title="基础用法">
-            <i-img-list v-model="files"></i-img-list>
+            <i-img-list v-model="files" @delete="imgDel"></i-img-list>
             <i-button @click="add">添加图片</i-button>
         </demo-block>
         <demo-block title="可设置图片描述">
@@ -117,6 +117,9 @@
                     }
                 ]
                 this.imgs = list;
+            },
+            imgDel(index,obj){
+                console.log(index, obj);
             }
         }
     }

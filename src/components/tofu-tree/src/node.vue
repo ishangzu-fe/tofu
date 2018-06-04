@@ -105,9 +105,12 @@
                     this.check()
                 }
 
-                if (this.watch.includes(this.node.id)) {
-                    Bus.$emit('update', this.node.id, this.node._checked)
+                if(this.watch){
+                    if (this.watch.includes(this.node.id)) {
+                        Bus.$emit('update', this.node.id, this.node._checked)
+                    }
                 }
+                
             }
         }
     }

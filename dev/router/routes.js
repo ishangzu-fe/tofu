@@ -18,6 +18,7 @@ import Layout from '../pages/layout'
 import Message from '../pages/message'
 import MessageBox from '../pages/message-box'
 import Select from '../pages/select'
+import SelectTree from '../pages/select-tree'
 import Switch from '../pages/switch'
 import Tabs from '../pages/tabs'
 import Table from '../pages/table'
@@ -43,6 +44,7 @@ let routes = [
     {path: '/message', component:Message},
     {path: '/message-box',component:MessageBox},
     {path: '/select', component:Select},
+    {path: '/select-tree', component:SelectTree},
     {path: '/switch', component:Switch},
     {path: '/tabs', component:Tabs},
     {path: '/table', component:Table}

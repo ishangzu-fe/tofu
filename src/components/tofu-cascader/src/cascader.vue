@@ -1,5 +1,6 @@
 <template>
     <div class="cascader-container"
+         v-clickoutside="hideMenu"   
          ref="cascader"
         :class="[size ? size : '']">
         <div
@@ -54,6 +55,7 @@
                 <li v-if="searchOptions.length <= 0" class="is-disabled">无匹配数据</li>
                 <li :class="{'is-disabled': option.disabled}"
                     v-else v-for="option in searchOptions"
+                    :key="option"
                     @click="pick(option.value)">
                     {{option.label}}
                 </li>
@@ -65,6 +67,7 @@
 <script>
     import CascaderMenu from './menu';
     import Emitter from '@/mixins/emitter';
+    import Clickoutside from '@/utils/clickoutside';    
 
     export default {
         name: 'cascader',
@@ -72,7 +75,8 @@
             'cascader-menu': CascaderMenu
         },
         mixins: [Emitter],
-
+        directives: {Clickoutside},
+    
         props: {
             options: {//菜单选项
                 type: Array,
@@ -282,11 +286,12 @@
         },
         created () {
             //点击别处隐藏
-            document.addEventListener('click', (e) => {
-                if (!this.$el.contains(e.target)) {
-                    this.hideMenu();
-                }
-            });
+            // document.addEventListener('click', (e) => {
+            //     debugger;
+            //     if (!this.$el.contains(e.target)) {
+            //         this.hideMenu();
+            //     }
+            // });
         },
         mounted () {
             this.inputWidth = this.$refs.input.offsetWidth - 2;

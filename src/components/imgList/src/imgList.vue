@@ -2,8 +2,8 @@
     <ul class="img-list">
         <li v-for="(item,index) in files" :key="item[opts.url] + index" :class="{'has-input':hasEdit}">
             <img :src="perfix + item[opts.url] + crop">
-            <i-input size="small" v-model="item[opts.name]" v-if="hasInput"></i-input>
-            <i-select size="small" v-model="item[opts.type]" v-if="hasSelect">
+            <i-input size="small" v-model="item[opts.name]" v-if="hasInput" :disabled="item[opts.disabled]"></i-input>
+            <i-select size="small" v-model="item[opts.type]" v-if="hasSelect" :disabled="item[opts.disabled]">
                 <i-option v-for="o in typeOptions" :key="o[opts.selectValue]" :label="o[opts.selectLabel]" :value="o[opts.selectValue]"></i-option>
             </i-select>
             <span class="img-actions">
@@ -90,6 +90,8 @@ export default {
       this.$preview(this.imgList, index);
     },
     handleDelete(index) {
+      let imgObj =  JSON.parse(JSON.stringify(this.value[index]));
+      
       if (!this.disabled) {
         if (this.deleteTip) {
           this.$confirm("确定要删除图片吗?", "提示", {
@@ -98,7 +100,7 @@ export default {
             type: "warning"
           }).then(() => {
               this.value.splice(index, 1);
-              this.$emit('delete',index);
+              this.$emit('delete',index, imgObj);
           }).catch(() => {
               this.$message({
                 type: "info",
@@ -107,6 +109,7 @@ export default {
             });
         } else {
           this.value.splice(index, 1);
+          this.$emit('delete',index, imgObj);          
         }
       }
     },
@@ -151,6 +154,7 @@ export default {
           type: 'type',
           selectLabel:'label',
           selectValue:'value',
+          disabled:'disabled',
           url:'url'
       }
       return merge({}, opts, this.props);
@@ -178,6 +182,8 @@ export default {
       height: 115px;
       border-radius: 2px;
       cursor: pointer;
+      display: block;
+      margin-bottom: 2px;
   }
   .img-actions {
     position: absolute;

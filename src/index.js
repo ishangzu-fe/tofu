@@ -23,6 +23,7 @@ import { Radio, RadioButton, RadioGroup } from './components/radio';
 import Row from './components/row';
 import Switch from './components/switch';
 import { Select, SelectOption, SelectOptionGroup } from './components/select';
+import { SelectTree, SelectTreeOption } from './components/select-tree';
 import { Step, Steps } from './components/steps';
 import Scrollbar from './components/scrollbar';
 import { Table, TableColumn } from './components/table';
@@ -84,6 +85,8 @@ const install = (Vue) => {
     Vue.component('i-select', Select);
     Vue.component('i-option', SelectOption);
     Vue.component('i-option-group', SelectOptionGroup);
+    Vue.component('i-select-tree', SelectTree);
+    Vue.component('i-select-tree-option', SelectTreeOption);    
     Vue.component('i-scrollbar', Scrollbar);
     Vue.component('i-switch', Switch);
     Vue.component('i-step', Step);

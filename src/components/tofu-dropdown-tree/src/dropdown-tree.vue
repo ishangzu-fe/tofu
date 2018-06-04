@@ -21,6 +21,7 @@
             v-show="isDropdownShow">
             <iu-tree ref="tree"
                 :inDropdown="true"
+                :checkChildren="checkChildren"
                 v-bind="$attrs"
                 v-on="$listeners"
                 @change="handleChange"
@@ -34,6 +35,7 @@
 import emitter from '@/mixins/emitter';
 import IUTree from '@/components/tofu-tree';
 import { Dropdown, DropdownMenu } from './components/dropdown';
+import tree from '../../tofu-tree/src/model/tree';
 
 export default {
     name: 'dropdown-tree',
@@ -53,6 +55,10 @@ export default {
         menuAlign: {
             type: String,
             default: 'start'
+        },
+        checkChildren:{
+            type:Boolean,
+            default:true
         }
     },
 

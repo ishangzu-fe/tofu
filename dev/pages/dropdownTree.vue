@@ -4,11 +4,12 @@
             <i-dropdown-tree ref="tree" 
                             size="normal" 
                             placeholder="请输入占位字符" 
+                            v-model="selectVal"
                             :data="depart" 
                             :dict="treeDict" 
                             :checkedNodes="dep">
             </i-dropdown-tree>
-    
+            <i-button @click.stop="cleanTree">清空</i-button>    
         </demo-block>
     </div>
 </template>
@@ -24,7 +25,8 @@
                     childNodes: 'children'
                 },
                 depart: depart,
-                dep: []
+                dep: [],
+                selectVal:['00000000000000000000000000000000']
             }
         },
         methods: {
