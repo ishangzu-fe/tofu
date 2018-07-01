@@ -43,8 +43,8 @@
                     </span>
                     <span class="cover-footer-button float-right">
                         <img src="../assets/download.svg">
-                        <a :href="loadedImages[this.curImgIdx]
-                                && loadedImages[this.curImgIdx].src"
+                        <a :href="getImgUrl(loadedImages[this.curImgIdx])
+                                && getImgUrl(loadedImages[this.curImgIdx].src)"
                             download>
                         </a>
                     </span>
@@ -145,13 +145,22 @@ export default {
     },
 
     methods: {
+        getImgUrl(img){
+            if (!img){
+                return undefined;
+            }
+            if (typeof img == 'string') {
+                img = img.split('@')[0]
+            }
+            return img;
+        },
         /**
          * 预览，挂载在每个 vue 实例的 $preview 方法
          *
          * @param {Object|Array<Object|String>|String|Number} images 传递的需要做预览的图片
          * @param {Number} defaultIndex 默认展示图片索引
          */
-        preview (images, defaultIndex = 0) {
+        preview (images, defaultIndex = 0,  crop) {
             this.justPreview = true;
             this.loadedImages = [];
 
@@ -162,6 +171,14 @@ export default {
             if (defaultIndex > images.length - 1) defaultIndex = images.length - 1;
 
             if (Array.isArray(images)) {
+                if (crop) {
+                    images.forEach(item => {
+                        if (item.src.indexOf('@') == -1) {
+                            item.src += crop;
+                        }
+                    });
+                }
+                
                 data = images
             } else if (typeof images === 'object') {
                 defaultIndex = images.defaultIndex || defaultIndex;

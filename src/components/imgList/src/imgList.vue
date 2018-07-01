@@ -92,7 +92,7 @@ export default {
   },
   methods: {
     handlePreview(index) {
-      this.$preview(this.imgList, index);
+      this.$preview(this.imgList, index, this.previewCrop);
     },
     handleDelete(index) {
       let imgObj =  JSON.parse(JSON.stringify(this.value[index]));
