@@ -13,11 +13,12 @@
                 <span class="img-item preivew" @click="handlePreview(index)">
                     <i class="el-icon-view" style="transform: scale(0.8);"></i>
                 </span>
-                <span class="img-item delete" @click="handleDelete(index)">
-                    <i class="el-icon-delete2"></i>
-                </span>
                 <span class="img-item next" :class="{'hidden':index== (imgLength-1)}" @click="handleNext(index)" v-if="order">
                     <i class="el-icon-arrow-right" style="transform: scale(0.8);"></i>
+                </span>
+
+                <span class="img-item-delete" @click="handleDelete(index)" v-if="!disabled">
+                    <i class="el-icon-delete2"></i>
                 </span>
             </span>
         </li>
@@ -38,6 +39,10 @@ export default {
     crop:{
       type:String,
       default:'@115w_115h_1c_1e'
+    },
+    previewCrop:{
+      type:String,
+      default:'@1024w_1c_1e'
     },
     perfix:{
       type:String,
@@ -209,6 +214,18 @@ export default {
     &.hidden {
       visibility: hidden;
     }
+  }
+
+  .img-item-delete{
+    cursor: pointer;
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    background: #ff4949;
+    right: 0;
+    top: 0;
+    border-radius: 0 0 0 5px;
   }
 }
 </style>

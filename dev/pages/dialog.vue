@@ -3,7 +3,11 @@
       <demo-block title="基础用法">
           <i-button @click.stop="dialog1 = true">打开dialog</i-button>
           <i-dialog v-model="dialog1" title="dialog" :before-close="handleClose">
-              <div>这是一个dialog</div>
+              <div style="height:1000px">
+                  <div style="height:200px;overflow:auto">
+                      <div style="height:600px;background:red">heiheihei</div>
+                  </div>
+              </div>
           </i-dialog>
       </demo-block>
       <demo-block title="嵌套">

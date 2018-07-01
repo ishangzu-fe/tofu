@@ -25,7 +25,7 @@
                 <template v-for="(item, index) in suggestions" v-else>
                     <li v-if="!customItem"
                         :class="{'highlighted': highlightedIndex === index}"
-                        @click="select(index)">
+                        @click="select(index)" :key="index">
                         {{item.value}}
                     </li>
                     <component v-else
@@ -33,6 +33,7 @@
                                @click="select(index)"
                                :is="customItem"
                                :item="item"
+                               :key="index"
                                :index="index">
                     </component>
                 </template>
