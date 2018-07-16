@@ -31,40 +31,89 @@ export default {
                 {
                     this._l(this.columns, column =>
                         <col
-                            name={ column.id }
-                            width={ column.realWidth || column.width }
+                            name={column.id}
+                            width={column.realWidth || column.width}
                         />)
                 }
                 <tbody>
-                {
-                    this._l(this.data, (row, $index) =>
-                        <tr
-                            style={ this.rowStyle ? this.getRowStyle(row, $index) : null }
-                            key={ this.$parent.rowKey ? this.getKeyOfRow(row, $index) : $index }
-                            on-dblclick={ ($event) => this.handleDoubleClick($event, row) }
-                            on-click={ ($event) => this.handleClick($event, row) }
-                            on-contextmenu={ ($event) => this.handleContextMenu($event, row) }
-                            on-mouseenter={ _ => this.handleMouseEnter($index) }
-                            on-mouseleave={ _ => this.handleMouseLeave() }
-                            class={ this.getRowClass(row, $index) }>
-                            {
-                                this._l(this.columns, (column, cellIndex) =>
-                                    <td
-                                        class={ [column.id, column.align, column.className || '', columnsHidden[cellIndex] ? 'is-hidden' : '' ] }
-                                        on-mouseenter={ ($event) => this.handleCellMouseEnter($event, row) }
-                                        on-mouseleave={ this.handleCellMouseLeave }>
-                                        {
-                                            column.renderCell.call(this._renderProxy, h, { row, column, $index, store: this.store, _self: this.context || this.$parent.$vnode.context })
+                    {
+                        this._l(this.data, (row, $index) =>
+                            <tr
+                                style={this.rowStyle ? this.getRowStyle(row, $index) : null}
+                                key={this.$parent.rowKey ? this.getKeyOfRow(row, $index) : $index}
+                                on-dblclick={($event) => this.handleDoubleClick($event, row)}
+                                on-click={($event) => this.handleClick($event, row)}
+                                on-contextmenu={($event) => this.handleContextMenu($event, row)}
+                                on-mouseenter={_ => this.handleMouseEnter($index)}
+                                on-mouseleave={_ => this.handleMouseLeave()}
+                                class={this.getRowClass(row, $index)}>
+                                {
+                                    this._l(this.columns, (column, cellIndex) => {
+                                        const { rowspan, colspan } = this.getSpan(row, column, $index, cellIndex);
+                                        if (!rowspan || !colspan) {
+                                            return '';
+                                        } else {
+                                            if (rowspan === 1 && colspan === 1) {
+                                                // console.log('1');
+                                                return (
+                                                    <td
+                                                        style={this.getCellStyle($index, cellIndex, row, column)}
+                                                        class={this.getCellClass($index, cellIndex, row, column) || [column.id, column.align, column.className || '', columnsHidden[cellIndex] ? 'is-hidden' : '' ]}
+                                                        on-mouseenter={($event) => this.handleCellMouseEnter($event, row)}
+                                                        on-mouseleave={this.handleCellMouseLeave}>
+                                                        {
+                                                            column.renderCell.call(
+                                                                this._renderProxy,
+                                                                h,
+                                                                {
+                                                                    row,
+                                                                    column,
+                                                                    $index,
+                                                                    store: this.store,
+                                                                    _self: this.context || this.table.$vnode.context
+                                                                },
+                                                                columnsHidden[cellIndex]
+                                                            )
+                                                        }
+                                                    </td>
+                                                );
+                                            } else {
+                                                // console.log('2');
+                                                return (
+                                                    <td
+                                                        style={this.getCellStyle($index, cellIndex, row, column)}
+                                                        class={this.getCellClass($index, cellIndex, row, column) || [column.id, column.align, column.className || '', columnsHidden[cellIndex] ? 'is-hidden' : '' ]}
+                                                        rowspan={rowspan}
+                                                        colspan={colspan}
+                                                        on-mouseenter={($event) => this.handleCellMouseEnter($event, row)}
+                                                        on-mouseleave={this.handleCellMouseLeave}>
+                                                        {
+                                                            column.renderCell.call(
+                                                                this._renderProxy,
+                                                                h,
+                                                                {
+                                                                    row,
+                                                                    column,
+                                                                    $index,
+                                                                    store: this.store,
+                                                                    _self: this.context || this.table.$vnode.context
+                                                                },
+                                                                columnsHidden[cellIndex]
+                                                            )
+                                                        }
+                                                    </td>
+                                                );
+                                            }
                                         }
-                                    </td>
-                                )
-                            }
-                            {
-                                !this.fixed && this.layout.scrollY && this.layout.gutterWidth ? <td class="gutter" /> : ''
-                            }
-                        </tr>
-                    )
-                }
+                                    }
+                                    )
+                                }
+                                {
+                                    !this.fixed && this.layout.scrollY && this.layout.gutterWidth ? <td class="gutter" /> : ''
+                                }
+                            </tr>
+                        )
+                    }
                 </tbody>
             </table>
         );
@@ -103,6 +152,10 @@ export default {
     },
 
     computed: {
+        table() {
+            return this.$parent;
+        },
+
         data() {
             return this.store.states.data;
         },
@@ -149,6 +202,34 @@ export default {
             }
         },
 
+        getSpan(row, column, rowIndex, columnIndex) {
+            let rowspan = 1;
+            let colspan = 1;
+
+            const fn = this.table.spanMethod;
+            if (typeof fn === 'function') {
+                const result = fn({
+                    row,
+                    column,
+                    rowIndex,
+                    columnIndex
+                });
+
+                if (Array.isArray(result)) {
+                    rowspan = result[0];
+                    colspan = result[1];
+                } else if (typeof result === 'object') {
+                    rowspan = result.rowspan;
+                    colspan = result.colspan;
+                }
+            }
+
+            return {
+                rowspan,
+                colspan
+            };
+        },
+
         getRowStyle(row, index) {
             const rowStyle = this.rowStyle;
             if (typeof rowStyle === 'function') {
@@ -165,6 +246,41 @@ export default {
                 classes.push(rowClassName);
             } else if (typeof rowClassName === 'function') {
                 classes.push(rowClassName.call(null, row, index) || '');
+            }
+
+            return classes.join(' ');
+        },
+
+        getCellStyle(rowIndex, columnIndex, row, column) {
+            const cellStyle = this.table.cellStyle;
+            if (typeof cellStyle === 'function') {
+                return cellStyle.call(null, {
+                    rowIndex,
+                    columnIndex,
+                    row,
+                    column
+                });
+            }
+            return cellStyle;
+        },
+
+        getCellClass(rowIndex, columnIndex, row, column) {
+            const classes = [column.id, column.align, column.className];
+
+            if (this.isColumnHidden(columnIndex)) {
+                classes.push('is-hidden');
+            }
+
+            const cellClassName = this.table.cellClassName;
+            if (typeof cellClassName === 'string') {
+                classes.push(cellClassName);
+            } else if (typeof cellClassName === 'function') {
+                classes.push(cellClassName.call(null, {
+                    rowIndex,
+                    columnIndex,
+                    row,
+                    column
+                }));
             }
 
             return classes.join(' ');

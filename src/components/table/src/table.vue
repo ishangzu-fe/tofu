@@ -151,7 +151,9 @@
 
             highlightCurrentRow: Boolean,
 
-            emptyText: String
+            emptyText: String,
+
+            spanMethod: Function
         },
 
         components: {
