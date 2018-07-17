@@ -1,6 +1,6 @@
 {
   "name": "i-tofu",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "UI Library.",
   "author": "vincent",
   "main": "dist/tofu.js",
@@ -11,7 +11,7 @@
   "scripts": {
     "dev": "node bin/dev-server.js",
     "build": "node bin/build.js",
-    "publish": "npm run build && node bin/publish.js",
+    "publish": "npm run build && npm publish",
     "test": "mocha ./test/**/*.test.js --require babel-register"
   },
   "dependencies": {
