@@ -34,7 +34,7 @@
              v-if="fixedColumns.length > 0"
              :style="[
                 { width: layout.fixedWidth ? layout.fixedWidth + 'px' : '' },
-                fixedHeight]">
+                fixedHeight, { bottom: 0 + 'px' }, { overflow: 'hidden' }]">
             <div class="el-table-fixed-header-wrapper" ref="fixedHeaderWrapper" v-if="showHeader">
                 <table-header fixed="left"
                               :border="border"
