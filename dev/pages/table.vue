@@ -37,6 +37,11 @@
               <i-table-column prop="name" label="姓名" width="200"></i-table-column>
               <i-table-column prop="name" label="姓名" width="200"></i-table-column>
               <i-table-column prop="address" label="地址"></i-table-column>
+              <i-table-column fixed="right" align="center" label="操作" width="101" inline-template>
+                <div>
+                  <i-button type="text">详情</i-button>
+                </div>
+              </i-table-column>
           </i-table>
           <i-table :data="tableData1" max-height="200" style="width:100%">
               <i-table-column prop="date" label="日期" width="200" fixed="left"></i-table-column>
@@ -44,6 +49,11 @@
               <i-table-column prop="name" label="姓名" width="200"></i-table-column>
               <i-table-column prop="name" label="姓名" width="200"></i-table-column>
               <i-table-column prop="address" label="地址"></i-table-column>
+              <i-table-column fixed="right" align="center" label="操作" width="100" inline-template>
+                <div>
+                  <i-button type="text">详情</i-button>
+                </div>
+              </i-table-column>
           </i-table>
         </demo-block>
         <demo-block title="合并行或列">
