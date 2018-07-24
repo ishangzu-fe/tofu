@@ -34,7 +34,7 @@
              v-if="fixedColumns.length > 0"
              :style="[
                 { width: layout.fixedWidth ? layout.fixedWidth + 'px' : '' },
-                fixedHeight]">
+                fixedHeight, { bottom: 0 + 'px' }, { overflow: 'hidden' }]">
             <div class="el-table-fixed-header-wrapper" ref="fixedHeaderWrapper" v-if="showHeader">
                 <table-header fixed="left"
                               :border="border"
@@ -62,7 +62,7 @@
              :style="[
                 { width: layout.rightFixedWidth ? layout.rightFixedWidth + 'px' : '' },
                 { right: layout.scrollY ? (border ? layout.gutterWidth : (layout.gutterWidth || 1)) + 'px' : '' },
-                fixedHeight]">
+                fixedHeight, { bottom: 0 + 'px' }, { overflow: 'hidden' }]">
             <div class="el-table-fixed-header-wrapper" ref="rightFixedHeaderWrapper" v-if="showHeader">
                 <table-header fixed="right"
                               :border="border"
