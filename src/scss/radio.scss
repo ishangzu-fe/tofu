@@ -176,7 +176,9 @@
 
   &:first-child{
     .el-radio-button-inner{
+      border-left: 1px solid rgb(191, 203, 217);
       border-radius: $border-radius-base 0 0 $border-radius-base;
+      box-shadow: none !important
     }
   }
 
@@ -184,6 +186,13 @@
     .el-radio-button-inner{
       border-radius: 0 $border-radius-base $border-radius-base 0;
     }
+  }
+
+  .el-radio-button-orig-radio:checked + .el-radio-button-inner{
+    color: #fff;
+    background-color: #20a0ff;
+    border-color: #20a0ff;
+    box-shadow: -1px 0 0 0 #20a0ff
   }
 }
 
