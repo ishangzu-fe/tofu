@@ -12,6 +12,10 @@ Vue.use(VueRouter);
 Vue.use(Tofu);
 Vue.use(Tofu.Previewer);
 
+// 代码文档模板
+import codeDemoBlock from './component/codeDemoBlock'
+Vue.component('codeDemoBlock', codeDemoBlock);
+
 Vue.component('item-zh',{
     functional:true,
     render(h,ctx){

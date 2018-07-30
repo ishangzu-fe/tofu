@@ -90,42 +90,40 @@
     </div>
 </template>
 <script>
-    export default {
-
-    }
+export default {};
 </script>
 <style lang="scss" scoped>
-    .el-row{
-        margin-bottom: 20px;
+.el-row {
+  margin-bottom: 20px;
 
-        &:last-child{
-            margin-bottom: 0;
-        }
+  &:last-child {
+    margin-bottom: 0;
+  }
 
-        &.mt20 {
-            margin-bottom: -20px;
+  &.mt20 {
+    margin-bottom: -20px;
 
-            .el-col{
-                margin-bottom: 20px;
-            }
-        }
+    .el-col {
+      margin-bottom: 20px;
     }
+  }
+}
 
-    .bg-purple-dark {
-        background: #99a9bf;
-    }
-    .bg-purple {
-        background: #d3dce6;
-    }
-    .bg-purple-light {
-        background: #e5e9f2;
-    }
-    .grid-content {
-        border-radius: 4px;
-        min-height: 36px;
-    }
-    .row-bg {
-        padding: 10px 0;
-        background-color: #f9fafc;
-    }
+.bg-purple-dark {
+  background: #99a9bf;
+}
+.bg-purple {
+  background: #d3dce6;
+}
+.bg-purple-light {
+  background: #e5e9f2;
+}
+.grid-content {
+  border-radius: 4px;
+  min-height: 36px;
+}
+.row-bg {
+  padding: 10px 0;
+  background-color: #f9fafc;
+}
 </style>

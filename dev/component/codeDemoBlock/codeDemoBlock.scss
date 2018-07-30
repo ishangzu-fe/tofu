@@ -1,0 +1,99 @@
+$border-color: #00a65a;
+.page-component {
+    background: #fff;
+    >section {
+        width: 90%;
+        margin: 30px auto;
+    }
+    h1,
+    h2,
+    h3 {
+        margin: 0 0 15px 0;
+        padding: 0;
+        font-weight: 400;
+        color: #1f2f3d;
+    }
+    h3 {
+        margin: 45px 0 15px;
+        font-size: 22px;
+    }
+    p {
+        font-size: 14px;
+        color: #5e6d82;
+        line-height: 1.5em;
+    }
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        border: 1px solid #f4f4f4;
+        width: 100%;
+        margin: 8px 0 16px;
+        th {
+            white-space: nowrap;
+            border: 1px solid #f4f4f4;
+            padding: 8px 16px;
+        }
+        tbody>tr:nth-of-type(odd) {
+            background-color: #f9f9f9;
+        }
+        td {
+            border: 1px solid #f4f4f4;
+            padding: 8px 16px;
+            color: #666;
+        }
+    }
+    blockquote {
+        border-left: 5px solid #c1ccdc;
+        background: #f3f5f9;
+        color: #93a3bb;
+        li {
+            font-size: 14px;
+        }
+    }
+    .demo-block {
+        border: 1px solid $border-color;
+        border-radius: 4px;
+        transition: .2s;
+        margin-bottom: 20px;
+        &-source {
+            padding: 20px;
+            border-bottom: 1px solid $border-color;
+        }
+        &-code {
+            max-height: 300px;
+            overflow: auto;
+            position: relative;
+            .fa {
+                cursor: pointer;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                &:hover {
+                    color: $border-color
+                }
+            }
+            pre {
+                padding: 20px;
+                margin: 0;
+                border: 0;
+            }
+        }
+        &-btn {
+            margin-top: -1px;
+            border-top: 1px solid $border-color;
+            height: 36px;
+            line-height: 36px;
+            background-color: $border-color;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+            text-align: center;
+            color: #d3dce6;
+            cursor: pointer;
+            position: relative;
+        }
+        .title {
+            display: block;
+            color: #999;
+        }
+    }
+}

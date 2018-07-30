@@ -5,15 +5,15 @@ const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 
 
-function resolve (dir) {
+function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
 module.exports = {
   entry: {
     tofu: process.env.NODE_ENV === 'production'
-        ? resolve('src/index.js')
-        : resolve('dev/index.js')
+      ? resolve('src/index.js')
+      : resolve('dev/index.js')
   },
   output: {
     path: resolve('dist'),
