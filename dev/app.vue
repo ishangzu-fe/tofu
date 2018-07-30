@@ -2,36 +2,36 @@
     <div class="app">
         <div class="menu">
             <ul>
-                <li v-for="(item,index) in routeList" :key="index">
-                    <router-link :to="item.path">{{item.name}}</router-link>
+                <li v-for="(item, itemIndex) in routeList" :key="itemIndex">
+                    <router-link :to="{ path: item.path }">{{ item.name }}</router-link>
+                    <ul>
+                        <li v-for="(child, childIndex) in item.children" :key="childIndex">
+                            <router-link :to="{ path: child.path }">{{ child.name }}</router-link>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>
-        
         <div class="container">
             <router-view></router-view>
         </div>
     </div>
 </template>
-
 <script>
-import routes from './router/routes';
+import routes from "./router/routes";
 
 export default {
   name: "app",
-  computed:{
-      routeList(){
-          var array = [],name;
-          routes.forEach(item => {
-              if(item.path != "/"){
-                  name = item.path.replace('/','');
-                  name = name.substring(0,1).toUpperCase() + name.substring(1);
-                  array.push({path:item.path,name:name})
-              }
-          });
-
-          return array;
-      }
+  computed: {
+    routeList() {
+      return routes;
+    }
+  },
+  mounted() {
+    // 设置左侧导航栏
+    document.querySelector(".menu > ul").style.height = document.querySelector(".menu").clientHeight + "px";
+    document.querySelector(".menu").style.overflow = "scroll";
+    document.querySelector(".menu").style.height = document.body.clientHeight + "px";
   }
 };
 </script>
@@ -40,28 +40,29 @@ export default {
   width: 100%;
   height: 100%;
 
-  .menu{
-      width: 200px;
-      padding-top: 40px;
-      position: fixed;
-        
-      li{
-          text-align: left;
-          padding-left: 20px;
-          line-height: 30px;
-          a{
-            color: #666;
-            
-            &.router-link-active{
-                color: #20a0ff;
-            }
-          }
+  .menu {
+    width: 200px;
+    padding-top: 40px;
+    position: fixed;
+    top: 0;
+
+    li {
+      text-align: left;
+      padding-left: 20px;
+      line-height: 30px;
+      a {
+        color: #666;
+
+        &.router-link-active {
+          color: #20a0ff;
+        }
       }
+    }
   }
-  .container{
-      height: 100%;
-      margin-left: 210px;
-      padding-right:20px;
+  .container {
+    height: 100%;
+    margin-left: 210px;
+    padding-right: 20px;
   }
 }
 </style>
