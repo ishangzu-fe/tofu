@@ -5,9 +5,6 @@ import App from './app';
 import Tofu from '../src';
 import DemoBlock from './component/demo-block';
 import codeDemoBlock from './component/codeDemoBlock'
-import 'highlight.js/styles/monokai-sublime.css';
-import VueHighlightJS from 'vue-highlight.js';
-
 import './main.scss'
 
 Vue.use(VueRouter);
@@ -17,9 +14,6 @@ Vue.use(Tofu.Previewer);
 
 // 代码文档模板
 Vue.component('codeDemoBlock', codeDemoBlock);
-
-// 代码高亮
-Vue.use(VueHighlightJS);
 
 Vue.component('item-zh',{
     functional:true,

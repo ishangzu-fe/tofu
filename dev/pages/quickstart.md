@@ -4,7 +4,7 @@
 引入 tofu
 在 <code>index.js</code> 中写入以下内容
 
-<highlight-code lang="javascript">
+```javascript
 import Vue from 'vue';
 import App from './app';
 import Tofu from '../src';
@@ -16,4 +16,4 @@ new Vue({
     components:{App},
     router
 });
-</highlight-code>
+```

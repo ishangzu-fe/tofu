@@ -3,7 +3,7 @@
 2. 如果网络不是很理想，可以用国内镜像下载, 镜像配置：<code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code>
 3. 以下选择添加（如果墙外无法更新）
 
-<highlight-code lang="javascript">
+```javascript
 // operadriver 二进制包镜像
 $ npm set operadriver_cdnurl http://cdn.npm.taobao.org/dist/operadriver
 // chromedriver 二进制包镜像
@@ -16,7 +16,7 @@ $ npm set fse_binary_host_mirror https://npm.taobao.org/mirrors/fsevents
 $ npm set sass_binary_site http://cdn.npm.taobao.org/dist/node-sass
 // electron 二进制包镜像
 $ npm set electron_mirror http://cdn.npm.taobao.org/dist/electron/
-</highlight-code>
+```
 
 ### 开始使用
 1. 安装模块：<code>npm install</code>

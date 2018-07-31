@@ -40,7 +40,7 @@ module.exports = {
       },
       {
         test: /\.md$/,
-        loader: 'vue-markdown-loader',
+        use: ['vue-markdown-loader']
       },
       {
         test: /\.js(x)*$/,

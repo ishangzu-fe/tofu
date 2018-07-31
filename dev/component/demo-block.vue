@@ -26,11 +26,11 @@
 
 <style>
     .demo-block {
-        margin-bottom: 20px;
+        /* margin-bottom: 20px; */
     }
     
     .demo-block h6 {
-        margin: 45px 0 15px;
+        margin: 15px 0 15px;
         color: #1f2d3d;
         font-weight: 400;
         margin-bottom: 10px;
@@ -45,7 +45,8 @@
     .module {
         padding: 24px;
         border: 1px solid #eaeefb;
-        border-radius: 4px;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
         transition: .2s;
     }
 
