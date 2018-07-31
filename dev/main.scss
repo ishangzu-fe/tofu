@@ -1,3 +1,39 @@
-html,body{
+html,
+body {
     height: 100%;
+}
+
+.page-component {
+    font-size: 14px;
+    h2 {
+        font-size: 30px;
+    }
+    ul {
+        list-style-type: disc;
+        list-style-position: inside;
+    }
+    ol {
+        list-style-type: decimal;
+        list-style-position: inside;
+    }
+    li {
+        line-height: 24px;
+    }
+    p {
+        code {
+            background: #f9fafc;
+            padding: 0 4px;
+            border: 1px solid #eaeefb;
+            border-radius: 4px;
+        }
+    }
+    pre {
+        .hljs {
+            line-height: 1.8;
+            padding: 18px 24px;
+            border-radius: 4px;
+            font-family: Menlo,Monaco,Consolas,Courier,monospace;
+            font-size: 12px;
+        }
+    }
 }

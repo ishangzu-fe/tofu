@@ -26,9 +26,9 @@ import Table from '../pages/table'
 
 import publicPage from '../pages/publicpage'
 
-import ChangeLog from '../pages/changelog'
-import Installation from '../pages/installation.vue'
-import Quickstart from '../pages/quickstart.vue'
+import ChangeLog from '../pages/changelog.md'
+import Installation from '../pages/installation.md'
+import Quickstart from '../pages/quickstart.md'
 import Icon from '../pages/hello.vue'
 import Container from '../pages/hello.vue'
 import DateTimePicker from '../pages/dateTimePicker.vue'

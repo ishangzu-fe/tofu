@@ -12,8 +12,8 @@
                 </li>
             </ul>
         </div>
-        <div class="container">
-            <router-view></router-view>
+        <div class="container" :class="wrapCls">
+          <router-view></router-view>
         </div>
     </div>
 </template>
@@ -25,6 +25,9 @@ export default {
   computed: {
     routeList() {
       return routes;
+    },
+    wrapCls() {
+      return this.$route.path.indexOf("template") > -1 ? "" : "page-component";
     }
   },
   mounted() {
