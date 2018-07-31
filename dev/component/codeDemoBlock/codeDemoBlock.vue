@@ -3,7 +3,7 @@
     <div class="code-demo-block-source">
       <slot></slot>
     </div>
-    <div class="code-demo-block-code" v-show="bExpand">
+    <div class="code-demo-block-code hljs" v-show="bExpand">
       <slot name="highlight"></slot>
     </div>
     <div class="code-demo-block-btn" @click="handleExpand">

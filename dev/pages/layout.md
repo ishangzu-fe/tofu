@@ -64,11 +64,7 @@
         <i-col :span="4"><div class="grid-content bg-purple-light"></div></i-col>
     </i-row>
 </demo-block>
-<div slot="highlight">
-```
-<h1>13</h1>
-```
-</div>
+<div slot="highlight"></div>
 </code-demo-block>
 
   ### Row Attributes
