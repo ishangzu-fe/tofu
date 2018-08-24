@@ -36,6 +36,7 @@
                     :iconClass="child.iconClass"
                     :path="child.path"
                     :children="child.children"
+                    :url="menu.url"
 
                     @activated="handleChildrenActivated"
                     @deactivated="handleChildrenDeactivated">
@@ -61,7 +62,8 @@ export default {
         iconURL: String,
         iconClass: String,
         path: String,
-        children: Array
+        children: Array,
+        url:String,
     },
 
     data() {
