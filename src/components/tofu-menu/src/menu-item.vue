@@ -63,7 +63,7 @@ export default {
         iconClass: String,
         path: String,
         children: Array,
-        url:String,
+        url: String,
     },
 
     data() {
@@ -97,7 +97,8 @@ export default {
                 this.$emit('activated', {
                     id: this.id,
                     path: this.path,
-                    label: this.label
+                    label: this.label,
+                    url: this.url,
                 }, false);
             } else {
                 this.foldOrExpand();
@@ -217,14 +218,16 @@ export default {
                     this.$emit('activated', {
                         id: this.id,
                         path: this.path,
-                        label: this.label
+                        label: this.label,
+                        url: this.url,
                     }, true);
                 } else if (this.state === 'activated' && this.path !== path) {
                     this.state = 'deactivated';
                     this.$emit('deactivated', {
                         id: this.id,
                         path: this.path,
-                        label: this.label
+                        label: this.label,
+                        url: this.url,
                     }, true);
                 }
             });
