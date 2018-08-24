@@ -13,6 +13,7 @@
             :iconClass="menu.iconClass"
             :path="menu.path"
             :children="menu.children"
+            :url="menu.url"
 
             @activated="handleChildrenActivated">
         </i-menu-item>
