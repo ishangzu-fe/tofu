@@ -36,7 +36,6 @@
                     :iconClass="child.iconClass"
                     :path="child.path"
                     :children="child.children"
-                    :url="menu.url"
 
                     @activated="handleChildrenActivated"
                     @deactivated="handleChildrenDeactivated">
@@ -62,8 +61,7 @@ export default {
         iconURL: String,
         iconClass: String,
         path: String,
-        children: Array,
-        url: String,
+        children: Array
     },
 
     data() {
@@ -97,8 +95,7 @@ export default {
                 this.$emit('activated', {
                     id: this.id,
                     path: this.path,
-                    label: this.label,
-                    url: this.url,
+                    label: this.label
                 }, false);
             } else {
                 this.foldOrExpand();
@@ -218,16 +215,14 @@ export default {
                     this.$emit('activated', {
                         id: this.id,
                         path: this.path,
-                        label: this.label,
-                        url: this.url,
+                        label: this.label
                     }, true);
                 } else if (this.state === 'activated' && this.path !== path) {
                     this.state = 'deactivated';
                     this.$emit('deactivated', {
                         id: this.id,
                         path: this.path,
-                        label: this.label,
-                        url: this.url,
+                        label: this.label
                     }, true);
                 }
             });
