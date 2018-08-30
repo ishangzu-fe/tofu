@@ -34,7 +34,7 @@
 
           return {
               top: rect.top + scrollTop - clientTop,
-              let: rect.left + scrollLeft - clinetLeft
+              left: rect.left + scrollLeft - clinetLeft
           }
       }
 

@@ -7,7 +7,7 @@
       <slot name="highlight"></slot>
     </div>
     <div class="code-demo-block-btn" @click="handleExpand">
-      {{bExpand ?  `收齐代码` : `展开代码`}}
+      {{bExpand ?  `收起代码` : `展开代码`}}
     </div>
   </div>
 </template>
