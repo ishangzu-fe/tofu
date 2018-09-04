@@ -65,24 +65,26 @@
                     :src="loadedImages[this.curImgIdx] && loadedImages[this.curImgIdx].src"
                     class="loading-image"
                     alt="图片加载失败" />
-                <transition
-                    name="scale"
-                    @enter="enter"
-                    @leave="leave"
-                    @afterLeave="afterLeave"
-                    :css="true"
-                    v-for="(image, idx) in images"
-                    :key="image.id">
-                    <img
-                        class="preview-image"
-                        :ref="`img-${idx}`"
-                        v-show="image.id === curImgId && image.cached"
-                        :src="image.src"
-                        :data-idx="idx"
-                        :data-id="image.id"
-                        @load="handleImageLoad"
-                    >
-                </transition>
+                <div :style="styles">
+                    <transition
+                        name="scale"
+                        @enter="enter"
+                        @leave="leave"
+                        @afterLeave="afterLeave"
+                        :css="true"
+                        v-for="(image, idx) in images"
+                        :key="image.id">
+                        <img
+                            class="preview-image"
+                            :ref="`img-${idx}`"
+                            v-show="image.id === curImgId && image.cached"
+                            :src="image.src"
+                            :data-idx="idx"
+                            :data-id="image.id"
+                            @load="handleImageLoad"
+                        >
+                    </transition>
+                </div>
             </div>
         </transition>
     </div>
@@ -128,6 +130,8 @@ export default {
             isSwitch: false, // 判断图片的出现是否是切换
 
             showInfo: false, // 是否展示图片附带信息
+
+            styles: {},
         };
     },
 
@@ -541,11 +545,21 @@ export default {
             console.log(transform);
 
             this.$refs[`img-${this.curImgIdx}`][0].style.transform = transform;
-        }
+        },
+        gallerySizeAuto () {
+            this.styles = {
+                top: `44px`,
+                width: `${this.size.galleryWidth}px`,
+                height: `${this.size.galleryHeight}px`,
+                position: `relative`,
+                overflow: `scroll`,
+            };
+        },
     },
 
     mounted () {
         this.size = getDimension(); // 初始化尺寸信息
+        this.gallerySizeAuto();        
 
         window.onresize = () => {
             // 重新计算尺寸信息
@@ -554,6 +568,7 @@ export default {
             // 并调账当前展示图片的大小
             this.size = getDimension();
             this.handleResize();
+            this.gallerySizeAuto();
         }
 
         window.addEventListener('keyup', this.handleKeyup);
@@ -765,7 +780,8 @@ export default {
     }
 
     .preview-image {
-        position: fixed;
+        // position: fixed;
+        position: absolute;
         z-index: -1;
 
         transition: all .500s cubic-bezier(0.4, 0, 0.22, 1);
