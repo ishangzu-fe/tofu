@@ -762,9 +762,11 @@ export default {
 
             &.icon-point-left {
                 left: 6px;
+                z-index: 9;
             }
             &.icon-point-right {
                 right: 6px;
+                z-index: 9;
             }
         }
 
