@@ -124,7 +124,12 @@
         }
     }
 </script>
-<style scoped>
+<style lang="scss">
+    .img-list {
+        li {
+            list-style: none;
+        }
+    }
     .close{
         width: 16px;
         height: 16px;
