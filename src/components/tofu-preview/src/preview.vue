@@ -453,6 +453,8 @@ export default {
                     }, 20);
                 }
             }
+            // 默认预设一个 margin-top
+            el.style.marginTop = `0px`;
         },
 
         leave (el, done) {
@@ -507,11 +509,10 @@ export default {
 
         zoomOut () {
             let transform = this.$refs[`img-${this.curImgIdx}`][0].style.transform;
-            console.log(transform);
+            let margin = this.$refs[`img-${this.curImgIdx}`][0].style.marginTop;
             if (~transform.indexOf('scale')) {
                 let willScale;
                 const scaled = transform.match(/scale\((.*?)\)/)[1] - 0;
-                console.log(scaled);
                 if (scaled === .4) {
                     willScale = .4;
                 } else {
@@ -522,13 +523,17 @@ export default {
                 transform += ' scale(.8)';
             }
 
-            console.log(transform);
+            this.styles.scale = transform.match(/scale\((.*?)\)/)[1];
+            this.styles.scale = this.styles.scale < 1 ? 1 : this.styles.scale;
+            margin = `${(this.size.galleryHeight * this.styles.scale - this.size.galleryHeight) / 2 + 4}px`;
 
             this.$refs[`img-${this.curImgIdx}`][0].style.transform = transform;
+            this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = margin;
         },
 
         zoomIn () {
             let transform = this.$refs[`img-${this.curImgIdx}`][0].style.transform;
+            let margin = this.$refs[`img-${this.curImgIdx}`][0].style.marginTop;
             if (~transform.indexOf('scale')) {
                 let willScale;
                 const scaled = transform.match(/scale\((.*?)\)/)[1] - 0;
@@ -538,18 +543,22 @@ export default {
                     willScale = (scaled + .2).toFixed(1);
                 }
                 transform = transform.replace(/scale\((.*?)\)/, `scale(${willScale})`);
+                this.styles.scaled = scaled;
             } else {
                 transform += ' scale(1.2)';
             }
-
-            console.log(transform);
+            
+            this.styles.scale = transform.match(/scale\((.*?)\)/)[1];
+            this.styles.scale = this.styles.scale < 1 ? 1 : this.styles.scale;
+            margin = `${(this.size.galleryHeight * this.styles.scale - this.size.galleryHeight) / 2 + 4}px`;
 
             this.$refs[`img-${this.curImgIdx}`][0].style.transform = transform;
+            this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = margin;
         },
-        gallerySizeAuto () {
+        gallerySizeAuto (n) {
             this.styles = {
                 top: `44px`,
-                width: `${this.size.galleryWidth}px`,
+                width: `${this.size.galleryWidth - n}px`,
                 height: `${this.size.galleryHeight}px`,
                 position: `relative`,
                 overflow: `scroll`,
@@ -559,7 +568,7 @@ export default {
 
     mounted () {
         this.size = getDimension(); // 初始化尺寸信息
-        this.gallerySizeAuto();        
+        this.gallerySizeAuto(8);        
 
         window.onresize = () => {
             // 重新计算尺寸信息
@@ -568,7 +577,7 @@ export default {
             // 并调账当前展示图片的大小
             this.size = getDimension();
             this.handleResize();
-            this.gallerySizeAuto();
+            this.gallerySizeAuto(0);
         }
 
         window.addEventListener('keyup', this.handleKeyup);
