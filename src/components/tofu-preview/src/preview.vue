@@ -615,7 +615,7 @@ export default {
 
     mounted () {
         this.size = getDimension(); // 初始化尺寸信息
-        this.gallerySizeAuto(8);      
+        // this.gallerySizeAuto(8);
 
         window.onresize = () => {
             // 重新计算尺寸信息
@@ -624,7 +624,7 @@ export default {
             // 并调账当前展示图片的大小
             this.size = getDimension();
             this.handleResize();
-            this.gallerySizeAuto(0);
+            // this.gallerySizeAuto(0);
         }
 
         window.addEventListener('keyup', this.handleKeyup);
