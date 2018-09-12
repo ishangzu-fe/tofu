@@ -535,7 +535,7 @@ export default {
                     this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `0px`;
                     this.count = 1;
                 } else if (this.size.galleryHeight < this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) {
-                    this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `${(this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', '')) - parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) / 2}px`;
+                    this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `${(this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', '')) - this.size.galleryHeight) / 2}px`;
                 } else {
                     this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `0px`;
                     this.count = 0;
@@ -580,7 +580,7 @@ export default {
 
             if (this.size.galleryHeight == parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) {
                 if (this.size.galleryHeight < this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) {
-                    this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `${(this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', '')) - parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) / 2}px`;
+                    this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `${(this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', '')) - this.size.galleryHeight) / 2}px`;
                 } else if (this.size.galleryHeight > this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) {
                     this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `0px`;
                     this.count = 1;
