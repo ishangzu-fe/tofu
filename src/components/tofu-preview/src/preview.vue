@@ -132,6 +132,7 @@ export default {
             showInfo: false, // 是否展示图片附带信息
 
             styles: {},
+            count: 1,
         };
     },
 
@@ -509,7 +510,7 @@ export default {
 
         zoomOut () {
             let transform = this.$refs[`img-${this.curImgIdx}`][0].style.transform;
-            let margin = this.$refs[`img-${this.curImgIdx}`][0].style.marginTop;
+            this.count = this.count - 1;
             if (~transform.indexOf('scale')) {
                 let willScale;
                 const scaled = transform.match(/scale\((.*?)\)/)[1] - 0;
@@ -525,15 +526,24 @@ export default {
 
             this.styles.scale = transform.match(/scale\((.*?)\)/)[1];
             this.styles.scale = this.styles.scale < 1 ? 1 : this.styles.scale;
-            margin = `${(this.size.galleryHeight * this.styles.scale - this.size.galleryHeight) / 2 + 4}px`;
 
             this.$refs[`img-${this.curImgIdx}`][0].style.transform = transform;
-            this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = margin;
+
+            console.log('zoomOut: ', this.size.galleryHeight, this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', '')));
+
+            if (this.size.galleryHeight > this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) {
+                this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `0px`;
+                this.count = 1;
+            } else {
+                this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `${this.count * 44}px`;
+            }
+            console.log('zoomOut: ', this.count);
         },
 
         zoomIn () {
             let transform = this.$refs[`img-${this.curImgIdx}`][0].style.transform;
-            let margin = this.$refs[`img-${this.curImgIdx}`][0].style.marginTop;
+            this.count = this.count + 1;
+
             if (~transform.indexOf('scale')) {
                 let willScale;
                 const scaled = transform.match(/scale\((.*?)\)/)[1] - 0;
@@ -550,10 +560,19 @@ export default {
             
             this.styles.scale = transform.match(/scale\((.*?)\)/)[1];
             this.styles.scale = this.styles.scale < 1 ? 1 : this.styles.scale;
-            margin = `${(this.size.galleryHeight * this.styles.scale - this.size.galleryHeight) / 2 + 4}px`;
 
             this.$refs[`img-${this.curImgIdx}`][0].style.transform = transform;
-            this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = margin;
+
+            console.log('zoomIn: ', this.size.galleryHeight, this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', '')));
+
+            if (this.size.galleryHeight < this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) {
+                // 图片高度大于容器高度
+                this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `${this.count * 44}px`;
+            } else {
+                this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `0px`;
+                this.count = 1;
+            }
+            console.log('zoomIn: ', this.count);
         },
         gallerySizeAuto (n) {
             this.styles = {
