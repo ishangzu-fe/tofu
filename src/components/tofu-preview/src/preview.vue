@@ -529,7 +529,7 @@ export default {
 
             this.$refs[`img-${this.curImgIdx}`][0].style.transform = transform;
 
-            console.log('zoomOut: ', this.size.galleryHeight, this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', '')));
+            // console.log('zoomOut: ', this.size.galleryHeight, this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', '')));
 
             if (this.size.galleryHeight > this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) {
                 this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `0px`;
@@ -537,12 +537,11 @@ export default {
             } else {
                 this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `${this.count * 44}px`;
             }
-            console.log('zoomOut: ', this.count);
+            // console.log('zoomOut: ', this.count);
         },
 
         zoomIn () {
             let transform = this.$refs[`img-${this.curImgIdx}`][0].style.transform;
-            this.count = this.count + 1;
 
             if (~transform.indexOf('scale')) {
                 let willScale;
@@ -551,6 +550,7 @@ export default {
                     willScale = 2;
                 } else {
                     willScale = (scaled + .2).toFixed(1);
+                    this.count = this.count + 1;
                 }
                 transform = transform.replace(/scale\((.*?)\)/, `scale(${willScale})`);
                 this.styles.scaled = scaled;
@@ -563,7 +563,7 @@ export default {
 
             this.$refs[`img-${this.curImgIdx}`][0].style.transform = transform;
 
-            console.log('zoomIn: ', this.size.galleryHeight, this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', '')));
+            // console.log('zoomIn: ', this.size.galleryHeight, this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', '')));
 
             if (this.size.galleryHeight < this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) {
                 // 图片高度大于容器高度
@@ -572,7 +572,7 @@ export default {
                 this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `0px`;
                 this.count = 1;
             }
-            console.log('zoomIn: ', this.count);
+            // console.log('zoomIn: ', this.count);
         },
         gallerySizeAuto (n) {
             this.styles = {
