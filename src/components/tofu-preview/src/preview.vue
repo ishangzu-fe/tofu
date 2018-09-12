@@ -456,6 +456,7 @@ export default {
             }
             // 默认预设一个 margin-top
             el.style.marginTop = `0px`;
+            el.style.marginLeft = `0px`;
         },
 
         leave (el, done) {
@@ -534,7 +535,7 @@ export default {
                     this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `0px`;
                     this.count = 1;
                 } else if (this.size.galleryHeight < this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) {
-                    this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `${this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', '')) - this.size.galleryHeight - 88 * this.count}px`;
+                    this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `${(this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', '')) - parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) / 2}px`;
                 } else {
                     this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `0px`;
                     this.count = 0;
@@ -545,8 +546,12 @@ export default {
                 if (this.size.galleryHeight > this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) {
                     this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `0px`;
                 } else {
-                    this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `${this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', '')) - this.size.galleryHeight}px`;
+                    this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `${(this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', '')) - parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) / 2 - 88}px`;
                 }
+            }
+
+            if (this.size.galleryWidth < this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.width.replace('px', ''))) {
+                this.$refs[`img-${this.curImgIdx}`][0].style.marginLeft = `${(this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.width.replace('px', '')) - this.size.galleryWidth) / 2}px`;
             }
         },
 
@@ -575,7 +580,7 @@ export default {
 
             if (this.size.galleryHeight == parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) {
                 if (this.size.galleryHeight < this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) {
-                    this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `${this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', '')) - this.size.galleryHeight - 88 * this.count}px`;
+                    this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `${(this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', '')) - parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) / 2}px`;
                 } else if (this.size.galleryHeight > this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) {
                     this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `0px`;
                     this.count = 1;
@@ -587,11 +592,14 @@ export default {
                 // console.log('zoomIn: ', this.styles.scale, this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''), this.size.galleryHeight, this.count);
             } else {
                 if (this.size.galleryHeight < this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) {
-                    // 图片高度大于容器高度
-                    this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `${this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', '')) - this.size.galleryHeight}px`;
+                    this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `${(this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', '')) - parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) / 2 - 88}px`;
                 } else {
                     this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `0px`;
                 }
+            }
+
+            if (this.size.galleryWidth < this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.width.replace('px', ''))) {
+                this.$refs[`img-${this.curImgIdx}`][0].style.marginLeft = `${(this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.width.replace('px', '')) - this.size.galleryWidth) / 2}px`;
             }
         },
         gallerySizeAuto (n) {
