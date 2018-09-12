@@ -546,7 +546,7 @@ export default {
                 if (this.size.galleryHeight > this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) {
                     this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `0px`;
                 } else {
-                    this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `${(this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', '')) - parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) / 2 - 88}px`;
+                    this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `${(this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', '')) - this.size.galleryHeight) / 2}px`;
                 }
             }
 
@@ -592,7 +592,7 @@ export default {
                 // console.log('zoomIn: ', this.styles.scale, this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''), this.size.galleryHeight, this.count);
             } else {
                 if (this.size.galleryHeight < this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) {
-                    this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `${(this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', '')) - parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) / 2 - 88}px`;
+                    this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `${(this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', '')) - this.size.galleryHeight) / 2}px`;
                 } else {
                     this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `0px`;
                 }
