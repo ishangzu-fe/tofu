@@ -530,6 +530,7 @@ export default {
 
             this.$refs[`img-${this.curImgIdx}`][0].style.transform = transform;
 
+            // 高度
             if (this.size.galleryHeight == parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) {
                 if (this.size.galleryHeight > this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) {
                     this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `0px`;
@@ -550,8 +551,9 @@ export default {
                 }
             }
 
-            if (this.size.galleryWidth < this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.width.replace('px', ''))) {
-                this.$refs[`img-${this.curImgIdx}`][0].style.marginLeft = `${(this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.width.replace('px', '')) - this.size.galleryWidth) / 2}px`;
+            // 宽度
+            if (this.size.galleryWidth > this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.width.replace('px', ''))) {
+                this.$refs[`img-${this.curImgIdx}`][0].style.marginLeft = `0px`;
             }
         },
 
@@ -578,6 +580,7 @@ export default {
 
             this.$refs[`img-${this.curImgIdx}`][0].style.transform = transform;
 
+            // 高度
             if (this.size.galleryHeight == parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) {
                 if (this.size.galleryHeight < this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', ''))) {
                     this.$refs[`img-${this.curImgIdx}`][0].style.marginTop = `${(this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.height.replace('px', '')) - this.size.galleryHeight) / 2}px`;
@@ -598,6 +601,7 @@ export default {
                 }
             }
 
+            // 宽度
             if (this.size.galleryWidth < this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.width.replace('px', ''))) {
                 this.$refs[`img-${this.curImgIdx}`][0].style.marginLeft = `${(this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.width.replace('px', '')) - this.size.galleryWidth) / 2}px`;
             }
