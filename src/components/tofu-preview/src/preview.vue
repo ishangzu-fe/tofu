@@ -133,6 +133,7 @@ export default {
 
             styles: {},
             count: 1,
+            zoomValue: 0,
         };
     },
 
@@ -554,6 +555,8 @@ export default {
             // 宽度
             if (this.size.galleryWidth > this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.width.replace('px', ''))) {
                 this.$refs[`img-${this.curImgIdx}`][0].style.marginLeft = `0px`;
+            } else {
+                this.$refs[`img-${this.curImgIdx}`][0].style.marginLeft = `${(this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.width.replace('px', '')) - this.size.galleryWidth) / 2}px`;
             }
         },
 
@@ -605,6 +608,8 @@ export default {
             if (this.size.galleryWidth < this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.width.replace('px', ''))) {
                 this.$refs[`img-${this.curImgIdx}`][0].style.marginLeft = `${(this.styles.scale * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.width.replace('px', '')) - this.size.galleryWidth) / 2}px`;
             }
+
+            this.zoomValue = this.styles.scale;
         },
         gallerySizeAuto (n) {
             this.styles = {
@@ -614,6 +619,11 @@ export default {
                 position: `relative`,
                 overflow: `scroll`,
             };
+        },
+        resizeMarginLeft () {
+            if (this.size.galleryWidth < parseFloat(this.zoomValue) * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.width.replace('px', ''))) {
+                this.$refs[`img-${this.curImgIdx}`][0].style.marginLeft = `${(parseFloat(this.zoomValue) * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.width.replace('px', '')) - this.size.galleryWidth) / 2}px`;
+            }
         },
     },
 
@@ -629,6 +639,7 @@ export default {
             this.size = getDimension();
             this.handleResize();
             this.gallerySizeAuto(0);
+            this.resizeMarginLeft();
         }
 
         window.addEventListener('keyup', this.handleKeyup);
