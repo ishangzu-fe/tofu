@@ -12,3 +12,6 @@
 
 ### 1.0.7
 * 更新 preview 组件图片可以滚动
+
+### 1.0.9
+* 修复 table fixed right 无法 fixed 的问题
