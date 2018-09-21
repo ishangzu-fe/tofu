@@ -81,30 +81,30 @@ export default {
                 {
                     this._l(this.columns, column =>
                         <col
-                            name={ column.id }
-                            width={ column.realWidth || column.width }
+                            name={column.id}
+                            width={column.realWidth || column.width}
                         />)
                 }
                 {
                     !this.fixed && this.layout.gutterWidth
-                        ? <col name="gutter" width={ this.layout.scrollY ? this.layout.gutterWidth : '' }></col>
+                        ? <col name="gutter" width={this.layout.scrollY ? this.layout.gutterWidth : ''}></col>
                         : ''
                 }
                 <thead>
-                {
-                    this._l(columnRows, (columns, rowIndex) =>
-                        <tr>
-                            {
-                                this._l(columns, (column, cellIndex) =>
+                    {
+                        this._l(columnRows, (columns, rowIndex) =>
+                            <tr>
+                                {
+                                    this._l(columns, (column, cellIndex) =>
                                         <th
-                                            colspan={ column.colSpan }
-                                            rowspan={ column.rowSpan }
-                                            on-mousemove={ ($event) => this.handleMouseMove($event, column) }
-                                            on-mouseout={ this.handleMouseOut }
-                                            on-mousedown={ ($event) => this.handleMouseDown($event, column) }
-                                            on-click={ ($event) => this.handleClick($event, column) }
-                                            class={ [column.id, column.order, column.align, column.className || '', rowIndex === 0 && this.isCellHidden(cellIndex) ? 'is-hidden' : '', !column.children ? 'is-leaf' : ''] }>
-                                            <div class={ ['cell', column.filteredValue && column.filteredValue.length > 0 ? 'highlight' : ''] }>
+                                            colspan={column.colSpan}
+                                            rowspan={column.rowSpan}
+                                            on-mousemove={($event) => this.handleMouseMove($event, column)}
+                                            on-mouseout={this.handleMouseOut}
+                                            on-mousedown={($event) => this.handleMouseDown($event, column)}
+                                            on-click={($event) => this.handleClick($event, column)}
+                                            class={[column.id, column.order, column.align, column.className || '', rowIndex === 0 && this.isCellHidden(cellIndex, columns) ? 'is-hidden' : '', !column.children ? 'is-leaf' : '']}>
+                                            <div class={['cell', column.filteredValue && column.filteredValue.length > 0 ? 'highlight' : '']}>
                                                 {
                                                     column.renderHeader
                                                         ? column.renderHeader.call(this._renderProxy, h, { column, $index: cellIndex, store: this.store, _self: this.$parent.$vnode.context })
@@ -112,29 +112,29 @@ export default {
                                                 }
                                                 {
                                                     column.sortable
-                                                        ? <span class="caret-wrapper" on-click={ ($event) => this.handleHeaderClick($event, column) }>
-                              <i class="sort-caret ascending"></i>
-                              <i class="sort-caret descending"></i>
-                            </span>
+                                                        ? <span class="caret-wrapper" on-click={($event) => this.handleHeaderClick($event, column)}>
+                                                            <i class="sort-caret ascending"></i>
+                                                            <i class="sort-caret descending"></i>
+                                                        </span>
                                                         : ''
                                                 }
                                                 {
                                                     column.filterable
-                                                        ? <span class="el-table-column-filter-trigger" on-click={ ($event) => this.handleFilterClick($event, column) }><i class={ ['el-icon-arrow-down', column.filterOpened ? 'el-icon-arrow-up' : ''] }></i></span>
+                                                        ? <span class="el-table-column-filter-trigger" on-click={($event) => this.handleFilterClick($event, column)}><i class={['el-icon-arrow-down', column.filterOpened ? 'el-icon-arrow-up' : '']}></i></span>
                                                         : ''
                                                 }
                                             </div>
                                         </th>
-                                )
-                            }
-                            {
-                                !this.fixed && this.layout.gutterWidth
-                                    ? <th class="gutter" style={{ width: this.layout.scrollY ? this.layout.gutterWidth + 'px' : '0' }}></th>
-                                    : ''
-                            }
-                        </tr>
-                    )
-                }
+                                    )
+                                }
+                                {
+                                    !this.fixed && this.layout.gutterWidth
+                                        ? <th class="gutter" style={{ width: this.layout.scrollY ? this.layout.gutterWidth + 'px' : '0' }}></th>
+                                        : ''
+                                }
+                            </tr>
+                        )
+                    }
                 </thead>
             </table>
         );
@@ -192,11 +192,15 @@ export default {
     },
 
     methods: {
-        isCellHidden(index) {
+        isCellHidden(index, columns) {
             if (this.fixed === true || this.fixed === 'left') {
                 return index >= this.leftFixedCount;
             } else if (this.fixed === 'right') {
-                return index < this.columnsCount - this.rightFixedCount;
+                let before = 0;
+                for (let i = 0; i < index; i++) {
+                    before += columns[i].colSpan;
+                }
+                return before < this.columnsCount - this.rightFixedCount;
             } else {
                 return (index < this.leftFixedCount) || (index >= this.columnsCount - this.rightFixedCount);
             }
@@ -264,8 +268,8 @@ export default {
                 const resizeProxy = this.$parent.$refs.resizeProxy;
                 resizeProxy.style.left = this.dragState.startLeft + 'px';
 
-                document.onselectstart = function() { return false; };
-                document.ondragstart = function() { return false; };
+                document.onselectstart = function () { return false; };
+                document.ondragstart = function () { return false; };
 
                 const handleMouseMove = (event) => {
                     const deltaLeft = event.clientX - this.dragState.startMouseLeft;
@@ -295,7 +299,7 @@ export default {
                     document.onselectstart = null;
                     document.ondragstart = null;
 
-                    setTimeout(function() {
+                    setTimeout(function () {
                         columnEl.classList.remove('noclick');
                     }, 0);
                 };
