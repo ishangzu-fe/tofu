@@ -11,6 +11,7 @@
   "scripts": {
     "dev": "node bin/dev-server.js",
     "build": "node bin/build.js",
+    "release": "node run build && npm publish"
     "test": "mocha ./test/**/*.test.js --require babel-register"
   },
   "dependencies": {
