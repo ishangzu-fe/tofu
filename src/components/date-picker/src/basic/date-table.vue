@@ -9,14 +9,16 @@
         <tbody>
         <tr>
             <th v-if="showWeekNumber">{{ $t('el.datepicker.week') }}</th>
-            <th v-for="week in WEEKS">{{ $t('el.datepicker.weeks.' + week) }}</th>
+            <th v-for="(week, key) in WEEKS" :key="key">{{ $t('el.datepicker.weeks.' + week) }}</th>
         </tr>
         <tr
                 class="el-date-table-row"
-                v-for="row in rows"
+                v-for="(row, key) in rows"
+                :key="key"
                 :class="{ current: isWeekActive(row[1]) }">
             <td
-                    v-for="cell in row"
+                    v-for="(cell, key) in row"
+                    :key="key"
                     :class="getCellClasses(cell)"
                     v-text="cell.type === 'today' ? $t('el.datepicker.today') : cell.text"></td>
         </tr>

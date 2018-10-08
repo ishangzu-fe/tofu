@@ -16,7 +16,8 @@
                     <button
                             type="button"
                             class="el-picker-panel-shortcut"
-                            v-for="shortcut in shortcuts"
+                            v-for="(shortcut, key) in shortcuts"
+                            :key="key"
                             @click="handleShortcutClick(shortcut)">{{ shortcut.text }}</button>
                 </div>
                 <div class="el-picker-panel-body">
