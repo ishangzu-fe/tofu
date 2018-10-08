@@ -1,6 +1,6 @@
 import dateUtil from './date';
 
-const newArray = function(start, end) {
+const newArray = function (start, end) {
     let result = [];
     for (let i = start; i <= end; i++) {
         result.push(i);
@@ -8,31 +8,31 @@ const newArray = function(start, end) {
     return result;
 };
 
-export const equalDate = function(dateA, dateB) {
+export const equalDate = function (dateA, dateB) {
     return dateA === dateB || new Date(dateA).getTime() === new Date(dateB).getTime();
 };
 
-export const toDate = function(date) {
+export const toDate = function (date) {
     return isDate(date) ? new Date(date) : null;
 };
 
-export const isDate = function(date) {
+export const isDate = function (date) {
     if (date === null || date === undefined) return false;
     if (isNaN(new Date(date).getTime())) return false;
     return true;
 };
 
-export const formatDate = function(date, format) {
+export const formatDate = function (date, format) {
     date = toDate(date);
     if (!date) return '';
     return dateUtil.format(date, format || 'yyyy-MM-dd');
 };
 
-export const parseDate = function(string, format) {
+export const parseDate = function (string, format) {
     return dateUtil.parse(string, format || 'yyyy-MM-dd');
 };
 
-export const getDayCountOfMonth = function(year, month) {
+export const getDayCountOfMonth = function (year, month) {
     if (month === 3 || month === 5 || month === 8 || month === 10) {
         return 30;
     }
@@ -48,7 +48,7 @@ export const getDayCountOfMonth = function(year, month) {
     return 31;
 };
 
-export const getFirstDayOfMonth = function(date) {
+export const getFirstDayOfMonth = function (date) {
     const temp = new Date(date.getTime());
     temp.setDate(1);
     return temp.getDay();
@@ -56,7 +56,7 @@ export const getFirstDayOfMonth = function(date) {
 
 export const DAY_DURATION = 86400000;
 
-export const getStartDateOfMonth = function(year, month) {
+export const getStartDateOfMonth = function (year, month) {
     const result = new Date(year, month, 1);
     const day = result.getDay();
 
@@ -69,7 +69,7 @@ export const getStartDateOfMonth = function(year, month) {
     return result;
 };
 
-export const getWeekNumber = function(src) {
+export const getWeekNumber = function (src) {
     const date = new Date(src.getTime());
     date.setHours(0, 0, 0, 0);
     // Thursday in current week decides the year.
@@ -80,7 +80,7 @@ export const getWeekNumber = function(src) {
     return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
 };
 
-export const prevMonth = function(src) {
+export const prevMonth = function (src) {
     const year = src.getFullYear();
     const month = src.getMonth();
     const date = src.getDate();
@@ -99,7 +99,7 @@ export const prevMonth = function(src) {
     return new Date(src.getTime());
 };
 
-export const nextMonth = function(src) {
+export const nextMonth = function (src) {
     const year = src.getFullYear();
     const month = src.getMonth();
     const date = src.getDate();
@@ -118,7 +118,7 @@ export const nextMonth = function(src) {
     return new Date(src.getTime());
 };
 
-export const getRangeHours = function(ranges) {
+export const getRangeHours = function (ranges) {
     const hours = [];
     let disabledHours = [];
 
@@ -141,7 +141,7 @@ export const getRangeHours = function(ranges) {
     return hours;
 };
 
-export const limitRange = function(date, ranges, format = 'yyyy-MM-dd HH:mm:ss') {
+export const limitRange = function (date, ranges, format = 'yyyy-MM-dd HH:mm:ss') {
     if (!ranges || !ranges.length) return date;
 
     const len = ranges.length;
@@ -163,4 +163,15 @@ export const limitRange = function(date, ranges, format = 'yyyy-MM-dd HH:mm:ss')
     });
 
     return date < minDate ? minDate : maxDate;
+};
+
+export const modifyWithTimeString = (dateVV, timeVV) => {
+    if (dateVV !== '') {
+        // console.log('modifyWithTimeString: ', dateVV, timeVV);
+        if (dateVV == null || !timeVV) {
+            return dateVV;
+        }
+        timeVV = parseDate(timeVV, 'HH:mm:ss');
+        return new Date(dateVV.getFullYear(), dateVV.getMonth(), dateVV.getDate(), timeVV.getHours(), timeVV.getMinutes(), timeVV.getSeconds());
+    }
 };

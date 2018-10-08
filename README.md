@@ -15,3 +15,9 @@
 
 ### 1.0.9
 * 修复 table fixed right 无法 fixed 的问题
+
+### 1.1.0
+* 新增 date-picker 组件默认时间功能
+```
+:default-time="['12:00:00', '23:59:59']"
+```
