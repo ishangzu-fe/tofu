@@ -103,7 +103,10 @@ export default {
                                             on-mouseout={this.handleMouseOut}
                                             on-mousedown={($event) => this.handleMouseDown($event, column)}
                                             on-click={($event) => this.handleClick($event, column)}
-                                            class={[column.id, column.order, column.align, column.className || '', rowIndex === 0 && this.isCellHidden(cellIndex, columns) ? 'is-hidden' : '', !column.children ? 'is-leaf' : '']}>
+                                            style={this.getHeaderCellStyle(rowIndex, cellIndex, columns, column)}
+                                            // class={[column.id, column.order, column.align, column.className || '', rowIndex === 0 && this.isCellHidden(cellIndex, columns) ? 'is-hidden' : '', !column.children ? 'is-leaf' : '']}
+                                            class={ this.getHeaderCellClass(rowIndex, cellIndex, columns, column) }
+                                            key={ column.id }>
                                             <div class={['cell', column.filteredValue && column.filteredValue.length > 0 ? 'highlight' : '']}>
                                                 {
                                                     column.renderHeader
@@ -157,6 +160,10 @@ export default {
     },
 
     computed: {
+        table() {
+            return this.$parent;
+        },
+
         isAllSelected() {
             return this.store.states.isAllSelected;
         },
@@ -377,7 +384,50 @@ export default {
             states.sortOrder = sortOrder;
 
             this.store.commit('changeSortCondition');
-        }
+        },
+
+        getHeaderCellStyle(rowIndex, columnIndex, row, column) {
+            const headerCellStyle = this.table.headerCellStyle;
+            if (typeof headerCellStyle === 'function') {
+                return headerCellStyle.call(null, {
+                    rowIndex,
+                    columnIndex,
+                    row,
+                    column
+                });
+            }
+            return headerCellStyle;
+        },
+
+        getHeaderCellClass(rowIndex, columnIndex, row, column) {
+            const classes = [column.id, column.order, column.headerAlign, column.className, column.labelClassName];
+
+            if (rowIndex === 0 && this.isCellHidden(columnIndex, row)) {
+                classes.push('is-hidden');
+            }
+
+            if (!column.children) {
+                classes.push('is-leaf');
+            }
+
+            if (column.sortable) {
+                classes.push('is-sortable');
+            }
+
+            const headerCellClassName = this.table.headerCellClassName;
+            if (typeof headerCellClassName === 'string') {
+                classes.push(headerCellClassName);
+            } else if (typeof headerCellClassName === 'function') {
+                classes.push(headerCellClassName.call(null, {
+                    rowIndex,
+                    columnIndex,
+                    row,
+                    column
+                }));
+            }
+
+            return classes.join(' ');
+        },
     },
 
     data() {
