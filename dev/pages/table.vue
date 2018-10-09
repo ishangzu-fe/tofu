@@ -155,6 +155,6 @@ export default {
 
 <style>
 .el-table .table-head-th {
-    color: #ff0000;
+    color: #0000ff;
 }
 </style>
