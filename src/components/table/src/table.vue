@@ -94,282 +94,317 @@
 
 
 <script type="text/babel">
-    import ElCheckbox from '../../checkbox/src/checkbox';
-    import Migrating from '../../../mixins/migrating';
-    import throttle from 'throttle-debounce/throttle';
-    import debounce from 'throttle-debounce/debounce';
-    import { addResizeListener, removeResizeListener } from '../../../utils/resize-event';
-    import Locale from '../../../mixins/locale';
-    import TableStore from './table-store';
-    import TableLayout from './table-layout';
-    import TableBody from './table-body';
-    import TableHeader from './table-header';
-    import { mousewheel } from './util';
+import ElCheckbox from "../../checkbox/src/checkbox";
+import Migrating from "../../../mixins/migrating";
+import throttle from "throttle-debounce/throttle";
+import debounce from "throttle-debounce/debounce";
+import {
+    addResizeListener,
+    removeResizeListener
+} from "../../../utils/resize-event";
+import Locale from "../../../mixins/locale";
+import TableStore from "./table-store";
+import TableLayout from "./table-layout";
+import TableBody from "./table-body";
+import TableHeader from "./table-header";
+import { mousewheel } from "./util";
 
-    let tableIdSeed = 1;
+let tableIdSeed = 1;
 
-    export default {
-        name: 'el-table',
+export default {
+    name: "el-table",
 
-        mixins: [Migrating, Locale],
+    mixins: [Migrating, Locale],
 
-        props: {
-            data: {
-                type: Array,
-                default: function() {
-                    return [];
+    props: {
+        data: {
+            type: Array,
+            default: function() {
+                return [];
+            }
+        },
+
+        width: [String, Number],
+
+        height: [String, Number],
+
+        maxHeight: [String, Number],
+
+        fit: {
+            type: Boolean,
+            default: true
+        },
+
+        stripe: Boolean,
+
+        border: Boolean,
+
+        rowKey: [String, Function],
+
+        context: {},
+
+        showHeader: {
+            type: Boolean,
+            default: true
+        },
+
+        rowClassName: [String, Function],
+
+        rowStyle: [Object, Function],
+
+        highlightCurrentRow: Boolean,
+
+        emptyText: String,
+
+        spanMethod: Function
+    },
+
+    components: {
+        TableHeader,
+        TableBody,
+        ElCheckbox
+    },
+
+    methods: {
+        getMigratingConfig() {
+            return {
+                props: {
+                    "allow-no-selection":
+                        "Table: allow-no-selection has been removed.",
+                    "selection-mode": "Table: selection-mode has been removed.",
+                    "fixed-column-count":
+                        "Table: fixed-column-count has been removed. Use fixed prop in TableColumn instead.",
+                    "custom-criteria":
+                        "Table: custom-criteria has been removed. Use row-class-name instead.",
+                    "custom-background-colors":
+                        "custom-background-colors has been removed. Use row-class-name instead."
+                },
+                events: {
+                    selectionchange:
+                        "Table: selectionchange has been renamed to selection-change.",
+                    cellmouseenter:
+                        "Table: cellmouseenter has been renamed to cell-mouse-enter.",
+                    cellmouseleave:
+                        "Table: cellmouseleave has been renamed to cell-mouse-leave.",
+                    cellclick:
+                        "Table: cellclick has been renamed to cell-click."
                 }
-            },
-
-            width: [String, Number],
-
-            height: [String, Number],
-
-            maxHeight: [String, Number],
-
-            fit: {
-                type: Boolean,
-                default: true
-            },
-
-            stripe: Boolean,
-
-            border: Boolean,
-
-            rowKey: [String, Function],
-
-            context: {},
-
-            showHeader: {
-                type: Boolean,
-                default: true
-            },
-
-            rowClassName: [String, Function],
-
-            rowStyle: [Object, Function],
-
-            highlightCurrentRow: Boolean,
-
-            emptyText: String,
-
-            spanMethod: Function
+            };
         },
 
-        components: {
-            TableHeader,
-            TableBody,
-            ElCheckbox
+        toggleRowSelection(row, selected) {
+            this.store.toggleRowSelection(row, selected);
+            this.store.updateAllSelected();
         },
 
-        methods: {
-            getMigratingConfig() {
-                return {
-                    props: {
-                        'allow-no-selection': 'Table: allow-no-selection has been removed.',
-                        'selection-mode': 'Table: selection-mode has been removed.',
-                        'fixed-column-count': 'Table: fixed-column-count has been removed. Use fixed prop in TableColumn instead.',
-                        'custom-criteria': 'Table: custom-criteria has been removed. Use row-class-name instead.',
-                        'custom-background-colors': 'custom-background-colors has been removed. Use row-class-name instead.'
-                    },
-                    events: {
-                        selectionchange: 'Table: selectionchange has been renamed to selection-change.',
-                        cellmouseenter: 'Table: cellmouseenter has been renamed to cell-mouse-enter.',
-                        cellmouseleave: 'Table: cellmouseleave has been renamed to cell-mouse-leave.',
-                        cellclick: 'Table: cellclick has been renamed to cell-click.'
-                    }
-                };
-            },
+        clearSelection() {
+            this.store.clearSelection();
+        },
 
-            toggleRowSelection(row, selected) {
-                this.store.toggleRowSelection(row, selected);
-                this.store.updateAllSelected();
-            },
+        handleMouseLeave() {
+            this.store.commit("setHoverRow", null);
+            if (this.hoverState) this.hoverState = null;
+        },
 
-            clearSelection() {
-                this.store.clearSelection();
-            },
+        updateScrollY() {
+            this.layout.updateScrollY();
+        },
 
-            handleMouseLeave() {
-                this.store.commit('setHoverRow', null);
-                if (this.hoverState) this.hoverState = null;
-            },
+        bindEvents() {
+            const { bodyWrapper, headerWrapper } = this.$refs;
+            const refs = this.$refs;
+            bodyWrapper.addEventListener("scroll", function() {
+                if (headerWrapper) headerWrapper.scrollLeft = this.scrollLeft;
+                if (refs.fixedBodyWrapper)
+                    refs.fixedBodyWrapper.scrollTop = this.scrollTop;
+                if (refs.rightFixedBodyWrapper)
+                    refs.rightFixedBodyWrapper.scrollTop = this.scrollTop;
+            });
 
-            updateScrollY() {
-                this.layout.updateScrollY();
-            },
-
-            bindEvents() {
-                const { bodyWrapper, headerWrapper } = this.$refs;
-                const refs = this.$refs;
-                bodyWrapper.addEventListener('scroll', function() {
-                    if (headerWrapper) headerWrapper.scrollLeft = this.scrollLeft;
-                    if (refs.fixedBodyWrapper) refs.fixedBodyWrapper.scrollTop = this.scrollTop;
-                    if (refs.rightFixedBodyWrapper) refs.rightFixedBodyWrapper.scrollTop = this.scrollTop;
-                });
-
-                if (headerWrapper) {
-                    mousewheel(headerWrapper, throttle(16, function(event) {
+            if (headerWrapper) {
+                mousewheel(
+                    headerWrapper,
+                    throttle(16, function(event) {
                         const deltaX = event.deltaX;
 
                         if (deltaX > 0) {
-                            bodyWrapper.scrollLeft = bodyWrapper.scrollLeft + 10;
+                            bodyWrapper.scrollLeft =
+                                bodyWrapper.scrollLeft + 10;
                         } else {
-                            bodyWrapper.scrollLeft = bodyWrapper.scrollLeft - 10;
+                            bodyWrapper.scrollLeft =
+                                bodyWrapper.scrollLeft - 10;
                         }
-                    }));
-                }
+                    })
+                );
+            }
 
-                if (this.fit) {
-                    this.windowResizeListener = throttle(50, () => {
-                                if (this.$ready) this.doLayout();
+            if (this.fit) {
+                this.windowResizeListener = throttle(50, () => {
+                    if (this.$ready) this.doLayout();
                 });
-                    addResizeListener(this.$el, this.windowResizeListener);
-                }
-            },
-
-            doLayout() {
-                this.store.updateColumns();
-                this.layout.update();
-                this.updateScrollY();
-                this.$nextTick(() => {
-                    if (this.height) {
-                        this.layout.setHeight(this.height);
-                    } else if (this.maxHeight) {
-                        this.layout.setMaxHeight(this.maxHeight);
-                    } else if (this.shouldUpdateHeight) {
-                        this.layout.updateHeight();
-                    }
-                });
+                addResizeListener(this.$el, this.windowResizeListener);
             }
         },
 
-        created() {
-            this.tableId = 'el-table_' + tableIdSeed + '_';
-            this.debouncedLayout = debounce(50, () => this.doLayout());
-        },
-
-        computed: {
-            shouldUpdateHeight() {
-                return typeof this.height === 'number' ||
-                        this.fixedColumns.length > 0 ||
-                        this.rightFixedColumns.length > 0;
-            },
-
-            selection() {
-                return this.store.selection;
-            },
-
-            columns() {
-                return this.store.states.columns;
-            },
-
-            tableData() {
-                return this.store.states.data;
-            },
-
-            fixedColumns() {
-                return this.store.states.fixedColumns;
-            },
-
-            rightFixedColumns() {
-                return this.store.states.rightFixedColumns;
-            },
-
-            bodyHeight() {
-                let style = {};
-
+        doLayout() {
+            this.store.updateColumns();
+            this.layout.update();
+            this.updateScrollY();
+            this.$nextTick(() => {
                 if (this.height) {
-                    style = {
-                        height: this.layout.bodyHeight ? this.layout.bodyHeight + 'px' : ''
-                    };
+                    this.layout.setHeight(this.height);
                 } else if (this.maxHeight) {
-                    style = {
-                        'max-height': (this.showHeader ? this.maxHeight - this.layout.headerHeight : this.maxHeight) + 'px'
-                    };
+                    this.layout.setMaxHeight(this.maxHeight);
+                } else if (this.shouldUpdateHeight) {
+                    this.layout.updateHeight();
                 }
-
-                return style;
-            },
-
-            fixedBodyHeight() {
-                let style = {};
-
-                if (this.height) {
-                    style = {
-                        height: this.layout.fixedBodyHeight ? this.layout.fixedBodyHeight + 'px' : ''
-                    };
-                } else if (this.maxHeight) {
-                    let maxHeight = this.layout.scrollX ? this.maxHeight - this.layout.gutterWidth : this.maxHeight;
-
-                    if (this.showHeader) {
-                        maxHeight -= this.layout.headerHeight;
-                    }
-
-                    style = {
-                        'max-height': maxHeight + 'px'
-                    };
-                }
-
-                return style;
-            },
-
-            fixedHeight() {
-                let style = {};
-
-                if (this.maxHeight) {
-                    style = {
-                        bottom: (this.layout.scrollX && this.data.length) ? this.layout.gutterWidth + 'px' : ''
-                    };
-                } else {
-                    style = {
-                        height: this.layout.viewportHeight ? this.layout.viewportHeight + 'px' : ''
-                    };
-                }
-
-                return style;
-            }
-        },
-
-        watch: {
-            height(value) {
-                this.layout.setHeight(value);
-            },
-
-            data: {
-                immediate: true,
-                handler(val) {
-                    this.store.commit('setData', val);
-                }
-            }
-        },
-
-        destroyed() {
-            if (this.windowResizeListener) removeResizeListener(this.$el, this.windowResizeListener);
-        },
-
-        mounted() {
-            this.bindEvents();
-            this.doLayout();
-
-            this.$ready = true;
-        },
-
-        data() {
-            const store = new TableStore(this, {
-                rowKey: this.rowKey
             });
-            const layout = new TableLayout({
-                store,
-                table: this,
-                fit: this.fit,
-                showHeader: this.showHeader
-            });
-            return {
-                store,
-                layout,
-                resizeProxyVisible: false
-            };
         }
-    };
+    },
+
+    created() {
+        this.tableId = "el-table_" + tableIdSeed + "_";
+        this.debouncedLayout = debounce(50, () => this.doLayout());
+    },
+
+    computed: {
+        shouldUpdateHeight() {
+            return (
+                typeof this.height === "number" ||
+                this.fixedColumns.length > 0 ||
+                this.rightFixedColumns.length > 0
+            );
+        },
+
+        selection() {
+            return this.store.selection;
+        },
+
+        columns() {
+            return this.store.states.columns;
+        },
+
+        tableData() {
+            return this.store.states.data;
+        },
+
+        fixedColumns() {
+            return this.store.states.fixedColumns;
+        },
+
+        rightFixedColumns() {
+            return this.store.states.rightFixedColumns;
+        },
+
+        bodyHeight() {
+            let style = {};
+
+            if (this.height) {
+                style = {
+                    height: this.layout.bodyHeight
+                        ? this.layout.bodyHeight + "px"
+                        : ""
+                };
+            } else if (this.maxHeight) {
+                style = {
+                    "max-height":
+                        (this.showHeader
+                            ? this.maxHeight - this.layout.headerHeight
+                            : this.maxHeight) + "px"
+                };
+            }
+
+            return style;
+        },
+
+        fixedBodyHeight() {
+            let style = {};
+
+            if (this.height) {
+                style = {
+                    height: this.layout.fixedBodyHeight
+                        ? this.layout.fixedBodyHeight + "px"
+                        : ""
+                };
+            } else if (this.maxHeight) {
+                let maxHeight = this.layout.scrollX
+                    ? this.maxHeight - this.layout.gutterWidth
+                    : this.maxHeight;
+
+                if (this.showHeader) {
+                    maxHeight -= this.layout.headerHeight;
+                }
+
+                style = {
+                    "max-height": maxHeight + "px"
+                };
+            }
+
+            return style;
+        },
+
+        fixedHeight() {
+            let style = {};
+
+            if (this.maxHeight) {
+                style = {
+                    bottom:
+                        this.layout.scrollX && this.data.length
+                            ? this.layout.gutterWidth + "px"
+                            : ""
+                };
+            } else {
+                style = {
+                    height: this.layout.viewportHeight
+                        ? this.layout.viewportHeight + "px"
+                        : ""
+                };
+            }
+
+            return style;
+        }
+    },
+
+    watch: {
+        height(value) {
+            this.layout.setHeight(value);
+        },
+
+        data: {
+            immediate: true,
+            handler(val) {
+                this.store.commit("setData", val);
+            }
+        }
+    },
+
+    destroyed() {
+        if (this.windowResizeListener)
+            removeResizeListener(this.$el, this.windowResizeListener);
+    },
+
+    mounted() {
+        this.bindEvents();
+        this.doLayout();
+
+        this.$ready = true;
+    },
+
+    data() {
+        const store = new TableStore(this, {
+            rowKey: this.rowKey
+        });
+        const layout = new TableLayout({
+            store,
+            table: this,
+            fit: this.fit,
+            showHeader: this.showHeader
+        });
+        return {
+            store,
+            layout,
+            resizeProxyVisible: false
+        };
+    }
+};
 </script>
