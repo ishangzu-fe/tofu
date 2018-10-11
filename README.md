@@ -21,3 +21,8 @@
 ```
 :default-time="['12:00:00', '23:59:59']"
 ```
+* 新增 table 组件自定义 theader 属性
+```
+:header-cell-style="{color:'red'}"
+:header-cell-class-name="tableheaderClassName"
+```
