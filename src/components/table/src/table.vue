@@ -156,7 +156,11 @@ export default {
 
         emptyText: String,
 
-        spanMethod: Function
+        spanMethod: Function,
+
+        headerCellClassName: [String, Function],
+
+        headerCellStyle: [Object, Function]
     },
 
     components: {
