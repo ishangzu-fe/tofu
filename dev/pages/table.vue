@@ -97,14 +97,14 @@
         </demo-block>
         <demo-block title="header-cell-style">
             <i-table :data="tableData1" style="width:100%" :header-cell-style="{color:'red'}">
-                <i-table-column prop="date" label="日期" width="180"></i-table-column>
+                <i-table-column prop="date" label="日期" width="180" align="center"></i-table-column>
                 <i-table-column prop="name" label="姓名" width="180"></i-table-column>
                 <i-table-column prop="address" label="地址" show-tooltip-when-overflow></i-table-column>
             </i-table> 
         </demo-block>
         <demo-block title="header-cell-class-name">
             <i-table :data="tableData1" style="width:100%" :header-cell-class-name="tableheaderClassName">
-                <i-table-column prop="date" label="日期" width="180"></i-table-column>
+                <i-table-column prop="date" label="日期" width="180" align="center"></i-table-column>
                 <i-table-column prop="name" label="姓名" width="180"></i-table-column>
                 <i-table-column prop="address" label="地址" show-tooltip-when-overflow></i-table-column>
             </i-table> 
