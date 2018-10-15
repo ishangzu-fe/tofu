@@ -16,6 +16,8 @@
   },
   "dependencies": {
     "async-validator": "^1.6.8",
+    "normalize-wheel": "^1.0.1",
+    "resize-observer-polyfill": "^1.5.0",
     "throttle-debounce": "^1.0.1",
     "vue": "^2.5.13",
     "wind-dom": "^0.0.3"

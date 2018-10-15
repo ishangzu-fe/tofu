@@ -110,9 +110,32 @@
             </i-table> 
         </demo-block>
         <demo-block title="合计">
-            <i-table :data="tableData1" style="width:100%" show-summary :summary-method="getSummaries">
+            <i-table :data="tableData1" max-height="200" style="width:100%" show-summary :summary-method="getSummaries">
                 <i-table-column prop="date" label="日期" width="180" align="center"></i-table-column>
                 <i-table-column prop="name" label="姓名" width="180"></i-table-column>
+                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
+                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
+                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
+                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
+                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
+                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
+                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
+                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
+                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
+                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
+                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
+                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
+                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
+                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
+                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
+                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
+                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
+                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
+                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
+                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
+                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
+                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
+                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
                 <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
             </i-table> 
         </demo-block>
@@ -161,7 +184,7 @@ export default {
             const sums = [];
             columns.forEach((column, index) => {
                 if (index === 0) {
-                    sums[index] = "总价";
+                    sums[index] = "合计";
                     return;
                 }
                 const values = data.map(item => Number(item[column.property]));

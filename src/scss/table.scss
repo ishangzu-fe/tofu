@@ -322,6 +322,10 @@
   width: 100%;
 }
 
+.el-table__footer-wrapper {
+  overflow: hidden;
+}
+
 .el-table-header,
 .el-table-body{
   table-layout: fixed;
