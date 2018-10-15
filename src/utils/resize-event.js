@@ -4,27 +4,31 @@
  * version: 0.5.3
  **/
 
+import ResizeObserver from 'resize-observer-polyfill';
+
+const isServer = typeof window === 'undefined';
+
 /* istanbul ignore next */
-const requestFrame = (function() {
+const requestFrame = (function () {
     const raf = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame ||
-        function(fn) {
+        function (fn) {
             return window.setTimeout(fn, 20);
         };
-    return function(fn) {
+    return function (fn) {
         return raf(fn);
     };
 })();
 
 /* istanbul ignore next */
-const cancelFrame = (function() {
+const cancelFrame = (function () {
     const cancel = window.cancelAnimationFrame || window.mozCancelAnimationFrame || window.webkitCancelAnimationFrame || window.clearTimeout;
-    return function(id) {
+    return function (id) {
         return cancel(id);
     };
 })();
 
 /* istanbul ignore next */
-const resetTrigger = function(element) {
+const resetTrigger = function (element) {
     const trigger = element.__resizeTrigger__;
     const expand = trigger.firstElementChild;
     const contract = trigger.lastElementChild;
@@ -39,12 +43,12 @@ const resetTrigger = function(element) {
 };
 
 /* istanbul ignore next */
-const checkTriggers = function(element) {
+const checkTriggers = function (element) {
     return element.offsetWidth !== element.__resizeLast__.width || element.offsetHeight !== element.__resizeLast__.height;
 };
 
 /* istanbul ignore next */
-const scrollListener = function(event) {
+const scrollListener = function (event) {
     resetTrigger(this);
     if (this.__resizeRAF__) cancelFrame(this.__resizeRAF__);
     this.__resizeRAF__ = requestFrame(() => {
@@ -90,7 +94,7 @@ if (!attachEvent) {
 
 let stylesCreated = false;
 /* istanbul ignore next */
-const createStyles = function() {
+const createStyles = function () {
     if (!stylesCreated) {
         const animationKeyframes = `@${keyFramePrefix}keyframes ${RESIZE_ANIMATION_NAME} { from { opacity: 0; } to { opacity: 0; } } `;
         const animationStyle = `${keyFramePrefix}animation: 1ms ${RESIZE_ANIMATION_NAME};`;
@@ -118,48 +122,33 @@ const createStyles = function() {
 };
 
 /* istanbul ignore next */
-export const addResizeListener = function(element, fn) {
-    if (attachEvent) {
-        element.attachEvent('onresize', fn);
-    } else {
-        if (!element.__resizeTrigger__) {
-            if (getComputedStyle(element).position === 'static') {
-                element.style.position = 'relative';
-            }
-            createStyles();
-            element.__resizeLast__ = {};
-            element.__resizeListeners__ = [];
-
-            const resizeTrigger = element.__resizeTrigger__ = document.createElement('div');
-            resizeTrigger.className = 'resize-triggers';
-            resizeTrigger.innerHTML = '<div class="expand-trigger"><div></div></div><div class="contract-trigger"></div>';
-            element.appendChild(resizeTrigger);
-
-            resetTrigger(element);
-            element.addEventListener('scroll', scrollListener, true);
-
-            /* Listen for a css animation to detect element display/re-attach */
-            if (animationStartEvent) {
-                resizeTrigger.addEventListener(animationStartEvent, function(event) {
-                    if (event.animationName === RESIZE_ANIMATION_NAME) {
-                        resetTrigger(element);
-                    }
-                });
-            }
+const resizeHandler = function (entries) {
+    for (let entry of entries) {
+        const listeners = entry.target.__resizeListeners__ || [];
+        if (listeners.length) {
+            listeners.forEach(fn => {
+                fn();
+            });
         }
-        element.__resizeListeners__.push(fn);
     }
 };
 
 /* istanbul ignore next */
-export const removeResizeListener = function(element, fn) {
-    if (attachEvent) {
-        element.detachEvent('onresize', fn);
-    } else {
-        element.__resizeListeners__.splice(element.__resizeListeners__.indexOf(fn), 1);
-        if (!element.__resizeListeners__.length) {
-            element.removeEventListener('scroll', scrollListener);
-            element.__resizeTrigger__ = !element.removeChild(element.__resizeTrigger__);
-        }
+export const addResizeListener = function (element, fn) {
+    if (isServer) return;
+    if (!element.__resizeListeners__) {
+        element.__resizeListeners__ = [];
+        element.__ro__ = new ResizeObserver(resizeHandler);
+        element.__ro__.observe(element);
+    }
+    element.__resizeListeners__.push(fn);
+};
+
+/* istanbul ignore next */
+export const removeResizeListener = function (element, fn) {
+    if (!element || !element.__resizeListeners__) return;
+    element.__resizeListeners__.splice(element.__resizeListeners__.indexOf(fn), 1);
+    if (!element.__resizeListeners__.length) {
+        element.__ro__.disconnect();
     }
 };

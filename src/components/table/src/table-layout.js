@@ -21,6 +21,8 @@ class TableLayout {
         this.viewportHeight = null; // Table Height - Scroll Bar Height
         this.bodyHeight = null; // Table Height - Table Header Height
         this.fixedBodyHeight = null; // Table Height - Table Header Height - Scroll Bar Height
+        this.appendHeight = 0; // Append Slot Height
+        this.footerHeight = 44; // Table Footer Height
 
         if (GUTTER_WIDTH === undefined) {
             GUTTER_WIDTH = getScrollBarWidth();
@@ -75,7 +77,9 @@ class TableLayout {
 
     updateHeight() {
         const height = this.tableHeight = this.table.$el.clientHeight;
-        const { headerWrapper } = this.table.$refs;
+        const { headerWrapper, appendWrapper, footerWrapper } = this.table.$refs;
+        this.appendHeight = appendWrapper ? appendWrapper.offsetHeight : 0;
+
         if (this.showHeader && !headerWrapper) return;
         if (!this.showHeader) {
             this.headerHeight = 0;
@@ -87,7 +91,8 @@ class TableLayout {
             const headerHeight = this.headerHeight = headerWrapper.offsetHeight;
             const bodyHeight = height - headerHeight;
             if (this.height !== null && (!isNaN(this.height) || typeof this.height === 'string')) {
-                this.bodyHeight = bodyHeight;
+                const footerHeight = this.footerHeight = footerWrapper ? footerWrapper.offsetHeight : 0;
+                this.bodyHeight = height - headerHeight - footerHeight + (footerWrapper ? 1 : 0);
             }
             this.fixedBodyHeight = this.scrollX ? bodyHeight - this.gutterWidth : bodyHeight;
         }
@@ -139,7 +144,7 @@ class TableLayout {
                 }
             } else { // HAVE HORIZONTAL SCROLL BAR
                 this.scrollX = true;
-                flexColumns.forEach(function(column) {
+                flexColumns.forEach(function (column) {
                     column.realWidth = column.minWidth;
                 });
             }
@@ -164,7 +169,7 @@ class TableLayout {
 
         if (fixedColumns.length > 0) {
             let fixedWidth = 0;
-            fixedColumns.forEach(function(column) {
+            fixedColumns.forEach(function (column) {
                 fixedWidth += column.realWidth;
             });
 
@@ -174,7 +179,7 @@ class TableLayout {
         const rightFixedColumns = this.store.states.rightFixedColumns;
         if (rightFixedColumns.length > 0) {
             let rightFixedWidth = 0;
-            rightFixedColumns.forEach(function(column) {
+            rightFixedColumns.forEach(function (column) {
                 rightFixedWidth += column.realWidth;
             });
 
