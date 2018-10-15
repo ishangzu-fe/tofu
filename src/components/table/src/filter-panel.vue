@@ -4,8 +4,9 @@
             <div class="el-table-filter-content">
                 <i-checkbox-group class="el-table-filter-checkbox-group" v-model="filteredValue" v-if="filterComponent === 'checkbox'">
                     <i-checkbox
-                            v-for="filter in filters"
-                            :label="filter.value">{{ filter.text }}</i-checkbox>
+                            v-for="(filter, key) in filters"
+                            :label="filter.value"
+                            :key="key">{{ filter.text }}</i-checkbox>
                 </i-checkbox-group>
                 <i-input v-if="filterComponent === 'input'" v-model="filteredVal"></i-input>
                 <i-date-picker v-if="filterComponent === 'date'" type="date" placeholder="选择日期" v-model="filteredVal"></i-date-picker>
@@ -22,10 +23,11 @@
                     :class="{ 'is-active': !filterValue }"
                     @click="handleSelect(null)">{{ $t('el.table.clearFilter') }}</li>
                 <li class="el-table-filter-list-item"
-                    v-for="filter in filters"
+                    v-for="(filter, key) in filters"
                     :label="filter.value"
                     :class="{ 'is-active': isActive(filter) }"
-                    @click="handleSelect(filter.value)" >{{ filter.text }}</li>
+                    @click="handleSelect(filter.value)"
+                    :key="key">{{ filter.text }}</li>
             </ul>
         </div>
     </transition>
