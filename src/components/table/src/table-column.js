@@ -27,32 +27,32 @@ const defaults = {
 
 const forced = {
     selection: {
-        renderHeader: function(h) {
+        renderHeader: function (h) {
             return <el-checkbox
-                nativeOn-click={ this.toggleAllSelection }
-                value={ this.isAllSelected } />;
+                nativeOn-click={this.toggleAllSelection}
+                value={this.isAllSelected} />;
         },
-        renderCell: function(h, { row, column, store, $index }) {
+        renderCell: function (h, { row, column, store, $index }) {
             return <el-checkbox
-                value={ store.isSelected(row) }
-                disabled={ column.selectable ? !column.selectable.call(null, row, $index) : false }
-                on-input={ () => { store.commit('rowSelectedChanged', row); } } />;
+                value={store.isSelected(row)}
+                disabled={column.selectable ? !column.selectable.call(null, row, $index) : false}
+                on-input={() => { store.commit('rowSelectedChanged', row); }} />;
         },
         sortable: false,
         resizable: false
     },
     index: {
-        renderHeader: function(h, { column }) {
+        renderHeader: function (h, { column }) {
             return column.label || '#';
         },
-        renderCell: function(h, { $index }) {
-            return <div>{ $index + 1 }</div>;
+        renderCell: function (h, { $index }) {
+            return <div>{$index + 1}</div>;
         },
         sortable: false
     }
 };
 
-const getDefaultColumn = function(type, options) {
+const getDefaultColumn = function (type, options) {
     const column = {};
 
     objectAssign(column, defaults[type || 'default']);
@@ -75,7 +75,7 @@ const getDefaultColumn = function(type, options) {
     return column;
 };
 
-const DEFAULT_RENDER_CELL = function(h, { row, column }) {
+const DEFAULT_RENDER_CELL = function (h, { row, column }) {
     const property = column.property;
     if (column && column.formatter) {
         return column.formatter(row, column);
@@ -115,6 +115,7 @@ export default {
         context: {},
         columnKey: String,
         align: String,
+        headerAlign: String,
         showTooltipWhenOverflow: Boolean,
         showOverflowTooltip: Boolean,
         fixed: [Boolean, String],
@@ -130,7 +131,7 @@ export default {
     },
 
     render() {
-        return (<div>{ this._t('default') }</div>);
+        return (<div>{this._t('default')}</div>);
     },
 
     data() {
@@ -164,7 +165,7 @@ export default {
     created() {
         this.customRender = this.$options.render;
         this.$options.render = (h) => {
-            return (<div>{ this._t('default') }</div>);
+            return (<div>{this._t('default')}</div>);
         };
 
         let columnId = this.columnId = this.columnKey || ((this.$parent.tableId || (this.$parent.columnId + '-')) + 'column-' + columnIdSeed++);
@@ -206,6 +207,7 @@ export default {
             isColumnGroup,
             context: this.context,
             align: this.align ? 'is-' + this.align : null,
+            headerAlign: this.headerAlign ? 'is-' + this.headerAlign : (this.align ? 'is-' + this.align : null),
             sortable: this.sortable,
             sortMethod: this.sortMethod,
             resizable: this.resizable,
@@ -227,9 +229,9 @@ export default {
         let renderCell = column.renderCell;
         let _self = this;
 
-        column.renderCell = function(h, data) {
+        column.renderCell = function (h, data) {
             if (_self.$vnode.data.inlineTemplate) {
-                renderCell = function() {
+                renderCell = function () {
                     data._self = _self.context || data._self;
                     if (Object.prototype.toString.call(data._self) === '[object Object]') {
                         for (let prop in data._self) {
@@ -252,13 +254,13 @@ export default {
 
             return _self.showOverflowTooltip || _self.showTooltipWhenOverflow
                 ? <i-tooltip
-                    effect={ this.effect }
+                    effect={this.effect}
                     placement="top"
-                    disabled={ this.tooltipDisabled }>
-                    <div class="cell">{ renderCell(h, data) }</div>
-                    <span slot="content">{ renderCell(h, data) }</span>
+                    disabled={this.tooltipDisabled}>
+                    <div class="cell">{renderCell(h, data)}</div>
+                    <span slot="content">{renderCell(h, data)}</span>
                 </i-tooltip>
-                : <div class="cell">{ renderCell(h, data) }</div>;
+                : <div class="cell">{renderCell(h, data)}</div>;
         };
 
         this.columnConfig = column;
@@ -303,6 +305,16 @@ export default {
         align(newVal) {
             if (this.columnConfig) {
                 this.columnConfig.align = newVal ? 'is-' + newVal : null;
+
+                if (!this.headerAlign) {
+                    this.columnConfig.headerAlign = newVal ? 'is-' + newVal : null;
+                }
+            }
+        },
+
+        headerAlign(newVal) {
+            if (this.columnConfig) {
+                this.columnConfig.headerAlign = 'is-' + (newVal ? newVal : this.align);
             }
         },
 

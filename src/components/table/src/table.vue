@@ -30,6 +30,17 @@
                 <span class="el-table-empty-text"><slot name="empty">{{ emptyText || $t('el.table.emptyText') }}</slot></span>
             </div>
         </div>
+        <div class="el-table__footer-wrapper" ref="footerWrapper" v-if="showSummary" v-show="data && data.length > 0">
+            <table-footer
+                :store="store"
+                :layout="layout"
+                :border="border"
+                :sum-text="sumText || $t('el.table.sumText')"
+                :summary-method="summaryMethod"
+                :default-sort="defaultSort"
+                :style="{ width: layout.bodyWidth ? layout.bodyWidth + 'px' : '' }">
+            </table-footer>
+        </div>
         <div class="el-table-fixed" ref="fixedWrapper"
              v-if="fixedColumns.length > 0"
              :style="[
@@ -55,6 +66,16 @@
                             :row-style="rowStyle"
                             :style="{ width: layout.fixedWidth ? layout.fixedWidth + 'px' : '' }">
                 </table-body>
+            </div>
+            <div class="el-table__fixed-footer-wrapper" ref="fixedFooterWrapper" v-if="showSummary" v-show="data && data.length > 0">
+                <table-footer
+                fixed="left"
+                :border="border"
+                :sum-text="sumText || $t('el.table.sumText')"
+                :summary-method="summaryMethod"
+                :store="store"
+                :layout="layout"
+                :style="{ width: layout.fixedWidth ? layout.fixedWidth + 'px' : '' }"></table-footer>
             </div>
         </div>
         <div class="el-table-fixed-right" ref="rightFixedWrapper"
@@ -84,6 +105,16 @@
                             :style="{ width: layout.rightFixedWidth ? layout.rightFixedWidth + 'px' : '' }">
                 </table-body>
             </div>
+            <div class="el-table__fixed-footer-wrapper" ref="rightFixedFooterWrapper" v-if="showSummary" v-show="data && data.length > 0">
+                <table-footer
+                fixed="right"
+                :border="border"
+                :sum-text="sumText || $t('el.table.sumText')"
+                :summary-method="summaryMethod"
+                :store="store"
+                :layout="layout"
+                :style="{ width: layout.rightFixedWidth ? layout.rightFixedWidth + 'px' : '' }"></table-footer>
+            </div>
         </div>
         <div class="el-table-fixed-right-patch"
              v-if="rightFixedColumns.length > 0"
@@ -107,6 +138,7 @@ import TableStore from "./table-store";
 import TableLayout from "./table-layout";
 import TableBody from "./table-body";
 import TableHeader from "./table-header";
+import TableFooter from "./table-footer";
 import { mousewheel } from "./util";
 
 let tableIdSeed = 1;
@@ -148,6 +180,12 @@ export default {
             default: true
         },
 
+        showSummary: Boolean,
+
+        sumText: String,
+
+        summaryMethod: Function,
+
         rowClassName: [String, Function],
 
         rowStyle: [Object, Function],
@@ -160,11 +198,14 @@ export default {
 
         headerCellClassName: [String, Function],
 
-        headerCellStyle: [Object, Function]
+        headerCellStyle: [Object, Function],
+
+        defaultSort: Object,
     },
 
     components: {
         TableHeader,
+        TableFooter,
         TableBody,
         ElCheckbox
     },
