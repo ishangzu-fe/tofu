@@ -28,3 +28,6 @@
 ```
 ### 1.1.1
 * 新增 table 组件 合计 功能
+```
+ show-summary :summary-method="getSummaries"
+```
