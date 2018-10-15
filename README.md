@@ -26,3 +26,5 @@
 :header-cell-style="{color:'red'}"
 :header-cell-class-name="tableheaderClassName"
 ```
+### 1.1.1
+* 新增 table 组件 合计 功能
