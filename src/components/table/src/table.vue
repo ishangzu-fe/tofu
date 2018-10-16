@@ -81,15 +81,20 @@
                             :style="{ width: layout.fixedWidth ? layout.fixedWidth + 'px' : '' }">
                 </table-body>
             </div>
-            <div class="el-table__fixed-footer-wrapper" ref="fixedFooterWrapper" v-if="showSummary" v-show="data && data.length > 0">
-                <table-footer
-                fixed="left"
-                :border="border"
-                :sum-text="sumText || $t('el.table.sumText')"
-                :summary-method="summaryMethod"
-                :store="store"
-                :layout="layout"
-                :style="{ width: layout.fixedWidth ? layout.fixedWidth + 'px' : '' }"></table-footer>
+            <div
+                class="el-table__fixed-footer-wrapper"
+                ref="fixedFooterWrapper"
+                v-if="showSummary"
+                v-show="data && data.length > 0">
+                    <table-footer
+                    fixed="left"
+                    :border="border"
+                    :sum-text="sumText || $t('el.table.sumText')"
+                    :summary-method="summaryMethod"
+                    :store="store"
+                    :layout="layout"
+                    :style="{ width: layout.fixedWidth ? layout.fixedWidth + 'px' : '' }">
+                    </table-footer>
             </div>
         </div>
         <div
@@ -122,15 +127,20 @@
                             :style="{ width: layout.rightFixedWidth ? layout.rightFixedWidth + 'px' : '' }">
                 </table-body>
             </div>
-            <div class="el-table__fixed-footer-wrapper" ref="rightFixedFooterWrapper" v-if="showSummary" v-show="data && data.length > 0">
-                <table-footer
-                fixed="right"
-                :border="border"
-                :sum-text="sumText || $t('el.table.sumText')"
-                :summary-method="summaryMethod"
-                :store="store"
-                :layout="layout"
-                :style="{ width: layout.rightFixedWidth ? layout.rightFixedWidth + 'px' : '' }"></table-footer>
+            <div
+                class="el-table__fixed-footer-wrapper"
+                ref="rightFixedFooterWrapper"
+                v-if="showSummary"
+                v-show="data && data.length > 0">
+                    <table-footer
+                    fixed="right"
+                    :border="border"
+                    :sum-text="sumText || $t('el.table.sumText')"
+                    :summary-method="summaryMethod"
+                    :store="store"
+                    :layout="layout"
+                    :style="{ width: layout.rightFixedWidth ? layout.rightFixedWidth + 'px' : '' }">
+                    </table-footer>
             </div>
         </div>
         <div class="el-table-fixed-right-patch"
@@ -427,7 +437,9 @@ export default {
                 style = {
                     "max-height":
                         (this.showHeader
-                            ? this.maxHeight - this.layout.headerHeight - this.layout.footerHeight
+                            ? this.maxHeight -
+                              this.layout.headerHeight -
+                              this.layout.footerHeight
                             : this.maxHeight - this.layout.footerHeight) + "px"
                 };
             }
