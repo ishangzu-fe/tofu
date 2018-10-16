@@ -110,9 +110,9 @@
             </i-table> 
         </demo-block>
         <demo-block title="合计">
-            <i-table :data="tableData1" max-height="200" style="width:100%" show-summary :summary-method="getSummaries">
-                <i-table-column prop="date" label="日期" width="180" align="center"></i-table-column>
-                <i-table-column prop="name" label="姓名" width="180"></i-table-column>
+            <i-table :data="tableData3" max-height="300" style="width:100%" show-summary :summary-method="getSummaries">
+                <i-table-column prop="date" label="日期" width="200" fixed="left"></i-table-column>
+                <i-table-column prop="name" label="姓名" width="200" align="center"></i-table-column>
                 <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
                 <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
                 <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
@@ -125,18 +125,20 @@
                 <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
                 <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
                 <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
-                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
-                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
-                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
-                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
-                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
-                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
-                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
-                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
-                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
-                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
-                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
-                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
+                <i-table-column prop="name" label="姓名" width="200">
+                    <i-table-column prop="name" label="姓名" width="200"></i-table-column>
+                    <i-table-column prop="name" label="姓名" width="200"></i-table-column>
+                    <i-table-column prop="name" label="姓名" width="200"></i-table-column>
+                    <i-table-column prop="name" label="姓名" width="200"></i-table-column>
+                    <i-table-column prop="name" label="姓名" width="200"></i-table-column>
+                </i-table-column>
+                <i-table-column prop="name" label="姓名" width="200"></i-table-column>
+                <i-table-column prop="address" label="地址"></i-table-column>
+                <i-table-column fixed="right" align="center" label="操作" width="101" inline-template>
+                    <div>
+                    <i-button type="text">详情</i-button>
+                    </div>
+                </i-table-column>
             </i-table> 
         </demo-block>
     </div>
@@ -148,7 +150,8 @@ import data from "../data/tableData";
 export default {
     data() {
         return {
-            tableData1: data.data1
+            tableData1: data.data1,
+            tableData3: data.data3
         };
     },
     methods: {
