@@ -38,8 +38,8 @@
     }
     
     .demo-block .desc {
-        font-size: 14px;
-        color: #5e6d82;
+        /* font-size: 14px; */
+        /* color: #5e6d82; */
     }
     
     .module {
