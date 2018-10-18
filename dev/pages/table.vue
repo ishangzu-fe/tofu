@@ -124,13 +124,13 @@
                 <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
                 <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
                 <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
-                <i-table-column prop="age" label="年纪" show-tooltip-when-overflow></i-table-column>
+                <i-table-column prop="age" label="年纪" sortable='true' show-tooltip-when-overflow></i-table-column>
                 <i-table-column prop="name" label="姓名" width="200">
-                    <i-table-column prop="name" label="姓名" width="200"></i-table-column>
-                    <i-table-column prop="name" label="姓名" width="200"></i-table-column>
-                    <i-table-column prop="name" label="姓名" width="200"></i-table-column>
-                    <i-table-column prop="name" label="姓名" width="200"></i-table-column>
-                    <i-table-column prop="name" label="姓名" width="200"></i-table-column>
+                    <i-table-column prop="name" label="姓名" width="200" sortable='true'></i-table-column>
+                    <i-table-column prop="name" label="姓名" width="200" sortable='true'></i-table-column>
+                    <i-table-column prop="name" label="姓名" width="200" sortable='true'></i-table-column>
+                    <i-table-column prop="name" label="姓名" width="200" sortable='true'></i-table-column>
+                    <i-table-column prop="name" label="姓名" width="200" sortable='true'></i-table-column>
                 </i-table-column>
                 <i-table-column prop="name" label="姓名" width="200"></i-table-column>
                 <i-table-column prop="address" label="地址"></i-table-column>
