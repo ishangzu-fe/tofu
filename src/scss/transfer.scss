@@ -1,0 +1,114 @@
+.el-transfer {
+    font-size: 14px;
+    .el-transfer-panel {
+        border: 1px solid #d1dbe5;
+        background: #ffffff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+        display: inline-block;
+        vertical-align: middle;
+        width: 200px;
+        box-sizing: border-box;
+        position: relative;
+        .el-transfer-panel__header {
+            height: 36px;
+            line-height: 36px;
+            background: #fbfbff;
+            margin: 0;
+            padding-left: 20px;
+            border-bottom: 1px solid #d1dbe5;
+            box-sizing: border-box;
+            color: #1f2d3d;
+        }
+    }
+    .el-transfer-panel__body {
+        padding-bottom: 36px;
+        height: 246px;
+    }
+    .el-transfer-panel__filter {
+        margin-top: 10px;
+        text-align: center;
+        padding: 0 10px;
+        width: 100%;
+        box-sizing: border-box;
+        .el-input-icon {
+            right: 10px;
+        }
+        .el-input__inner {
+            height: 22px;
+            width: 100%;
+            display: inline-block;
+            box-sizing: border-box;
+        }
+    }
+    .el-transfer-panel__list {
+        width: 100%;
+        margin: 0;
+        padding: 6px 0;
+        list-style: none;
+        height: 246px;
+        overflow: auto;
+        box-sizing: border-box;
+    }
+    .el-transfer-panel__item {
+        height: 32px;
+        line-height: 32px;
+        padding-left: 20px;
+        display: block;
+        &.el-checkbox {
+            color: #48576a;
+        }
+    }
+    .el-transfer-panel__empty {
+        margin: 0;
+        height: 32px;
+        line-height: 32px;
+        padding: 6px 20px 0;
+        color: #8391a5;
+    }
+    .el-transfer-panel__footer {
+        height: 36px;
+        background: #fff;
+        margin: 0;
+        padding: 0;
+        border-top: 1px solid #d1dbe5;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1;
+        .el-checkbox {
+            padding-left: 20px;
+            color: #8391a5;
+        }
+    }
+    .el-transfer__buttons {
+        display: inline-block;
+        vertical-align: middle;
+        padding: 0 10px;
+        .el-button {
+            display: block;
+            margin: 0 auto;
+            padding: 8px 12px;
+            width: 100%;
+        }
+        .el-button:first-child {
+            margin-bottom: 6px;
+        }
+    }
+    .el-transfer-panel__list.is-filterable {
+        height: 214px;
+        padding-bottom: 36px;
+    }
+    .el-checkbox+.el-checkbox {
+        margin-left: 0;
+    } // footer 文字和 checkbox 居中
+    .el-progress-bar__inner:after,
+    .el-transfer-panel .el-transfer-panel__footer:after,
+    .el-upload-cover:after,
+    .el-upload-list--picture-card .el-upload-list__item-actions:after {
+        display: inline-block;
+        content: "";
+        height: 100%;
+        vertical-align: middle;
+    }
+}
