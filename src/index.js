@@ -41,6 +41,7 @@ import Cascader from './components/tofu-cascader';
 import DropdownTree from './components/tofu-dropdown-tree';
 import IMenu from './components/tofu-menu';
 import Tabbar from './components/tofu-tabbar';
+import Transfer from './components/tofu-transfer';
 import FiledFilter from './components/tofu-field-filter';
 import Popup from './components/tofu-popup';
 import Uploader from './components/tofu-uploader';
@@ -53,12 +54,12 @@ import Draggable from './directives/drag/';
 import './scss/index.scss';
 
 const install = (Vue) => {
-    Vue.component('i-affix',Affix);
+    Vue.component('i-affix', Affix);
     Vue.component('i-alert', Alert);
     Vue.component('i-autocomplete', Autocomplete);
     Vue.component('i-button', Button);
     Vue.component('i-button-group', ButtonGroup);
-    Vue.component('i-badge',Badge);
+    Vue.component('i-badge', Badge);
     Vue.component('i-card', Card);
     Vue.component('i-checkbox', Checkbox);
     Vue.component('i-checkbox-group', CheckboxGroup);
@@ -74,7 +75,7 @@ const install = (Vue) => {
     Vue.component('i-form-item', FormItem);
     Vue.component('i-input', Input);
     Vue.component('i-input-number', InputNumber);
-    Vue.component('i-img-list',ImgList);
+    Vue.component('i-img-list', ImgList);
     Vue.component('i-loading-bar', LoadingBar);
     Vue.component('i-pagination', Pagination);
     Vue.component('i-progress', Progress);
@@ -86,7 +87,7 @@ const install = (Vue) => {
     Vue.component('i-option', SelectOption);
     Vue.component('i-option-group', SelectOptionGroup);
     Vue.component('i-select-tree', SelectTree);
-    Vue.component('i-select-tree-option', SelectTreeOption);    
+    Vue.component('i-select-tree-option', SelectTreeOption);
     Vue.component('i-scrollbar', Scrollbar);
     Vue.component('i-switch', Switch);
     Vue.component('i-step', Step);
@@ -111,6 +112,7 @@ const install = (Vue) => {
     Vue.component('i-uploader', Uploader);
     Vue.component('iu-tree', IUTree);
     Vue.component('i-tabbar', Tabbar);
+    Vue.component('i-transfer', Transfer);
 
     Vue.prototype.$message = Message;
     Vue.prototype.$msgbox = MessageBox;
@@ -130,5 +132,5 @@ module.exports = {
     install,
     MessageBox,
     Previewer: Preview,
-    ContextMenu:ContextMenu
+    ContextMenu: ContextMenu
 }
