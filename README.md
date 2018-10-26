@@ -16,7 +16,7 @@
 ### 1.0.9
 * 修复 table fixed right 无法 fixed 的问题
 
-### 1.1.0
+### 1.1.10
 * 新增 date-picker 组件默认时间功能
 ```
 :default-time="['12:00:00', '23:59:59']"
@@ -26,8 +26,11 @@
 :header-cell-style="{color:'red'}"
 :header-cell-class-name="tableheaderClassName"
 ```
-### 1.1.1
+### 1.1.11
 * 新增 table 组件 合计 功能
 ```
  show-summary :summary-method="getSummaries"
 ```
+
+### 1.1.12
+* 新增 preview 组件 `:style` 属性
