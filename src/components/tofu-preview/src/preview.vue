@@ -77,6 +77,7 @@
                         <img
                             class="preview-image"
                             :ref="`img-${idx}`"
+                            :style="addStyle"
                             v-show="image.id === curImgId && image.cached"
                             :src="image.src"
                             :data-idx="idx"
@@ -130,7 +131,7 @@ export default {
             isSwitch: false, // 判断图片的出现是否是切换
 
             showInfo: false, // 是否展示图片附带信息
-
+            addStyle:'', // 添加class
             styles: {},
             count: 1,
             zoomValue: 0,
@@ -166,10 +167,10 @@ export default {
          * @param {Object|Array<Object|String>|String|Number} images 传递的需要做预览的图片
          * @param {Number} defaultIndex 默认展示图片索引
          */
-        preview (images, defaultIndex = 0,  crop) {
+        preview (images, defaultIndex = 0,  crop, sty) {
             this.justPreview = true;
             this.loadedImages = [];
-
+            this.addStyle = sty;
             let data
 
             // 处理参数
