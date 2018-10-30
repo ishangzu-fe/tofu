@@ -15,7 +15,7 @@
 
 <script>
 export default {
-    name: 'tabStoreItem',
+    name: "tabStoreItem",
 
     props: {
         // id: String | Number,
@@ -29,20 +29,20 @@ export default {
     },
 
     methods: {
-        activate () {
-            this.$emit('store-activate', this.tab.id)
+        activate() {
+            this.$emit("store-activate", this.tab.id);
         },
 
-        destroy () {
-            this.$emit('store-destroy', this.tab.id)
+        destroy() {
+            this.$emit("store-destroy", this.tab.id);
         }
     }
-}
+};
 </script>
 
 <style lang="scss">
 $item-height: 22px;
-$item-color: #1E2C3C;
+$item-color: #1e2c3c;
 
 $item-check-width: 18px;
 $item-close-width: 30px;
@@ -67,7 +67,7 @@ $item-label-width: calc(100% - #{$item-close-width} - #{$item-check-width});
 
     &:hover {
         color: #fff;
-        background: #20A0FF;
+        background: #20a0ff;
     }
 
     .store-item-select {
@@ -82,6 +82,7 @@ $item-label-width: calc(100% - #{$item-close-width} - #{$item-check-width});
 
         font-size: 12px;
         text-align: center;
+        overflow: hidden;
 
         &.space {
             color: transparent;
@@ -93,8 +94,10 @@ $item-label-width: calc(100% - #{$item-close-width} - #{$item-check-width});
         box-sizing: border-box;
         width: $item-label-width;
         height: 100%;
-
         background: transparent;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
     }
 
     .store-item-close {
