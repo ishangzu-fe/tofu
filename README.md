@@ -38,5 +38,5 @@
 ### 1.0.13
 * 修改 tabStoreItem 组件样式
 
-### 1.0.15
+### 1.0.16
 * 新增 date-picker 组件 选择时间范围添加 firstDayOfWeek 属性
