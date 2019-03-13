@@ -37,3 +37,6 @@
 
 ### 1.0.13
 * 修改 tabStoreItem 组件样式
+
+### 1.0.14
+* 添加 事件范围 firstDayOfWeek 属性
