@@ -39,4 +39,4 @@
 * 修改 tabStoreItem 组件样式
 
 ### 1.0.14
-* 添加 事件范围 firstDayOfWeek 属性
+* 新增 date-picker 组件 选择时间范围添加 firstDayOfWeek 属性
