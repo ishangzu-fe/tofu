@@ -1,125 +1,153 @@
 <template>
     <transition name="md-fade-bottom" @after-leave="$emit('dodestroy')">
-        <div v-show="visible"
-             :style="{ width: width + 'px' }"
-             class="el-picker-panel el-date-range-picker"
-             :class="{'has-sidebar': $slots.sidebar || shortcuts,'has-time': showTime}">
+        <div
+            v-show="visible"
+            :style="{ width: width + 'px' }"
+            class="el-picker-panel el-date-range-picker"
+            :class="{'has-sidebar': $slots.sidebar || shortcuts,'has-time': showTime}"
+        >
             <div class="el-picker-panel-body-wrapper">
                 <slot name="sidebar" class="el-picker-panel-sidebar"></slot>
                 <div class="el-picker-panel-sidebar" v-if="shortcuts">
-                    <button type="button"
-                            class="el-picker-panel-shortcut"
-                            v-for="(shortcut, key) in shortcuts"
-                            :key="key"
-                            @click="handleShortcutClick(shortcut)">{{shortcut.text}}</button>
+                    <button
+                        type="button"
+                        class="el-picker-panel-shortcut"
+                        v-for="(shortcut, key) in shortcuts"
+                        :key="key"
+                        @click="handleShortcutClick(shortcut)"
+                    >{{shortcut.text}}</button>
                 </div>
                 <div class="el-picker-panel-body">
                     <div class="el-date-range-picker-time-header" v-if="showTime">
                         <span class="el-date-range-picker-editors-wrap">
                             <span class="el-date-range-picker-time-picker-wrap">
-                                <input :placeholder="$t('el.datepicker.startDate')"
-                                        class="el-date-range-picker-editor"
-                                        :value="minVisibleDate"
-                                        @input="handleDateInput($event, 'min')"
-                                        @change="handleDateChange($event, 'min')"/>
+                                <input
+                                    :placeholder="$t('el.datepicker.startDate')"
+                                    class="el-date-range-picker-editor"
+                                    :value="minVisibleDate"
+                                    @input="handleDateInput($event, 'min')"
+                                    @change="handleDateChange($event, 'min')"
+                                >
                             </span>
                             <span class="el-date-range-picker-time-picker-wrap">
-                                <input :placeholder="$t('el.datepicker.startTime')"
-                                       class="el-date-range-picker-editor"
-                                       :value="minVisibleTime"
-                                       @focus="minTimePickerVisible = !minTimePickerVisible"
-                                       @change="handleTimeChange($event, 'min')"/>
-                                <time-picker :picker-width="minPickerWidth"
-                                             ref="minTimePicker"
-                                             :date="minDate"
-                                             @pick="handleMinTimePick"
-                                             :visible="minTimePickerVisible">
-                                </time-picker>
+                                <input
+                                    :placeholder="$t('el.datepicker.startTime')"
+                                    class="el-date-range-picker-editor"
+                                    :value="minVisibleTime"
+                                    @focus="minTimePickerVisible = !minTimePickerVisible"
+                                    @change="handleTimeChange($event, 'min')"
+                                >
+                                <time-picker
+                                    :picker-width="minPickerWidth"
+                                    ref="minTimePicker"
+                                    :date="minDate"
+                                    @pick="handleMinTimePick"
+                                    :visible="minTimePickerVisible"
+                                ></time-picker>
                             </span>
                         </span>
                         <span class="el-icon-arrow-right"></span>
                         <span class="el-date-range-picker-editors-wrap is-right">
                             <span class="el-date-range-picker-time-picker-wrap">
-                                <input ref="minInput"
-                                       :placeholder="$t('el.datepicker.endDate')"
-                                       class="el-date-range-picker-editor"
-                                       :value="maxVisibleDate"
-                                       :readonly="!minDate"
-                                       @input="handleDateInput($event, 'max')"
-                                       @change="handleDateChange($event, 'max')" />
+                                <input
+                                    ref="minInput"
+                                    :placeholder="$t('el.datepicker.endDate')"
+                                    class="el-date-range-picker-editor"
+                                    :value="maxVisibleDate"
+                                    :readonly="!minDate"
+                                    @input="handleDateInput($event, 'max')"
+                                    @change="handleDateChange($event, 'max')"
+                                >
                             </span>
                             <span class="el-date-range-picker-time-picker-wrap">
-                                <input ref="maxInput"
-                                       :placeholder="$t('el.datepicker.endTime')"
-                                       class="el-date-range-picker-editor"
-                                       :value="maxVisibleTime"
-                                       @focus="minDate && (maxTimePickerVisible = !maxTimePickerVisible)"
-                                       :readonly="!minDate"
-                                       @change="handleTimeChange($event, 'max')" />
-                                <time-picker :picker-width="maxPickerWidth"
-                                             ref="maxTimePicker"
-                                             :date="maxDate"
-                                             @pick="handleMaxTimePick"
-                                             :visible="maxTimePickerVisible">
-
-                                </time-picker>
+                                <input
+                                    ref="maxInput"
+                                    :placeholder="$t('el.datepicker.endTime')"
+                                    class="el-date-range-picker-editor"
+                                    :value="maxVisibleTime"
+                                    @focus="minDate && (maxTimePickerVisible = !maxTimePickerVisible)"
+                                    :readonly="!minDate"
+                                    @change="handleTimeChange($event, 'max')"
+                                >
+                                <time-picker
+                                    :picker-width="maxPickerWidth"
+                                    ref="maxTimePicker"
+                                    :date="maxDate"
+                                    @pick="handleMaxTimePick"
+                                    :visible="maxTimePickerVisible"
+                                ></time-picker>
                             </span>
                         </span>
                     </div>
                     <div class="el-picker-panel-content el-date-range-picker-content is-left">
                         <div class="el-date-range-picker-header">
-                            <button type="button"
-                                    @click="prevYear"
-                                    class="el-picker-panel-icon-btn el-icon-d-arrow-left"></button>
-                            <button type="button"
-                                    @click="prevMonth"
-                                    class="el-picker-panel-icon-btn el-icon-arrow-left"></button>
+                            <button
+                                type="button"
+                                @click="prevYear"
+                                class="el-picker-panel-icon-btn el-icon-d-arrow-left"
+                            ></button>
+                            <button
+                                type="button"
+                                @click="prevMonth"
+                                class="el-picker-panel-icon-btn el-icon-arrow-left"
+                            ></button>
                             <div>{{ leftLabel }}</div>
                         </div>
-                        <date-table selection-mode="range"
-                                    :date="date"
-                                    :year="leftYear"
-                                    :month="leftMonth"
-                                    :min-date="minDate"
-                                    :max-date="maxDate"
-                                    :range-state="rangeState"
-                                    :disabled-date="disabledDate"
-                                    @changerange="handleChangeRange"
-                                    @pick="handleRangePick">
-                        </date-table>
+                        <date-table
+                            selection-mode="range"
+                            :date="date"
+                            :year="leftYear"
+                            :month="leftMonth"
+                            :min-date="minDate"
+                            :max-date="maxDate"
+                            :range-state="rangeState"
+                            :disabled-date="disabledDate"
+                            @changerange="handleChangeRange"
+                            :first-day-of-week="firstDayOfWeek"
+                            @pick="handleRangePick"
+                        ></date-table>
                     </div>
                     <div class="el-picker-panel-content el-date-range-picker-content is-right">
                         <div class="el-date-range-picker-header">
-                            <button type="button"
-                                    @click="nextYear"
-                                    class="el-picker-panel-icon-btn el-icon-d-arrow-right"></button>
-                            <button type="button"
-                                    @click="nextMonth"
-                                    class="el-picker-panel-icon-btn el-icon-arrow-right"></button>
+                            <button
+                                type="button"
+                                @click="nextYear"
+                                class="el-picker-panel-icon-btn el-icon-d-arrow-right"
+                            ></button>
+                            <button
+                                type="button"
+                                @click="nextMonth"
+                                class="el-picker-panel-icon-btn el-icon-arrow-right"
+                            ></button>
                             <div>{{ rightLabel }}</div>
                         </div>
-                        <date-table selection-mode="range"
-                                    :date="rightDate"
-                                    :year="rightYear"
-                                    :month="rightMonth"
-                                    :min-date="minDate"
-                                    :max-date="maxDate"
-                                    :range-state="rangeState"
-                                    :disabled-date="disabledDate"
-                                    @changerange="handleChangeRange"
-                                    @pick="handleRangePick">
-
-                        </date-table>
+                        <date-table
+                            selection-mode="range"
+                            :date="rightDate"
+                            :year="rightYear"
+                            :month="rightMonth"
+                            :min-date="minDate"
+                            :max-date="maxDate"
+                            :range-state="rangeState"
+                            :disabled-date="disabledDate"
+                            @changerange="handleChangeRange"
+                            :first-day-of-week="firstDayOfWeek"
+                            @pick="handleRangePick"
+                        ></date-table>
                     </div>
                 </div>
             </div>
             <div class="el-picker-panel-footer" v-if="showTime">
-                <a class="el-picker-panel-link-btn"
-                   @click="handleClear">{{ $t('el.datepicker.clear') }}</a>
-                <button type="button"
-                        class="el-picker-panel-btn"
-                        @click="handleConfirm"
-                        :disabled="btnDisabled">{{ $t('el.datepicker.confirm') }}</button>
+                <a
+                    class="el-picker-panel-link-btn"
+                    @click="handleClear"
+                >{{ $t('el.datepicker.clear') }}</a>
+                <button
+                    type="button"
+                    class="el-picker-panel-btn"
+                    @click="handleConfirm"
+                    :disabled="btnDisabled"
+                >{{ $t('el.datepicker.confirm') }}</button>
             </div>
         </div>
     </transition>
@@ -232,7 +260,8 @@ export default {
             minTimePickerVisible: false,
             maxTimePickerVisible: false,
             width: 0,
-            defaultTime: null
+            defaultTime: null,
+            firstDayOfWeek: 7,
         };
     },
 
@@ -388,7 +417,7 @@ export default {
             if (this.maxDate === maxDate && this.minDate === minDate) {
                 return;
             }
-            
+
             this.maxDate = maxDate;
             this.minDate = minDate;
 
