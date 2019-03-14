@@ -1,20 +1,15 @@
 <template>
     <div class="previewer" id="previewer-cover">
         <transition name="cover">
-            <div
-                class="cover"
-                ref="cover"
-                v-show="showCover">
+            <div class="cover" ref="cover" v-show="showCover">
                 <div class="cover-header">
                     <span class="serial">{{(parseInt(fakeIndex) + 1)}} / {{loadedImages.length}}</span>
-                    <p class="cover-header-title"
+                    <p
+                        class="cover-header-title"
                         v-show="loadedImages[this.curImgIdx] && loadedImages[this.curImgIdx].title"
-                        v-html="loadedImages[this.curImgIdx] && loadedImages[this.curImgIdx].title">
-                    </p>
-                    <span
-                        class="close-button tofu-icon icon-close"
-                        @click="close">
-                    </span>
+                        v-html="loadedImages[this.curImgIdx] && loadedImages[this.curImgIdx].title"
+                    ></p>
+                    <span class="close-button tofu-icon icon-close" @click="close"></span>
                 </div>
                 <span
                     v-show="loadedImages.length > 1 && fakeIndex > 0"
@@ -28,25 +23,28 @@
                 ></span>
                 <transition name="slide">
                     <ul class="cover-info" v-show="showInfo">
-                        <li v-for="(info, idx) in (loadedImages[this.curImgIdx] && loadedImages[this.curImgIdx].infos)"
+                        <li
+                            v-for="(info, idx) in (loadedImages[this.curImgIdx] && loadedImages[this.curImgIdx].infos)"
                             :key="idx"
-                            v-html="info">
-                        </li>
+                            v-html="info"
+                        ></li>
                     </ul>
                 </transition>
                 <div class="cover-footer">
                     <span
                         class="cover-footer-button"
                         v-show="loadedImages[this.curImgIdx] && loadedImages[this.curImgIdx].infos"
-                        @click="showInfo = !showInfo">
+                        @click="showInfo = !showInfo"
+                    >
                         <img src="../assets/info.svg">
                     </span>
                     <span class="cover-footer-button float-right">
                         <img src="../assets/download.svg">
-                        <a :href="getImgUrl(loadedImages[this.curImgIdx])
+                        <a
+                            :href="getImgUrl(loadedImages[this.curImgIdx])
                                 && getImgUrl(loadedImages[this.curImgIdx].src)"
-                            download>
-                        </a>
+                            download
+                        ></a>
                     </span>
                     <div class="cover-footer-toolbar">
                         <span class="toolbar-button" @click="rotate">
@@ -64,7 +62,8 @@
                     v-show="loadedImages[this.curImgIdx] && !loadedImages[this.curImgIdx].cached"
                     :src="loadedImages[this.curImgIdx] && loadedImages[this.curImgIdx].src"
                     class="loading-image"
-                    alt="图片加载失败" />
+                    alt="图片加载失败"
+                >
                 <div :style="styles">
                     <transition
                         name="scale"
@@ -73,7 +72,8 @@
                         @afterLeave="afterLeave"
                         :css="true"
                         v-for="(image, idx) in images"
-                        :key="image.id">
+                        :key="image.id"
+                    >
                         <img
                             class="preview-image"
                             :ref="`img-${idx}`"
@@ -111,7 +111,7 @@ const getDimension = () => {
 export default {
     name: 'previewer',
 
-    data () {
+    data() {
         return {
             size: null, // 存放经过计算后的尺寸信息
             showCover: false,
@@ -131,7 +131,7 @@ export default {
             isSwitch: false, // 判断图片的出现是否是切换
 
             showInfo: false, // 是否展示图片附带信息
-            addStyle:'', // 添加class
+            addStyle: '', // 添加class
             styles: {},
             count: 1,
             zoomValue: 0,
@@ -139,7 +139,7 @@ export default {
     },
 
     watch: {
-        curImgIdx (newV, oldV) {
+        curImgIdx(newV, oldV) {
             this.oldImgidx = oldV;
             this.fakeIndex = newV;
 
@@ -152,8 +152,8 @@ export default {
     },
 
     methods: {
-        getImgUrl(img){
-            if (!img){
+        getImgUrl(img) {
+            if (!img) {
                 return undefined;
             }
             if (typeof img == 'string') {
@@ -167,7 +167,7 @@ export default {
          * @param {Object|Array<Object|String>|String|Number} images 传递的需要做预览的图片
          * @param {Number} defaultIndex 默认展示图片索引
          */
-        preview (images, defaultIndex = 0,  crop, sty) {
+        preview(images, defaultIndex = 0, crop, sty) {
             this.justPreview = true;
             this.loadedImages = [];
             this.addStyle = sty;
@@ -185,7 +185,7 @@ export default {
                         }
                     });
                 }
-                
+
                 data = images
             } else if (typeof images === 'object') {
                 defaultIndex = images.defaultIndex || defaultIndex;
@@ -210,7 +210,7 @@ export default {
             /**
              * @param {Array} origin 原始图片数据数组
              */
-            function normalizeData (origin) {
+            function normalizeData(origin) {
                 if (!Array.isArray(origin))
                     console.error('images 必须是数组类型');
 
@@ -235,7 +235,7 @@ export default {
              * @param {Array<Object>} origin
              * @param {Array<Object>} cache
              */
-            function checkCache (origin, cache) {
+            function checkCache(origin, cache) {
                 const reduced = origin.filter(unit => {
                     const isEveryNotDup = cache.every(imgObj => {
                         if (unit.src === imgObj.src) {
@@ -258,7 +258,7 @@ export default {
         /**
          * 图片加载完成时，计算初始化大小，只会在第一次加载时触发
          */
-        handleImageLoad (event) {
+        handleImageLoad(event) {
             const el = event.currentTarget;
             this.setImageSize(el)
 
@@ -269,7 +269,7 @@ export default {
         /**
          * @param {Object} image 图片对象
          */
-        setImageSize (el, immediate = false) {
+        setImageSize(el, immediate = false) {
             if (!el) return;
 
             const eh = el.dataset.originHeight || el.height; // 图片高度
@@ -313,7 +313,7 @@ export default {
             }
         },
 
-        handleResize () {
+        handleResize() {
             this.images.forEach(image => {
                 image.cached = false;
 
@@ -335,7 +335,7 @@ export default {
         /**
          * 关闭预览
          */
-        close () {
+        close() {
             this.curImgId = -1;
             this.curImgIdx = -1;
 
@@ -351,8 +351,8 @@ export default {
             }
         },
 
-        handleKeyup (e) {
-            if(this.$el.children[0].style['display'] == 'none'){
+        handleKeyup(e) {
+            if (this.$el.children[0].style['display'] == 'none') {
                 return;
             }
             switch (e.key) {
@@ -370,7 +370,7 @@ export default {
         /**
          * 切换图片
          */
-        switchImage (direction) {
+        switchImage(direction) {
             this.fakeIndex = this.fakeIndex >= 0 ? this.fakeIndex : this.curImgIdx;
             this.direction = direction;
 
@@ -393,7 +393,7 @@ export default {
         /**
          * 跳转至指定图片
          */
-        jumpTo (index) {
+        jumpTo(index) {
             if (this.isJumping) return;
 
             this.isJumping = true;
@@ -414,7 +414,7 @@ export default {
             }, 100);
         },
 
-        enter (el, done) {
+        enter(el, done) {
             if (this.isSwitch) {
                 if (this.justPreview) {
                     if (this.direction === 'left') {
@@ -461,7 +461,7 @@ export default {
             el.style.marginLeft = `0px`;
         },
 
-        leave (el, done) {
+        leave(el, done) {
             if (this.isSwitch) {
                 if (this.justPreview) {
                     if (this.direction === 'right') {
@@ -483,7 +483,7 @@ export default {
         /**
          * 过渡结束后，重置图片样式
          */
-        afterLeave (el) {
+        afterLeave(el) {
             el.style.width = '';
             el.style.height = '';
             el.style.top = '';
@@ -495,7 +495,7 @@ export default {
         /**
          * 旋转图片
          */
-        rotate () {
+        rotate() {
             let transform = this.$refs[`img-${this.curImgIdx}`][0].style.transform;
             if (~transform.indexOf('rotate')) {
                 let willRotateDeg;
@@ -511,7 +511,7 @@ export default {
             this.$refs[`img-${this.curImgIdx}`][0].style.transform = transform;
         },
 
-        zoomOut () {
+        zoomOut() {
             let transform = this.$refs[`img-${this.curImgIdx}`][0].style.transform;
             this.count = this.count - 1;
             if (~transform.indexOf('scale')) {
@@ -561,7 +561,7 @@ export default {
             }
         },
 
-        zoomIn () {
+        zoomIn() {
             let transform = this.$refs[`img-${this.curImgIdx}`][0].style.transform;
 
             if (~transform.indexOf('scale')) {
@@ -578,7 +578,7 @@ export default {
             } else {
                 transform += ' scale(1.2)';
             }
-            
+
             this.styles.scale = transform.match(/scale\((.*?)\)/)[1];
             this.styles.scale = this.styles.scale < 1 ? 1 : this.styles.scale;
 
@@ -612,7 +612,7 @@ export default {
 
             this.zoomValue = this.styles.scale;
         },
-        gallerySizeAuto (n) {
+        gallerySizeAuto(n) {
             this.styles = {
                 top: `44px`,
                 width: `${this.size.galleryWidth - n}px`,
@@ -621,14 +621,14 @@ export default {
                 overflow: `scroll`,
             };
         },
-        resizeMarginLeft () {
+        resizeMarginLeft() {
             if (this.size.galleryWidth < parseFloat(this.zoomValue) * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.width.replace('px', ''))) {
                 this.$refs[`img-${this.curImgIdx}`][0].style.marginLeft = `${(parseFloat(this.zoomValue) * parseInt(this.$refs[`img-${this.curImgIdx}`][0].style.width.replace('px', '')) - this.size.galleryWidth) / 2}px`;
             }
         },
     },
 
-    mounted () {
+    mounted() {
         this.size = getDimension(); // 初始化尺寸信息
         this.gallerySizeAuto(8);
 
@@ -640,7 +640,8 @@ export default {
             this.size = getDimension();
             this.handleResize();
             this.gallerySizeAuto(0);
-            this.resizeMarginLeft();
+            // resizeMarginLeft有BUG稍后修复
+            // this.resizeMarginLeft();
         }
 
         window.addEventListener('keyup', this.handleKeyup);
@@ -664,9 +665,9 @@ export default {
         width: 100%;
         height: 100%;
 
-        background: rgba(0, 0, 0, .85);
+        background: rgba(0, 0, 0, 0.85);
 
-        transition: opacity .500s cubic-bezier(0.4, 0, 0.22, 1);
+        transition: opacity 0.5s cubic-bezier(0.4, 0, 0.22, 1);
 
         .cover-header {
             width: 100%;
@@ -742,7 +743,7 @@ export default {
             bottom: 0;
 
             color: #fff;
-            background: rgba(0, 0, 0, .3);
+            background: rgba(0, 0, 0, 0.3);
 
             .cover-footer-button {
                 float: left;
@@ -756,7 +757,7 @@ export default {
                     float: right;
                     margin: 0 0 0 12px;
 
-                    a{
+                    a {
                         position: absolute;
                         width: 100%;
                         height: 100%;
@@ -824,7 +825,7 @@ export default {
             border-radius: 4px;
 
             transform: translateY(-50%);
-            background: rgba(0, 0, 0, .3);
+            background: rgba(0, 0, 0, 0.3);
 
             cursor: pointer;
 
@@ -858,13 +859,13 @@ export default {
         position: absolute;
         z-index: -1;
 
-        transition: all .500s cubic-bezier(0.4, 0, 0.22, 1);
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.22, 1);
     }
 }
 
 // 动画
 .scale-leave-active {
-    transition: opacity .250s cubic-bezier(0.4, 0, 0.22, 1);
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.22, 1);
     opacity: 0;
 }
 .scale-enter {
@@ -872,15 +873,16 @@ export default {
 }
 
 .cover-leave-active {
-    transition: opacity .250s cubic-bezier(0.4, 0, 0.22, 1);
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.22, 1);
     opacity: 0;
 }
 .cover-enter {
     opacity: 0;
 }
 
-.slide-enter-active, .slide-leave-active {
-    transition: all .25s cubic-bezier(0.4, 0, 0.22, 1);
+.slide-enter-active,
+.slide-leave-active {
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.22, 1);
 }
 .slide-enter {
     opacity: 0;

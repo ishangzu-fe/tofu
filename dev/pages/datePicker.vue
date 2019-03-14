@@ -104,6 +104,10 @@ export default {
                 }]
             },
             pickerOptions3: {
+                onPick: (maxDate, minDate) => {
+                    // getTime()
+                    console.log('maxDate, minDate: ', maxDate, minDate);
+                },
                 firstDayOfWeek: 1,
                 shortcuts: [{
                     text: '最近一周',
