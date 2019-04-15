@@ -15,6 +15,7 @@ import InputNumber from './components/input-number';
 import ImgList from './components/imgList';
 import { Loading, LoadingService } from './components/loading';
 import LoadingBar from './components/loading-bar';
+import {Menu,MenuItem,Submenu} from './components/menu';
 import Message from './components/message';
 import MessageBox from './components/message-box';
 import Pagination from './components/pagination';
@@ -75,6 +76,9 @@ const install = (Vue) => {
     Vue.component('i-input-number', InputNumber);
     Vue.component('i-img-list',ImgList);
     Vue.component('i-loading-bar', LoadingBar);
+    Vue.component('i-menu', Menu);
+    Vue.component('i-menu-item', MenuItem);
+    Vue.component('i-submenu', Submenu);
     Vue.component('i-pagination', Pagination);
     Vue.component('i-progress', Progress);
     Vue.component('i-radio', Radio);

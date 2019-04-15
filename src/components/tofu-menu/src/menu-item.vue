@@ -4,7 +4,8 @@
         }`">
         <div class="item__main"
             :class="{'item__main--active': this.state === 'activated' || this.state === 'expand'}"
-            @click="activate">
+            @click="activate"
+            @mouseenter="onMouseEnter">
             <div class="item__icon">
                 <img :src="iconURL" v-if="iconURL">
                 <i :class="iconClass" v-else-if="iconClass"></i>
@@ -100,6 +101,10 @@ export default {
             } else {
                 this.foldOrExpand();
             }
+        },
+
+        onMouseEnter(){
+            console.log('enter');
         },
 
         /**

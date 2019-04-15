@@ -24,12 +24,14 @@
                 <li v-if="loading"><i class="el-icon-loading"></i></li>
                 <template v-for="(item, index) in suggestions" v-else>
                     <li v-if="!customItem"
+                        :key="index"
                         :class="{'highlighted': highlightedIndex === index}"
                         @click="select(index)">
                         {{item.value}}
                     </li>
                     <component v-else
                                :class="{'highlighted': highlightedIndex === index}"
+                               :key="index"
                                @click="select(index)"
                                :is="customItem"
                                :item="item"
