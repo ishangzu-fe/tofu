@@ -151,7 +151,7 @@ export default {
          * @param {Object|Array<Object|String>|String|Number} images 传递的需要做预览的图片
          * @param {Number} defaultIndex 默认展示图片索引
          */
-        preview (images, defaultIndex = 0) {
+        preview (images, defaultIndex = 0, crop = '') {
             this.justPreview = true;
             this.loadedImages = [];
 
@@ -193,10 +193,11 @@ export default {
                 const handled = origin.map(unit => {
                     if (typeof unit === 'string') {
                         return {
-                            src: unit,
+                            src: unit + crop,
                             id: imageId++
                         }
                     } else if (typeof unit === 'object') { // 不严谨的对象类型检查
+                        unit.src = unit.src + crop;
                         return Object.assign({ id: imageId++ }, unit)
                     } else {
                         console.error('传递的数据单元必须是字符串或对象类型');

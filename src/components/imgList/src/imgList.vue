@@ -87,7 +87,7 @@ export default {
   },
   methods: {
     handlePreview(index) {
-      this.$preview(this.imgList, index);
+      this.$preview(this.imgList, index, this.crop);
     },
     handleDelete(index) {
       if (!this.disabled) {
