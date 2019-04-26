@@ -27,7 +27,7 @@
                         :key="index"
                         :class="{'highlighted': highlightedIndex === index}"
                         @click="select(index)">
-                        {{item.value}}
+                        {{item[valueKey]}}
                     </li>
                     <component v-else
                                :class="{'highlighted': highlightedIndex === index}"
@@ -64,7 +64,11 @@
                 type: Boolean,
                 default: true
             },
-            customItem: String
+            customItem: String,
+            valueKey:{
+                type:String,
+                default:'value'
+            }
         },
         data() {
             return {
@@ -92,7 +96,7 @@
             },
             select(index) {
                 if (this.suggestions && this.suggestions[index]) {
-                    this.$emit('input', this.suggestions[index].value);
+                    this.$emit('input', this.suggestions[index][this.valueKey]);
                     this.$emit('select', this.suggestions[index]);
                     this.$nextTick(() => {
                         this.hideSuggestions();
