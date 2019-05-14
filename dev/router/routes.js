@@ -10,6 +10,7 @@ import Checkbox from '../pages/checkbox'
 import Dialog from '../pages/dialog'
 import DatePicker from '../pages/datePicker'
 import DropdownTree from '../pages/dropdownTree'
+import Drawer from '../pages/drawer'
 import Form from '../pages/form'
 import TimePicker from '../pages/timePicker'
 import Input from '../pages/input'
@@ -32,6 +33,7 @@ let routes = [
     {path: '/card', component:Card},
     {path: '/cascader', component:Cascader},
     {path: '/checkbox', component:Checkbox},
+    {path: '/drawer', component:Drawer},
     {path: '/datePicker', component:DatePicker},
     {path: '/dropdown-tree', component:DropdownTree},
     {path: '/dialog', component:Dialog},

@@ -8,6 +8,7 @@ import { Checkbox, CheckboxGroup } from './components/checkbox';
 import Col from './components/col';
 import { DatePicker, TimeSelect, TimePicker } from './components/date-picker';
 import Dialog from './components/dialog';
+import Drawer from './components/drawer';
 import { Dropdown, DropdownItem, DropdownMenu } from './components/dropdown';
 import { Form, FormItem } from './components/form';
 import Input from './components/input';
@@ -67,6 +68,7 @@ const install = (Vue) => {
     Vue.component('i-time-select', TimeSelect);
     Vue.component('i-time-picker', TimePicker);
     Vue.component('i-dialog', Dialog);
+    Vue.component('i-drawer', Drawer);
     Vue.component('i-dropdown', Dropdown);
     Vue.component('i-dropdown-item', DropdownItem);
     Vue.component('i-dropdown-menu', DropdownMenu);
