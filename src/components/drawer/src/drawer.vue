@@ -1,12 +1,18 @@
 <template>
   <transition :name="'drawer-fade-' + placement">
     <div class="el-drawer-wrapper" v-show="value" @click.self="handleWrapperClick">
-      <div class="el-drawer" :class="[customClass]" ref="drawer" :style="{width:width}">
+      <div class="el-drawer" :class="[customClass]" ref="drawer" :style="{width:w}">
         <div class="el-drawer-header">
           <div class="el-drawer-headerbtn">
             <i v-if="showClose" class="el-drawer-close el-icon el-icon-close" @click="close()"></i>
           </div>
           <span class="el-drawer-title">{{title}}</span>
+          <div class="el-drawer-right-btn" v-if="showFull">
+              <span @click.stop="handleFull">
+                  <img src="./icon/full.svg" v-if="!fullState">
+                  <img src="./icon/exit.svg" v-else>
+              </span>
+          </div>  
         </div>
         <div class="el-drawer-body" :style="{height:bodyHeight}">
           <slot v-if="rendered"></slot>
@@ -36,7 +42,10 @@ export default {
       type: Boolean,
       default: true
     },
-
+    showFull:{
+        type:Boolean,
+        default: false
+    },
     customClass: {
       type: String,
       default: ""
@@ -59,6 +68,7 @@ export default {
       visible: false,
       mask:'',
       rendered: false,
+      fullState:false,
       bodyHeight:''
     };
   },
@@ -84,9 +94,18 @@ export default {
     handleWrapperClick() {
       this.close();
     },
-    close() {
+    close() {  
       this.$emit("input", false);
+      this.fullState = false;
+    },
+    handleFull(){
+        this.fullState = !this.fullState;
     }
+  },
+  computed:{
+      w(){
+          return this.fullState ? '100%' : this.width;
+      }
   },
   mounted(){
     if(this.hasMask) {
@@ -126,6 +145,7 @@ export default {
     top: 0;
     background: #fff;
     box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
+    transition: width .3s;
   }
 
   .el-drawer-header {
@@ -144,6 +164,15 @@ export default {
       color: #333;
       cursor: pointer;
     }
+  }
+
+  .el-drawer-right-btn{
+      float:right;
+      img {
+          width: 14px;
+          height: 14px;
+          cursor: pointer;
+      }
   }
 
   .el-drawer-title {
